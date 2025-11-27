@@ -1,0 +1,78 @@
+import React, { createContext, useContext, useEffect, useMemo } from 'react';
+import { MoveMarketSDK } from '../services/MoveMarketSDK';
+
+interface SDKContextProps {
+  sdk: MoveMarketSDK;
+}
+
+const SDKContext = createContext<SDKContextProps | null>(null);
+
+interface SDKProviderProps {
+  children: React.ReactNode;
+  moduleAddress?: string;
+  network?: string;
+}
+
+const envModuleAddress = (import.meta.env.VITE_MODULE_ADDRESS as string | undefined) ?? '';
+const envUsdcModuleAddress = (import.meta.env.VITE_USDC_MODULE_ADDRESS as string | undefined) ?? '';
+const envNetwork = (import.meta.env.VITE_NETWORK as string | undefined) ?? 'devnet';
+
+const normalizeAddress = (value?: string): string | undefined => {
+  if (!value) {
+    return undefined;
+  }
+  const trimmed = value.trim();
+  return trimmed.length === 0 ? undefined : trimmed;
+};
+
+export const SDKProvider: React.FC<SDKProviderProps> = ({
+  children,
+  moduleAddress,
+  network,
+}) => {
+  const resolvedNetwork = network ?? envNetwork;
+  const resolvedModuleAddress =
+    normalizeAddress(moduleAddress) ??
+    normalizeAddress(envModuleAddress) ??
+    '0x1';
+
+  const resolvedUsdcAddress = normalizeAddress(envUsdcModuleAddress) ?? resolvedModuleAddress;
+
+  useEffect(() => {
+    console.log('[SDKProvider] Contract address resolved:', {
+      moduleAddress: resolvedModuleAddress,
+      usdcAddress: resolvedUsdcAddress,
+      fromEnv: envModuleAddress,
+      network: resolvedNetwork,
+    });
+
+    if (resolvedModuleAddress === '0x1') {
+      const errorMsg = '[SDKProvider] Invalid module address: falling back to 0x1 (Aptos stdlib). Set VITE_MODULE_ADDRESS in your .env file.';
+
+      if (import.meta.env.PROD) {
+        // Fail fast in production
+        throw new Error(errorMsg + ' Production builds require a valid contract address.');
+      }
+
+      // Warn in development
+      console.warn(errorMsg);
+    }
+  }, [resolvedModuleAddress, resolvedUsdcAddress, resolvedNetwork]);
+
+  const sdk = useMemo(
+    () => new MoveMarketSDK(resolvedNetwork, resolvedModuleAddress, resolvedUsdcAddress),
+    [resolvedNetwork, resolvedModuleAddress, resolvedUsdcAddress]
+  );
+
+  return <SDKContext.Provider value={{ sdk }}>{children}</SDKContext.Provider>;
+};
+
+export const useSDK = (): MoveMarketSDK => {
+  const context = useContext(SDKContext);
+  if (!context) {
+    throw new Error('useSDK must be used within an SDKProvider');
+  }
+  return context.sdk;
+};
+
+export default SDKProvider;

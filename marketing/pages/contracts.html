@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Move Market · Smart Contract Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    code { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-200">
+  <div class="min-h-screen">
+    <header class="border-b border-gray-800 bg-gray-900/80 backdrop-blur">
+      <div class="max-w-5xl mx-auto px-6 py-8 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="text-3xl">🧱</span>
+          <div>
+            <h1 class="text-3xl font-bold">Move Market Smart Contracts</h1>
+            <p class="text-sm text-gray-400">Move modules for Aptos & Sui</p>
+          </div>
+        </div>
+        <a href="../index.html" class="text-sm text-blue-400 hover:text-blue-300 transition">
+          ← Back to marketing site
+        </a>
+      </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 py-16 space-y-16">
+      <section class="grid md:grid-cols-2 gap-8">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-3">
+          <h2 class="text-2xl font-semibold">Aptos Package</h2>
+          <p class="text-sm text-gray-400">
+            Core LMSR market manager, liquidity vault, oracle access control, and role registry implemented in Move.
+          </p>
+          <ul class="text-sm text-gray-300 list-disc pl-5 space-y-2">
+            <li><strong>Module:</strong> <code>move_market::market_manager</code></li>
+            <li><strong>Address:</strong> <code>0xb232...d894</code> (devnet)</li>
+            <li><strong>Source:</strong> <a class="text-blue-400 hover:text-blue-300" href="../../contracts/sources/market_manager.move" target="_blank">market_manager.move</a></li>
+            <li><strong>Deployment:</strong> <a class="text-blue-400 hover:text-blue-300" href="../../contracts/scripts/deploy_devnet.sh" target="_blank">deploy_devnet.sh</a></li>
+          </ul>
+        </div>
+
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-3">
+          <h2 class="text-2xl font-semibold">Sui Package</h2>
+          <p class="text-sm text-gray-400">
+            Sharded liquidity pools and settlement logic ported to Sui Move with shared object support.
+          </p>
+          <ul class="text-sm text-gray-300 list-disc pl-5 space-y-2">
+            <li><strong>Package ID:</strong> <code>0x76ac...0d9c</code> (devnet)</li>
+            <li><strong>Source:</strong> <a class="text-blue-400 hover:text-blue-300" href="../../contracts-sui/sources/market_manager_v2_secure.move" target="_blank">market_manager_v2_secure.move</a></li>
+            <li><strong>Deployment:</strong> <a class="text-blue-400 hover:text-blue-300" href="../../contracts-sui/scripts/deploy_devnet.sh" target="_blank">deploy_devnet.sh</a></li>
+            <li><strong>Verification:</strong> <a class="text-blue-400 hover:text-blue-300" href="../../contracts-sui/FORMAL_VERIFICATION.md" target="_blank">Formal Verification Notes</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold mb-4">Security Checklist</h2>
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-4">
+          <div class="flex items-start gap-3">
+            <span class="text-green-400 mt-0.5">✔</span>
+            <p class="text-sm text-gray-300">
+              Formal verification artifacts for critical invariants (<code>FORMAL_VERIFICATION.md</code>)
+            </p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-green-400 mt-0.5">✔</span>
+            <p class="text-sm text-gray-300">
+              Circuit breaker &amp; pause mechanisms managed via on-chain roles (<code>access_control.move</code>)
+            </p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-green-400 mt-0.5">✔</span>
+            <p class="text-sm text-gray-300">
+              Event indexer alignment—every emitted event includes <code>market_id</code>, <code>sequence_number</code>, and <code>chain</code>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold mb-4">Local Testing</h2>
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-4">
+          <pre class="bg-gray-950 border border-gray-800 rounded-lg p-4 text-xs text-gray-300 overflow-x-auto">
+# Compile and test Aptos package
+cd contracts
+aptos move test
+
+# Publish to devnet
+aptos move publish --profile default --named-addresses movemarket=default
+
+# Compile and test Sui package
+cd ../contracts-sui
+sui move test
+sui client publish --gas-budget 200000000
+          </pre>
+          <p class="text-xs text-gray-500">
+            Use the provided devnet fixtures in <code>scripts/</code> to pre-seed liquidity pools and oracle data.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-gray-900 py-6 text-center text-xs text-gray-500">
+      © 2025 Move Market · Secure prediction markets
+    </footer>
+  </div>
+</body>
+</html>

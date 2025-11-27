@@ -1,0 +1,193 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Suggestion {
+  id                String              @id @default(uuid())
+  question          String
+  category          String? 
+  outcomes          String[]
+  durationHours     Int
+  resolutionSource  String?
+  proposer          String
+  reviewer          String?
+  reviewReason      String?
+  status            SuggestionStatus    @default(pending)
+  chain             Chain               @default(aptos)
+  upvotes           Int                 @default(0)
+  publishedMarketId String?
+  publishedBy       String?
+  publishedAt       DateTime?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  approvedAt        DateTime?
+  events            SuggestionEvent[]
+}
+
+model SuggestionEvent {
+  id            String          @id @default(uuid())
+  suggestionId  String
+  suggestion    Suggestion      @relation(fields: [suggestionId], references: [id])
+  eventType     SuggestionEventType
+  actorWallet   String
+  metadata      Json?
+  timestamp     DateTime        @default(now())
+
+  @@index([suggestionId])
+  @@index([timestamp])
+}
+
+model User {
+  walletAddress     String      @id
+  roles             String[]
+  onChainRolesSynced Boolean    @default(false)
+  lastRoleSync      DateTime?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  roleChanges       RoleChange[]
+}
+
+model RoleChange {
+  id            String    @id @default(uuid())
+  walletAddress String
+  user          User      @relation(fields: [walletAddress], references: [walletAddress])
+  role          String
+  action        RoleAction
+  grantedBy     String
+  transactionHash String?
+  chain         Chain?
+  timestamp     DateTime  @default(now())
+
+  @@index([walletAddress])
+  @@index([timestamp])
+}
+
+model Market {
+  id              String        @id @default(uuid())
+  onChainId       String
+  chain           Chain
+  question        String
+  category        String?
+  outcomes        String[]
+  creatorWallet   String?
+  endDate         DateTime?
+  status          MarketStatus  @default(active)
+  totalVolume     BigInt        @default(0)
+  liquidityParam  BigInt?
+  outcomePools    BigInt[]
+  resolvedOutcome Int?
+  createdAt       DateTime      @default(now())
+  resolvedAt      DateTime?
+  lastSyncedAt    DateTime?
+  transactionHash String?
+  suiMarketObjectId    String?
+  suiShardObjectIds    String[]  @default([])
+  suiQueueObjectId     String?
+  events          BlockchainEvent[]
+
+  @@unique([onChainId, chain])
+  @@index([status])
+  @@index([chain])
+}
+
+model LeaderboardEntry {
+  id            String             @id @default(uuid())
+  walletAddress String
+  displayName   String?
+  metric        LeaderboardMetric
+  period        LeaderboardPeriod
+  chain         Chain              @default(aptos)
+  rank          Int
+  value         Decimal            @default(0)
+  totalProfit   Decimal            @default(0)
+  totalVolume   Decimal            @default(0)
+  totalBets     Int                @default(0)
+  winRate       Float              @default(0)
+  badges        String[]           @default([])
+  metadata      Json?
+  snapshotAt    DateTime           @default(now())
+
+  @@index([metric, period, chain, rank])
+  @@index([walletAddress, metric, period, chain])
+}
+
+model BlockchainEvent {
+  id              String    @id @default(uuid())
+  chain           Chain
+  eventType       String
+  marketId        String?
+  market          Market?   @relation(fields: [marketId], references: [id])
+  transactionHash String
+  sequenceNumber  BigInt
+  eventData       Json
+  processedAt     DateTime  @default(now())
+  blockHeight     BigInt?
+  timestamp       DateTime?
+
+  @@index([chain, sequenceNumber])
+  @@index([eventType])
+  @@index([marketId])
+  @@unique([chain, transactionHash, sequenceNumber])
+}
+
+model IndexerState {
+  id              String    @id @default(uuid())
+  chain           Chain     @unique
+  lastProcessedVersion BigInt @default(0)
+  lastProcessedTimestamp DateTime?
+  isRunning       Boolean   @default(false)
+  lastError       String?
+  updatedAt       DateTime  @updatedAt
+
+  @@index([chain])
+}
+
+enum SuggestionStatus {
+  pending
+  approved
+  rejected
+  published
+}
+
+enum SuggestionEventType {
+  submitted
+  approved
+  rejected
+  published
+  vote
+}
+
+enum Chain {
+  aptos
+  sui
+  movement
+}
+
+enum LeaderboardMetric {
+  profit
+  volume
+}
+
+enum LeaderboardPeriod {
+  daily
+  weekly
+  monthly
+  all_time
+}
+
+enum RoleAction {
+  grant
+  revoke
+}
+
+enum MarketStatus {
+  active
+  resolved
+  disputed
+  cancelled
+}

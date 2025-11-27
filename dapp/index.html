@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+    <!-- Mobile-First Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="The fastest, fairest prediction market platform. Multi-oracle consensus prevents manipulation. Built on Aptos blockchain." />
+    <meta name="keywords" content="prediction market, aptos, blockchain, betting, forecasting, defi" />
+    <meta name="author" content="Move Market" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://movemarket.com/" />
+    <meta property="og:title" content="Move Market - Manipulation-Proof Prediction Markets" />
+    <meta property="og:description" content="Never get scammed like Polymarket users. Multi-oracle consensus, 24-hour disputes, ultra-low fees." />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://movemarket.com/" />
+    <meta property="twitter:title" content="Move Market - Manipulation-Proof Prediction Markets" />
+    <meta property="twitter:description" content="Never get scammed like Polymarket users. Multi-oracle consensus, 24-hour disputes, ultra-low fees." />
+    <meta property="twitter:image" content="/twitter-image.png" />
+
+    <!-- PWA / Mobile App -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Move Market" />
+    <meta name="application-name" content="Move Market" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="msapplication-TileColor" content="#6366f1" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- iOS Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fullnode.devnet.aptoslabs.com" />
+
+    <!-- Fonts: Inter, JetBrains Mono, Baloo 2 (Tiki) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet" />
+
+    <title>Move Market - Manipulation-Proof Prediction Markets</title>
+    <script>
+      // Prevent flash of incorrect theme - runs before page renders
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || savedTheme === 'light') {
+          document.documentElement.classList.add(savedTheme);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.add('light');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

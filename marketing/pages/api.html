@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Move Market · API Reference</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    code { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-200">
+  <div class="min-h-screen">
+    <header class="border-b border-gray-800 bg-gray-900/80 backdrop-blur">
+      <div class="max-w-5xl mx-auto px-6 py-8 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="text-3xl">🛠️</span>
+          <div>
+            <h1 class="text-3xl font-bold">Move Market API Reference</h1>
+            <p class="text-sm text-gray-400">REST &amp; GraphQL endpoints for builders across Aptos &amp; Sui</p>
+          </div>
+        </div>
+        <a href="../index.html" class="text-sm text-blue-400 hover:text-blue-300 transition">
+          ← Back to marketing site
+        </a>
+      </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 py-16 space-y-16">
+      <section>
+        <h2 class="text-2xl font-semibold mb-3">Base URLs</h2>
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-4">
+          <div>
+            <h3 class="text-lg font-semibold mb-2">Production</h3>
+            <code class="bg-gray-950 border border-gray-800 px-3 py-2 rounded-lg text-sm text-blue-300 w-full block">
+https://api.movemarket.app/api
+            </code>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2">Local Development</h3>
+            <code class="bg-gray-950 border border-gray-800 px-3 py-2 rounded-lg text-sm text-blue-300 w-full block">
+http://localhost:3001/api
+            </code>
+          </div>
+          <p class="text-xs text-gray-500">
+            The backend exposes Swagger documentation at <code>/api-docs</code> once the service is running (<code>npm run dev --prefix backend</code>).
+          </p>
+        </div>
+      </section>
+
+      <section class="grid md:grid-cols-2 gap-8">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-4">
+          <div>
+            <h3 class="text-xl font-semibold">REST Endpoints</h3>
+          <p class="text-sm text-gray-400">
+            Standard JSON endpoints for markets, bets, suggestions, and oracle events. Authenticated endpoints expect wallet headers with the active chain (`aptos` or `sui`).
+            </p>
+          </div>
+          <pre class="bg-gray-950 border border-gray-800 rounded-lg p-4 text-xs text-gray-300 overflow-x-auto">
+GET    /api/markets                  # list markets
+GET    /api/markets/:chain/:id       # market details
+POST   /api/markets/calculate-payout # payout estimate (requires wallet headers)
+POST   /api/s suggestions            # create market suggestion (authenticated)
+POST   /api/auth/nonce               # sign-in nonce for wallet auth
+          </pre>
+          <a class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm font-semibold" href="../../backend/README.md" target="_blank">
+            Backend README →
+          </a>
+        </div>
+
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-4">
+          <div>
+            <h3 class="text-xl font-semibold">GraphQL & Indexer</h3>
+            <p class="text-sm text-gray-400">
+              Use the Postgres-backed Prisma layer or the event indexer GraphQL gateway for analytics workloads.
+            </p>
+          </div>
+          <pre class="bg-gray-950 border border-gray-800 rounded-lg p-4 text-xs text-gray-300 overflow-x-auto">
+# Example query
+query MarketsByChain($chain: String!) {
+  markets(where: { chain: { equals: $chain } }, orderBy: { createdAt: desc }) {
+    id
+    question
+    outcomes
+    totalVolume
+    endDate
+  }
+}
+          </pre>
+          <p class="text-xs text-gray-500">
+            Enable the optional GraphQL server by setting <code>ENABLE_GRAPHQL=true</code> in <code>backend/.env</code>.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold mb-4">Authentication Headers</h2>
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+          <p class="text-sm text-gray-400 mb-4">
+            Protected endpoints expect the active wallet address and chain in request headers. Sessions expire by default after 5 minutes.
+          </p>
+          <pre class="bg-gray-950 border border-gray-800 rounded-lg p-4 text-xs text-gray-300 overflow-x-auto">
+POST /api/markets/calculate-payout
+Headers:
+  Content-Type: application/json
+  X-Wallet-Address: 0xabc...
+  X-Active-Chain: aptos // or "sui"
+Body:
+{
+  "marketId": "93f6...",
+  "outcomeIndex": 1,
+  "amount": 250
+}
+          </pre>
+        </div>
+      </section>
+
+      <section class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+        <h2 class="text-2xl font-semibold mb-3">SDK Helpers</h2>
+        <p class="text-sm text-gray-400 mb-4">
+          Prefer the TypeScript SDK when integrating from React/Next.js apps. It handles wallet flows, Move transactions, and REST calls.
+        </p>
+        <pre class="bg-gray-950 border border-gray-800 rounded-lg p-4 text-xs text-gray-300 overflow-x-auto">
+import { MoveMarketSDK } from '@/services/MoveMarketSDK';
+
+const sdk = new MoveMarketSDK('testnet', MODULE_ADDRESS);
+const markets = await sdk.listMarkets();
+const quote = await sdk.calculatePayout(marketId, outcomeIndex, 100);
+        </pre>
+        <a class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm font-semibold" href="../../dapp/src/services/MoveMarketSDK.ts" target="_blank">
+          View SDK Source →
+        </a>
+      </section>
+    </main>
+
+    <footer class="border-t border-gray-900 py-6 text-center text-xs text-gray-500">
+      © 2025 Move Market · Builders welcome
+    </footer>
+  </div>
+</body>
+</html>

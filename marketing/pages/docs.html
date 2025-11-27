@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Move Market · Developer Documentation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-200">
+  <div class="min-h-screen">
+    <header class="border-b border-gray-800 bg-gray-900/80 backdrop-blur">
+      <div class="max-w-5xl mx-auto px-6 py-8 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="text-3xl">📘</span>
+          <div>
+            <h1 class="text-3xl font-bold">Move Market Developer Docs</h1>
+            <p class="text-sm text-gray-400">Integration playbook for engineers and protocol contributors across Aptos &amp; Sui</p>
+          </div>
+        </div>
+        <a href="../index.html" class="text-sm text-blue-400 hover:text-blue-300 transition">
+          ← Back to marketing site
+        </a>
+      </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 py-16 space-y-16">
+      <section>
+        <h2 class="text-2xl font-semibold mb-3">Quick Start</h2>
+          <p class="text-gray-400 mb-6">
+            Everything you need to run Move Market locally or integrate it with your own product—on both Aptos and Sui.
+        </p>
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-4">
+          <div>
+            <h3 class="text-lg font-semibold">Repository Structure</h3>
+            <p class="text-sm text-gray-400">
+              The monorepo ships with smart contracts (<code>contracts/</code> for Aptos, <code>contracts-sui/</code> for Sui),
+              backend services (<code>backend/</code>), the React dApp (<code>dapp/</code>), and extensive documentation (<code>docs/</code>).
+            </p>
+          </div>
+          <pre class="bg-gray-950 border border-gray-800 rounded-lg p-4 text-sm text-gray-300 overflow-auto">
+git clone https://github.com/movemarket/move-market.git
+cd move-market
+
+# Install dependencies
+cd dapp && npm install
+cd ../backend && npm install
+
+# Start local environment (multi-chain ready)
+npm run dev --prefix backend
+npm run dev --prefix dapp
+</pre>
+        </div>
+      </section>
+
+      <section class="grid md:grid-cols-2 gap-8">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+          <h3 class="text-xl font-semibold mb-3">Frontend Integration</h3>
+          <p class="text-sm text-gray-400 mb-4">
+            Step-by-step instructions for wiring the Move Market SDK, wallet adapters, and multi-chain UI.
+          </p>
+          <ul class="text-sm text-gray-300 space-y-2 list-disc pl-5">
+            <li><a class="text-blue-400 hover:text-blue-300" href="../../docs/FRONTEND_INTEGRATION_GUIDE.md" target="_blank">Frontend Integration Guide</a></li>
+            <li><a class="text-blue-400 hover:text-blue-300" href="../../dapp/README.md" target="_blank">dApp README</a></li>
+            <li><a class="text-blue-400 hover:text-blue-300" href="../../dapp/src/services/MoveMarketSDK.ts" target="_blank">MoveMarketSDK Source</a></li>
+          </ul>
+        </div>
+
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+          <h3 class="text-xl font-semibold mb-3">Backend & Indexer</h3>
+          <p class="text-sm text-gray-400 mb-4">
+            Learn how the Express/Prisma backend, multi-chain event indexers, and oracle synchronisation layers are wired.
+          </p>
+          <ul class="text-sm text-gray-300 space-y-2 list-disc pl-5">
+            <li><a class="text-blue-400 hover:text-blue-300" href="../../backend/README.md" target="_blank">Backend Service Overview</a></li>
+            <li><a class="text-blue-400 hover:text-blue-300" href="../../docs/USDC_INTEGRATION.md" target="_blank">USDC Integration Playbook</a></li>
+            <li><a class="text-blue-400 hover:text-blue-300" href="../../docs/HYBRID_ARCHITECTURE_SECURITY.md" target="_blank">Hybrid Architecture & Security</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold mb-4">Additional References</h2>
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+          <ul class="text-sm text-gray-300 space-y-3 list-disc pl-5">
+            <li><a class="text-blue-400 hover:text-blue-300" href="../../docs/COMPREHENSIVE_SECURITY_AUDIT_2025.md" target="_blank">Comprehensive Security Audit</a></li>
+            <li><a class="text-blue-400 hover:text-blue-300" href="../../docs/runbooks/DEPLOYMENT_RUNBOOK.md" target="_blank">Deployment Runbook</a></li>
+            <li><a class="text-blue-400 hover:text-blue-300" href="../../docs/runbooks/INCIDENT_RESPONSE_RUNBOOK.md" target="_blank">Incident Response Procedures</a></li>
+            <li><a class="text-blue-400 hover:text-blue-300" href="../../docs/analysis/COMPETITIVE_ANALYSIS.md" target="_blank">Competitive & Market Analysis</a></li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-gray-900 py-6 text-center text-xs text-gray-500">
+      © 2025 Move Market · Built with Move on Aptos &amp; Sui
+    </footer>
+  </div>
+</body>
+</html>

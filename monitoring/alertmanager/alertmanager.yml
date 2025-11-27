@@ -1,0 +1,16 @@
+route:
+  receiver: default
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+
+receivers:
+  - name: default
+    email_configs:
+      - to: ops@example.com
+        from: noreply@example.com
+        smarthost: smtp.example.com:587
+        auth_username: alerts@example.com
+        auth_password: "${ALERTMANAGER_SMTP_PASSWORD}"
+        require_tls: true

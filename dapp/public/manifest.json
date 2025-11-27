@@ -1,0 +1,60 @@
+{
+  "name": "Move Market - Prediction Markets",
+  "short_name": "Move Market",
+  "description": "The fastest, fairest prediction market platform. Built on Aptos blockchain.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "productivity"],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile-1.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Browse Markets",
+      "short_name": "Markets",
+      "description": "View active prediction markets",
+      "url": "/markets",
+      "icons": [
+        {
+          "src": "/icon-markets.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "My Bets",
+      "short_name": "Dashboard",
+      "description": "View your active bets and winnings",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "/icon-dashboard.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}
