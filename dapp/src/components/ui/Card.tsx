@@ -23,8 +23,8 @@ export const Card: React.FC<CardProps> = ({
   padding = 'md',
   onClick,
 }) => {
-  const baseClasses = 'bg-white dark:bg-gray-800 rounded-xl shadow-card border border-gray-200 dark:border-gray-700 transition-all duration-200';
-  const hoverClasses = hover ? 'hover:shadow-card-hover hover:border-primary-200 dark:hover:border-primary-700 cursor-pointer' : '';
+  const baseClasses = 'bg-[#0D1224] rounded-xl border border-[#1C2537] transition-all duration-200';
+  const hoverClasses = hover ? 'hover:border-primary-500/30 hover:shadow-[0_8px_32px_rgba(0,0,0,0.4)] cursor-pointer' : '';
 
   const classes = `
     ${baseClasses}
@@ -60,7 +60,7 @@ interface CardHeaderProps {
 
 export const CardHeader: React.FC<CardHeaderProps> = ({ children, className = '' }) => {
   return (
-    <div className={`border-b border-gray-200 dark:border-gray-700 pb-4 mb-4 transition-colors ${className}`}>
+    <div className={`border-b border-white/[0.06] pb-4 mb-4 transition-colors ${className}`}>
       {children}
     </div>
   );
@@ -73,7 +73,7 @@ interface CardTitleProps {
 
 export const CardTitle: React.FC<CardTitleProps> = ({ children, className = '' }) => {
   return (
-    <h3 className={`text-xl font-display font-bold text-gray-900 dark:text-white transition-colors ${className}`}>
+    <h3 className={`text-xl font-display font-bold text-white transition-colors ${className}`}>
       {children}
     </h3>
   );
@@ -86,7 +86,7 @@ interface CardDescriptionProps {
 
 export const CardDescription: React.FC<CardDescriptionProps> = ({ children, className = '' }) => {
   return (
-    <p className={`text-sm text-gray-600 dark:text-gray-400 mt-1 transition-colors ${className}`}>
+    <p className={`text-sm text-slate-500 mt-1 transition-colors ${className}`}>
       {children}
     </p>
   );
@@ -112,7 +112,7 @@ interface CardFooterProps {
 
 export const CardFooter: React.FC<CardFooterProps> = ({ children, className = '' }) => {
   return (
-    <div className={`border-t border-gray-200 dark:border-gray-700 pt-4 mt-4 transition-colors ${className}`}>
+    <div className={`border-t border-white/[0.06] pt-4 mt-4 transition-colors ${className}`}>
       {children}
     </div>
   );
