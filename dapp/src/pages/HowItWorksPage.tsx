@@ -12,318 +12,228 @@ import {
   FiBarChart2,
   FiAward,
   FiCreditCard,
-  FiCode,
 } from 'react-icons/fi';
-import { PremiumContainer } from '../components/layout/PremiumContainer';
-import { Card } from '../components/ui/Card';
+import { Container } from '../components/layout/Container';
 import { Button } from '../components/ui/Button';
-import { Badge } from '../components/ui/Badge';
 import { PayoutCalculator } from '../components/docs/PayoutCalculator';
 
+const STEPS = [
+  {
+    number: '01',
+    Icon: FiCreditCard,
+    title: 'Connect Wallet',
+    description: 'Connect your wallet of choice — Petra or Martian on Aptos, Suiet or Sui Wallet on Sui. No KYC required.',
+    details: [
+      'Install a compatible wallet extension for your selected chain',
+      'Click "Connect Wallet" in the top right',
+      'Approve the connection request',
+      'Your wallet address will appear in the header',
+    ],
+    color: 'text-primary-400',
+    bg: 'bg-primary-500/10',
+    border: 'border-primary-500/20',
+  },
+  {
+    number: '02',
+    Icon: FiDollarSign,
+    title: 'Get USDC',
+    description: 'Fund your wallet with USDC on your active chain. Prophecy supports stablecoin wagers on both Aptos and Sui.',
+    details: [
+      'Bridge USDC using LayerZero, Wormhole, or another supported bridge',
+      'Use a DEX to swap APT or SUI into USDC',
+      'Minimum bet size is typically 1 USDC',
+      'Keep some APT or SUI for gas (typically < $0.01)',
+    ],
+    color: 'text-success-400',
+    bg: 'bg-success-500/10',
+    border: 'border-success-500/20',
+  },
+  {
+    number: '03',
+    Icon: FiBarChart2,
+    title: 'Browse Markets',
+    description: 'Explore active prediction markets across crypto, sports, politics, and technology.',
+    details: [
+      'Filter by category, end date, or volume',
+      'View detailed market information and odds',
+      'Check the resolution criteria',
+      'Review trading volume and participant count',
+    ],
+    color: 'text-secondary-400',
+    bg: 'bg-secondary-500/10',
+    border: 'border-secondary-500/20',
+  },
+  {
+    number: '04',
+    Icon: FiTrendingUp,
+    title: 'Place Prediction',
+    description: 'Choose your outcome, enter your bet amount, and confirm the on-chain transaction.',
+    details: [
+      'Select YES or NO based on your prediction',
+      'Enter the amount you want to bet',
+      'Review the estimated payout and fees',
+      'Confirm the transaction in your wallet',
+    ],
+    color: 'text-warning-400',
+    bg: 'bg-warning-500/10',
+    border: 'border-warning-500/20',
+  },
+  {
+    number: '05',
+    Icon: FiClock,
+    title: 'Await Resolution',
+    description: 'After the market end date, an oracle or admin resolves the market based on real-world outcomes.',
+    details: [
+      'Markets close at the specified end date',
+      'Pyth Network price feeds and trusted oracles verify outcomes',
+      'Resolution is transparent and verifiable on-chain',
+      'Disputed outcomes can be escalated',
+    ],
+    color: 'text-cyan-400',
+    bg: 'bg-cyan-500/10',
+    border: 'border-cyan-500/20',
+  },
+  {
+    number: '06',
+    Icon: FiAward,
+    title: 'Claim Winnings',
+    description: 'If your prediction was correct, claim your winnings directly to your wallet. Payouts are instant.',
+    details: [
+      'Winners are determined by market outcome',
+      'Claim winnings from your My Bets dashboard',
+      'Instant payout in USDC',
+      'No withdrawal limits or delays',
+    ],
+    color: 'text-success-400',
+    bg: 'bg-success-500/10',
+    border: 'border-success-500/20',
+  },
+];
+
+const ODDS_CARDS = [
+  {
+    Icon: FiBarChart2,
+    iconColor: 'text-primary-400',
+    iconBg: 'bg-primary-500/10',
+    title: 'Dynamic Odds',
+    description: 'Odds change based on the ratio of YES and NO bets. More popular outcomes have lower potential returns.',
+  },
+  {
+    Icon: FiUsers,
+    iconColor: 'text-secondary-400',
+    iconBg: 'bg-secondary-500/10',
+    title: 'Market-Driven',
+    description: 'Prices reflect the collective wisdom of all participants, creating accurate probability estimates.',
+  },
+  {
+    Icon: FiDollarSign,
+    iconColor: 'text-success-400',
+    iconBg: 'bg-success-500/10',
+    title: 'Fair Payouts',
+    description: 'Winners share the losing side pool proportionally to their bet size, minus a small platform fee.',
+  },
+];
+
+const BENEFITS = [
+  { Icon: FiShield, iconColor: 'text-primary-400', iconBg: 'bg-primary-500/10', title: 'Secure & Transparent', description: 'All bets are stored on-chain, ensuring complete transparency and immutability.' },
+  { Icon: FiDollarSign, iconColor: 'text-success-400', iconBg: 'bg-success-500/10', title: 'Low Fees', description: 'Aptos and Sui offer extremely low transaction fees, typically less than $0.01 per transaction.' },
+  { Icon: FiTrendingUp, iconColor: 'text-warning-400', iconBg: 'bg-warning-500/10', title: 'Instant Settlement', description: 'Fast block times mean your bets are confirmed in seconds, not minutes or hours.' },
+  { Icon: FiCheckCircle, iconColor: 'text-secondary-400', iconBg: 'bg-secondary-500/10', title: 'Non-Custodial', description: 'Your funds remain in audited smart contracts. Winners can withdraw immediately after resolution.' },
+];
+
+const FAQS = [
+  { q: 'What is a prediction market?', a: 'A prediction market is a platform where users bet on the outcomes of future events. Prices reflect the collective probability assessment of all participants.' },
+  { q: 'How are markets resolved?', a: 'Markets are resolved by Pyth Network price feeds or trusted oracle managers who verify real-world outcomes. The process is transparent and auditable on-chain.' },
+  { q: 'What happens if I bet on the losing side?', a: 'If you bet on the losing outcome, your stake is distributed among winners proportionally. You will lose your initial bet amount.' },
+  { q: 'Can I sell my position before the market ends?', a: 'Currently positions are locked until market resolution. Secondary market trading is on our roadmap.' },
+  { q: 'What fees do you charge?', a: 'We charge a 2% platform fee on winning payouts. No fees to place bets — only standard network gas (typically < $0.01).' },
+  { q: 'Is my money safe?', a: 'All funds are held in audited smart contracts on Aptos and Sui. The platform cannot access user funds, and all transactions are transparent on-chain.' },
+];
+
 export const HowItWorksPage: React.FC = () => {
-  const steps = [
-    {
-      number: '01',
-      icon: FiCreditCard,
-      title: 'Connect Wallet',
-      description:
-        'Connect your wallet of choice to get started - Petra or Martian on Aptos, Suiet or Sui Wallet on Sui. No KYC required.',
-      details: [
-        'Install a compatible wallet extension for your selected chain (Petra or Martian on Aptos, Suiet or Sui Wallet on Sui)',
-        'Click "Connect Wallet" in the top right',
-        'Approve the connection request',
-        'Your wallet address will be displayed',
-      ],
-    },
-    {
-      number: '02',
-      icon: FiDollarSign,
-      title: 'Get USDC',
-      description:
-        'Fund your wallet with USDC on your active chain. Move Market supports stablecoin wagers on both Aptos and Sui.',
-      details: [
-        'Bridge USDC to Aptos or Sui using LayerZero, Wormhole, or another supported bridge',
-        'Use a DEX to swap APT or SUI into USDC depending on the chain',
-        'Minimum bet size is typically 1 USDC',
-        'Keep some APT or SUI for gas fees (both chains have very low costs)',
-      ],
-    },
-    {
-      number: '03',
-      icon: FiBarChart2,
-      title: 'Browse Markets',
-      description:
-        'Explore active prediction markets across categories like crypto, sports, politics, and technology.',
-      details: [
-        'Filter by category, end date, or volume',
-        'View detailed market information and odds',
-        'Check the resolution criteria',
-        'Review trading volume and participant count',
-      ],
-    },
-    {
-      number: '04',
-      icon: FiTrendingUp,
-      title: 'Place Bet',
-      description:
-        'Choose your prediction (Yes or No), enter your bet amount, and confirm the transaction to place your bet.',
-      details: [
-        'Select Yes or No based on your prediction',
-        'Enter the amount you want to bet',
-        'Review the potential payout',
-        'Confirm the transaction in your wallet',
-      ],
-    },
-    {
-      number: '05',
-      icon: FiClock,
-      title: 'Wait for Resolution',
-      description:
-        'After the market end date, an oracle or admin resolves the market based on real-world outcomes.',
-      details: [
-        'Markets close at the specified end date',
-        'Trusted oracles verify the outcome',
-        'Resolution is transparent and verifiable',
-        'Disputed outcomes can be appealed',
-      ],
-    },
-    {
-      number: '06',
-      icon: FiAward,
-      title: 'Claim Winnings',
-      description:
-        'If your prediction was correct, claim your winnings directly to your wallet. Payouts are instant and automatic.',
-      details: [
-        'Winners are determined by market outcome',
-        'Claim winnings from your dashboard',
-        'Instant payout in USDC',
-        'No withdrawal limits or delays',
-      ],
-    },
-  ];
-
-  const oddsCards = [
-    {
-      icon: FiBarChart2,
-      title: 'Dynamic Odds',
-      description:
-        'Odds change based on the ratio of Yes and No bets. More popular outcomes have lower potential returns.',
-    },
-    {
-      icon: FiUsers,
-      title: 'Market-Driven',
-      description:
-        'Prices reflect the collective wisdom of all participants, creating accurate probability estimates.',
-    },
-    {
-      icon: FiDollarSign,
-      title: 'Fair Payouts',
-      description:
-        'Winners share the losing side pool proportionally to their bet size, minus a small platform fee.',
-    },
-  ];
-
-  const benefits = [
-    {
-      icon: FiShield,
-      title: 'Secure & Transparent',
-      description:
-        'All bets are stored on-chain across Aptos and Sui, ensuring complete transparency and immutability.',
-    },
-    {
-      icon: FiDollarSign,
-      title: 'Low Fees',
-      description:
-        'Aptos and Sui offer extremely low transaction fees, typically less than $0.01 per transaction.',
-    },
-    {
-      icon: FiTrendingUp,
-      title: 'Instant Settlement',
-      description:
-        'Fast block times mean your bets are confirmed in seconds, not minutes or hours.',
-    },
-    {
-      icon: FiCheckCircle,
-      title: 'No Custodial Risk',
-      description:
-        'Your funds remain in your wallet until you place a bet. Winners can withdraw immediately.',
-    },
-  ];
-
-  const faqs = [
-    {
-      question: 'What is a prediction market?',
-      answer:
-        'A prediction market is a decentralized platform where users bet on the outcomes of future events. Prices reflect the collective probability assessment of participants.',
-    },
-    {
-      question: 'How are markets resolved?',
-      answer:
-        'Markets are resolved by trusted oracles or admins who verify real-world outcomes. The resolution process is transparent and can be audited on-chain.',
-    },
-    {
-      question: 'What happens if I bet on the losing side?',
-      answer:
-        'If you bet on the losing outcome, your stake is distributed among winners proportionally. You will lose your initial bet amount.',
-    },
-    {
-      question: 'Can I sell my position before the market ends?',
-      answer:
-        'Currently, positions are locked until market resolution. Secondary market trading may be added in future updates.',
-    },
-    {
-      question: 'What fees do you charge?',
-      answer:
-        'We charge a 2% platform fee on winning payouts. There are no fees to place bets, only standard Aptos or Sui gas fees (typically less than $0.01).',
-    },
-    {
-      question: 'Is my money safe?',
-      answer:
-        'All funds are held in audited smart contracts on Aptos and Sui. The platform cannot access user funds, and all transactions are transparent on-chain.',
-    },
-  ];
-
   return (
-    <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
-      <PremiumContainer size="xl">
-        {/* Hero Section */}
-        <section className="relative py-12 lg:py-16 text-center max-w-3xl mx-auto mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <Badge variant="primary" className="mb-6 bg-primary-500/20 text-primary-200 border border-primary-500/30">
-              Learn the Basics
-            </Badge>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
-              How It Works
-            </h1>
-            <p className="text-lg md:text-xl text-gray-400 leading-relaxed">
+    <div className="min-h-screen bg-[#080B18] text-white selection:bg-primary-500/30">
+      <Container className="py-8 md:py-14">
+
+        {/* ── Hero ─────────────────────────────────────────────────── */}
+        <section className="text-center max-w-3xl mx-auto mb-16">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <p className="text-xs font-bold uppercase tracking-widest text-primary-400 mb-3">Learn</p>
+            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-5">How It Works</h1>
+            <p className="text-lg text-slate-400 leading-relaxed">
               Discover how to participate in decentralized prediction markets on Aptos and Sui.
-              From connecting your wallet to claiming winnings, we will guide you through every step.
+              From connecting your wallet to claiming winnings — every step, explained.
             </p>
           </motion.div>
         </section>
 
-        {/* Steps Section */}
+        {/* ── 6 Steps ──────────────────────────────────────────────── */}
         <section className="mb-24">
-          <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-              6 Simple Steps to Start
-            </h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Follow these steps to make your first prediction and start earning rewards
-            </p>
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight mb-3">6 Simple Steps</h2>
+            <p className="text-slate-500">Follow these steps to make your first prediction and start earning</p>
           </div>
 
-          <div className="space-y-8 lg:space-y-12">
-            {steps.map((step, index) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {STEPS.map((step, i) => (
               <motion.div
                 key={step.number}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.4, delay: i * 0.07 }}
+                className="relative rounded-2xl border border-[#1C2537] bg-[#0D1224] p-6"
+                style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.3)' }}
               >
-                <div className="grid lg:grid-cols-2 gap-8 items-center">
-                  {index % 2 === 0 ? (
-                    <>
-                      <div className="lg:pr-12">
-                        <div className="flex items-center gap-4 mb-4">
-                          <div className="text-5xl font-display font-bold text-primary-500/40">
-                            {step.number}
-                          </div>
-                          <div className="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center border border-primary-500/30">
-                            <step.icon className="w-6 h-6 text-primary-400" />
-                          </div>
-                        </div>
-                        <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
-                          {step.title}
-                        </h3>
-                        <p className="text-lg text-gray-400 mb-6">{step.description}</p>
-                        <ul className="space-y-3">
-                          {step.details.map((detail, detailIndex) => (
-                            <li key={detailIndex} className="flex items-start gap-3">
-                              <FiCheckCircle className="w-5 h-5 text-success-400 flex-shrink-0 mt-0.5" />
-                              <span className="text-gray-300">{detail}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div className="bg-white/5 border border-white/10 rounded-2xl p-8 lg:p-12 flex items-center justify-center">
-                        <step.icon className="w-32 h-32 text-primary-500/40" />
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="bg-white/5 border border-white/10 rounded-2xl p-8 lg:p-12 flex items-center justify-center lg:order-first">
-                        <step.icon className="w-32 h-32 text-primary-500/40" />
-                      </div>
-                      <div className="lg:pl-12">
-                        <div className="flex items-center gap-4 mb-4">
-                          <div className="text-5xl font-display font-bold text-primary-500/40">
-                            {step.number}
-                          </div>
-                          <div className="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center border border-primary-500/30">
-                            <step.icon className="w-6 h-6 text-primary-400" />
-                          </div>
-                        </div>
-                        <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
-                          {step.title}
-                        </h3>
-                        <p className="text-lg text-gray-400 mb-6">{step.description}</p>
-                        <ul className="space-y-3">
-                          {step.details.map((detail, detailIndex) => (
-                            <li key={detailIndex} className="flex items-start gap-3">
-                              <FiCheckCircle className="w-5 h-5 text-success-400 flex-shrink-0 mt-0.5" />
-                              <span className="text-gray-300">{detail}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </>
-                  )}
+                <div className="absolute top-5 right-6 text-5xl font-black text-white/[0.03] leading-none select-none">
+                  {step.number}
                 </div>
+                <div className={`inline-flex w-11 h-11 items-center justify-center rounded-xl border mb-4 ${step.bg} ${step.border}`}>
+                  <step.Icon className={`w-5 h-5 ${step.color}`} />
+                </div>
+                <h3 className="text-base font-bold text-white mb-2">{step.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed mb-4">{step.description}</p>
+                <ul className="space-y-2">
+                  {step.details.map((d, di) => (
+                    <li key={di} className="flex items-start gap-2 text-xs text-slate-500">
+                      <FiCheckCircle className="w-3.5 h-3.5 text-success-400 flex-shrink-0 mt-0.5" />
+                      {d}
+                    </li>
+                  ))}
+                </ul>
               </motion.div>
             ))}
           </div>
         </section>
 
-        {/* How Odds Work Section */}
+        {/* ── Understanding Odds ───────────────────────────────────── */}
         <section className="mb-24">
-          <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-              Understanding Odds
-            </h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Learn how prediction market odds work and how payouts are calculated
-            </p>
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight mb-3">Understanding Odds</h2>
+            <p className="text-slate-500">Learn how prediction market odds work and how payouts are calculated</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {oddsCards.map((card, index) => (
+          <div className="grid md:grid-cols-3 gap-5 mb-10">
+            {ODDS_CARDS.map((card, i) => (
               <motion.div
                 key={card.title}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                className="flex items-start gap-4 rounded-2xl border border-[#1C2537] bg-[#0D1224] p-5"
               >
-                <Card hover padding="lg" className="bg-white/5 border-white/10 h-full">
-                  <div className="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center mb-4 border border-primary-500/30">
-                    <card.icon className="w-6 h-6 text-primary-400" />
-                  </div>
-                  <h3 className="text-xl font-display font-bold text-white mb-2">
-                    {card.title}
-                  </h3>
-                  <p className="text-gray-400">{card.description}</p>
-                </Card>
+                <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${card.iconBg}`}>
+                  <card.Icon className={`w-5 h-5 ${card.iconColor}`} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-white text-sm mb-1">{card.title}</h3>
+                  <p className="text-xs text-slate-500 leading-relaxed">{card.description}</p>
+                </div>
               </motion.div>
             ))}
           </div>
 
-          {/* Interactive Calculator */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -335,124 +245,98 @@ export const HowItWorksPage: React.FC = () => {
           </motion.div>
         </section>
 
-        {/* Benefits Section */}
+        {/* ── Why Choose Us ────────────────────────────────────────── */}
         <section className="mb-24">
-          <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-              Why Choose Our Platform
-            </h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Built on Aptos and Sui for the best prediction market experience
-            </p>
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight mb-3">Why Prophecy</h2>
+            <p className="text-slate-500">Built on Aptos and Sui for the best prediction market experience</p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit, index) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {BENEFITS.map((b, i) => (
               <motion.div
-                key={benefit.title}
-                initial={{ opacity: 0, y: 20 }}
+                key={b.title}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: i * 0.07 }}
+                className="rounded-2xl border border-[#1C2537] bg-[#0D1224] p-5 hover:border-white/[0.1] transition-colors"
               >
-                <Card hover padding="lg" className="bg-white/5 border-white/10 h-full">
-                  <div className="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center mb-4 border border-primary-500/30">
-                    <benefit.icon className="w-6 h-6 text-primary-400" />
-                  </div>
-                  <h3 className="text-xl font-display font-bold text-white mb-2">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-gray-400">{benefit.description}</p>
-                </Card>
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${b.iconBg}`}>
+                  <b.Icon className={`w-4.5 h-4.5 ${b.iconColor}`} />
+                </div>
+                <h3 className="font-bold text-white text-sm mb-1">{b.title}</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">{b.description}</p>
               </motion.div>
             ))}
           </div>
         </section>
 
-        {/* FAQ Section */}
+        {/* ── FAQ ──────────────────────────────────────────────────── */}
         <section className="mb-24">
-          <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Got questions? We have got answers
-            </p>
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight mb-3">FAQ</h2>
+            <p className="text-slate-500">Got questions? We have answers.</p>
           </div>
 
-          <div className="max-w-3xl mx-auto space-y-4">
-            {faqs.map((faq, index) => (
+          <div className="max-w-3xl mx-auto space-y-3">
+            {FAQS.map((faq, i) => (
               <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
+                key={i}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.35, delay: i * 0.05 }}
+                className="rounded-2xl border border-[#1C2537] bg-[#0D1224] p-5"
               >
-                <Card padding="lg" className="bg-white/5 border-white/10">
-                  <h3 className="text-lg font-display font-bold text-white mb-2">
-                    {faq.question}
-                  </h3>
-                  <p className="text-gray-400">{faq.answer}</p>
-                </Card>
+                <h3 className="font-bold text-white text-sm mb-2">{faq.q}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{faq.a}</p>
               </motion.div>
             ))}
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="text-center max-w-3xl mx-auto pb-12">
-          <div className="bg-gradient-to-br from-primary-600 to-primary-800 rounded-3xl p-12 border border-primary-500/30 shadow-2xl shadow-primary-900/50">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">
-              Ready to Make Your First Prediction?
+        {/* ── CTA ──────────────────────────────────────────────────── */}
+        <section className="mb-8">
+          <div className="relative overflow-hidden rounded-3xl border border-white/[0.07] bg-gradient-to-br from-primary-500/[0.08] via-secondary-600/[0.06] to-transparent p-12 text-center">
+            <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-b from-primary-500/[0.12] to-transparent rounded-full blur-3xl" />
+            <h2 className="relative text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">
+              Ready to make your first prediction?
             </h2>
-            <p className="text-lg text-primary-100 mb-8">
-              Join thousands of users predicting on real-world events and earning rewards
+            <p className="relative text-slate-400 mb-8 max-w-xl mx-auto">
+              Join thousands of traders forecasting the future on the most transparent prediction market in DeFi.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/markets">
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  rightIcon={<FiArrowRight />}
-                  className="bg-white text-primary-900 hover:bg-gray-100"
-                >
-                  Browse Markets
-                </Button>
-              </Link>
-              <Link to="/docs/developer">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="bg-primary-900/50 border-white/20 text-white hover:bg-primary-900/70"
-                  leftIcon={<FiCode />}
-                >
-                  Developer Docs
-                </Button>
-              </Link>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button
+                variant="primary"
+                size="lg"
+                to="/markets"
+                rightIcon={<FiArrowRight />}
+                className="rounded-xl border-0 !bg-gradient-to-r from-primary-500 to-secondary-600 shadow-[0_0_32px_rgba(59,130,246,0.3)]"
+              >
+                Browse Markets
+              </Button>
+              <Button
+                variant="ghost"
+                size="lg"
+                to="/create"
+                className="rounded-xl border border-white/[0.1] text-slate-300 hover:bg-white/[0.05] hover:text-white"
+              >
+                + Create Market
+              </Button>
             </div>
 
-            <div className="mt-12 flex flex-wrap justify-center gap-6 text-primary-100">
-              <div className="flex items-center gap-2">
-                <FiCheckCircle className="w-5 h-5" />
-                <span>No KYC Required</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FiCheckCircle className="w-5 h-5" />
-                <span>2% Platform Fee</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FiCheckCircle className="w-5 h-5" />
-                <span>Instant Payouts</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FiCheckCircle className="w-5 h-5" />
-                <span>100% On-Chain</span>
-              </div>
+            <div className="mt-10 flex flex-wrap justify-center gap-6 text-sm text-slate-500">
+              {['No KYC Required', '2% Platform Fee', 'Instant Payouts', '100% On-Chain'].map((feat) => (
+                <span key={feat} className="flex items-center gap-1.5">
+                  <FiCheckCircle className="w-4 h-4 text-success-400" />
+                  {feat}
+                </span>
+              ))}
             </div>
           </div>
         </section>
-      </PremiumContainer>
+      </Container>
     </div>
   );
 };
