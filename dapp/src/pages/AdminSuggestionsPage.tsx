@@ -16,7 +16,7 @@ import { useHasMarketCreatorRole, useIsAdmin } from '../hooks/useRoles';
 import { useCreateMarket } from '../hooks/useTransactions';
 import { useChain } from '../contexts/ChainContext';
 import { FiChevronDown } from 'react-icons/fi';
-import { PremiumContainer } from '../components/layout/PremiumContainer';
+import { Container } from '../components/layout/Container';
 
 const statusLabels: Record<MarketSuggestionStatus, string> = {
   pending: 'Pending Review',
@@ -260,8 +260,8 @@ const AdminSuggestionsPage: React.FC = () => {
 
   if (!connected) {
     return (
-      <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
-        <PremiumContainer size="sm">
+      <div className="min-h-screen bg-[#080B18] text-white selection:bg-primary-500/30">
+        <Container size="sm">
           <div className="bg-warning-900/20 border border-warning-500/30 rounded-xl p-6 text-center">
             <h2 className="text-xl font-semibold text-warning-200 mb-2">
               Wallet Connection Required
@@ -270,15 +270,15 @@ const AdminSuggestionsPage: React.FC = () => {
               Connect a wallet with DAO permissions to review market suggestions.
             </p>
           </div>
-        </PremiumContainer>
+        </Container>
       </div>
     );
   }
 
   if (!canModerate) {
     return (
-      <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
-        <PremiumContainer size="sm">
+      <div className="min-h-screen bg-[#080B18] text-white selection:bg-primary-500/30">
+        <Container size="sm">
           <div className="bg-error-900/20 border border-error-500/30 rounded-xl p-6 text-center">
             <h2 className="text-xl font-semibold text-error-200 mb-2">
               Insufficient Permissions
@@ -292,14 +292,14 @@ const AdminSuggestionsPage: React.FC = () => {
               </p>
             )}
           </div>
-        </PremiumContainer>
+        </Container>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
-      <PremiumContainer size="xl">
+    <div className="min-h-screen bg-[#080B18] text-white selection:bg-primary-500/30">
+      <Container size="xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -308,17 +308,17 @@ const AdminSuggestionsPage: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
             <div>
               <h1 className="text-3xl font-bold text-white">Suggestion Review Queue</h1>
-              <p className="text-gray-400">
+              <p className="text-slate-500">
                 Review and curate community proposals before publishing them as on-chain markets.
               </p>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="hidden text-sm text-gray-400 md:block">
+              <div className="hidden text-sm text-slate-500 md:block">
                 {filteredSuggestions.length} {filteredSuggestions.length === 1 ? 'proposal' : 'proposals'}
               </div>
               <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 shadow-sm">
-                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
                   Status
                 </span>
                 <div className="relative">
@@ -385,7 +385,7 @@ const AdminSuggestionsPage: React.FC = () => {
           {filteredSuggestions.length === 0 ? (
             <div className="bg-white/5 border border-white/10 rounded-xl p-10 text-center">
               <h3 className="text-lg font-semibold text-white mb-2">No suggestions found</h3>
-              <p className="text-gray-400">
+              <p className="text-slate-500">
                 {statusFilter === 'pending'
                   ? 'New market ideas will appear here as the community submits them.'
                   : 'Try selecting a different filter or check back later.'}
@@ -410,11 +410,11 @@ const AdminSuggestionsPage: React.FC = () => {
                       >
                         {chainLabels[suggestion.chain]}
                       </span>
-                      <span className="text-sm text-gray-400">
+                      <span className="text-sm text-slate-500">
                         Submitted {new Date(suggestion.createdAt).toLocaleString()}
                       </span>
                     </div>
-                    <span className="text-xs font-mono text-gray-400">
+                    <span className="text-xs font-mono text-slate-500">
                       ID: {suggestion.id.slice(0, 10)}…
                     </span>
                   </div>
@@ -424,7 +424,7 @@ const AdminSuggestionsPage: React.FC = () => {
                       <h2 className="text-xl font-semibold text-white">
                         {suggestion.question}
                       </h2>
-                      <p className="text-sm text-gray-400 mt-1">
+                      <p className="text-sm text-slate-500 mt-1">
                         Proposed by {suggestion.proposer}
                       </p>
                       {suggestion.chain !== activeChain && (
@@ -567,11 +567,11 @@ const AdminSuggestionsPage: React.FC = () => {
                                   <strong className="capitalize">{event.type}</strong>{' '}
                                   by {event.actor === 'community' ? 'Community' : event.actor}
                                 </p>
-                                <p className="text-xs text-gray-400">
+                                <p className="text-xs text-slate-500">
                                   {new Date(event.timestamp).toLocaleString()}
                                 </p>
                                 {event.metadata?.reason && (
-                                  <p className="text-xs text-gray-400">
+                                  <p className="text-xs text-slate-500">
                                     Reason: {event.metadata.reason}
                                   </p>
                                 )}
@@ -589,7 +589,7 @@ const AdminSuggestionsPage: React.FC = () => {
                             </div>
                           ))}
                         {events.filter((event) => event.suggestionId === suggestion.id).length === 0 && (
-                          <p className="text-sm text-gray-400">No activity recorded yet.</p>
+                          <p className="text-sm text-slate-500">No activity recorded yet.</p>
                         )}
                       </div>
                     </div>
@@ -599,7 +599,7 @@ const AdminSuggestionsPage: React.FC = () => {
             </div>
           )}
         </motion.div>
-      </PremiumContainer>
+      </Container>
     </div>
   );
 };

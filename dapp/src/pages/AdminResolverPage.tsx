@@ -5,7 +5,7 @@ import toast from '../components/ui/Toast';
 import { Button } from '../components/ui/Button';
 import { useIsAdmin } from '../hooks/useRoles';
 import { useChain } from '../contexts/ChainContext';
-import { PremiumContainer } from '../components/layout/PremiumContainer';
+import { Container } from '../components/layout/Container';
 
 interface ResolverConfig {
   intervalMs: number;
@@ -183,7 +183,7 @@ const AdminResolverPage: React.FC = () => {
 
   if (adminLoading) {
     return (
-      <div className="min-h-screen bg-[#050713] flex items-center justify-center">
+      <div className="min-h-screen bg-[#080B18] flex items-center justify-center">
         <div className="w-8 h-8 border-3 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -191,8 +191,8 @@ const AdminResolverPage: React.FC = () => {
 
   if (!canManage) {
     return (
-      <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
-        <PremiumContainer size="sm">
+      <div className="min-h-screen bg-[#080B18] text-white selection:bg-primary-500/30">
+        <Container size="sm">
           <div className="bg-error-900/20 border border-error-500/30 rounded-xl p-6 text-center">
             <h2 className="text-xl font-semibold text-error-200 mb-2">
               Admin Role Required
@@ -201,14 +201,14 @@ const AdminResolverPage: React.FC = () => {
               Only DAO admins and resolvers can manage market resolution.
             </p>
           </div>
-        </PremiumContainer>
+        </Container>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
-      <PremiumContainer size="xl">
+    <div className="min-h-screen bg-[#080B18] text-white selection:bg-primary-500/30">
+      <Container size="xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -218,7 +218,7 @@ const AdminResolverPage: React.FC = () => {
             <h1 className="text-3xl font-bold text-white">
               Market Resolver Controls
             </h1>
-            <p className="text-gray-400 mt-2">
+            <p className="text-slate-500 mt-2">
               Manage automated market resolution scheduling and manually trigger resolution checks.
             </p>
             <p className="mt-3 inline-flex items-center gap-2 rounded-lg bg-primary-500/20 px-3 py-2 text-sm text-primary-200 border border-primary-500/30">
@@ -231,7 +231,7 @@ const AdminResolverPage: React.FC = () => {
             <div className="bg-white/5 border border-white/10 rounded-xl p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-400">Status</p>
+                  <p className="text-sm font-medium text-slate-500">Status</p>
                   <p className="text-2xl font-bold text-white">
                     {status?.config.enabled ? 'Active' : 'Inactive'}
                   </p>
@@ -243,24 +243,24 @@ const AdminResolverPage: React.FC = () => {
             <div className="bg-white/5 border border-white/10 rounded-xl p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-400">Pending Resolutions</p>
+                  <p className="text-sm font-medium text-slate-500">Pending Resolutions</p>
                   <p className="text-2xl font-bold text-white">
                     {status?.pendingResolutions ?? 0}
                   </p>
                 </div>
-                <FiClock className="w-6 h-6 text-gray-500" />
+                <FiClock className="w-6 h-6 text-slate-500" />
               </div>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-400">Check Interval</p>
+                  <p className="text-sm font-medium text-slate-500">Check Interval</p>
                   <p className="text-2xl font-bold text-white">
                     {status?.config.intervalMs ? Math.round(status.config.intervalMs / 60000) : 0}m
                   </p>
                 </div>
-                <FiSettings className="w-6 h-6 text-gray-500" />
+                <FiSettings className="w-6 h-6 text-slate-500" />
               </div>
             </div>
           </div>
@@ -372,7 +372,7 @@ const AdminResolverPage: React.FC = () => {
             <h2 className="text-xl font-semibold text-white mb-4">Pending Resolutions</h2>
 
             {pendingResolutions.length === 0 ? (
-              <p className="text-gray-400 text-center py-8">
+              <p className="text-slate-500 text-center py-8">
                 No markets pending resolution
               </p>
             ) : (
@@ -384,7 +384,7 @@ const AdminResolverPage: React.FC = () => {
                   >
                     <div className="flex-1">
                       <h3 className="font-medium text-white">{market.question}</h3>
-                      <p className="text-sm text-gray-400">
+                      <p className="text-sm text-slate-500">
                         Ends: {new Date(market.endDate).toLocaleString()}
                       </p>
                       <div className="flex items-center gap-2 mt-2">
@@ -404,7 +404,7 @@ const AdminResolverPage: React.FC = () => {
                         </span>
                       </div>
                       {!market.canAutoResolve && (
-                        <p className="text-xs text-gray-400 mt-1">
+                        <p className="text-xs text-slate-500 mt-1">
                           {market.resolutionReason}
                         </p>
                       )}
@@ -435,7 +435,7 @@ const AdminResolverPage: React.FC = () => {
             )}
           </div>
         </motion.div>
-      </PremiumContainer>
+      </Container>
     </div>
   );
 };

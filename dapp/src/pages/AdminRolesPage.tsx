@@ -13,7 +13,7 @@ import {
 } from '../hooks/useRoles';
 import { useUnifiedWallet } from '../hooks/useUnifiedWallet';
 import { useChain } from '../contexts/ChainContext';
-import { PremiumContainer } from '../components/layout/PremiumContainer';
+import { Container } from '../components/layout/Container';
 
 const ROLE_METADATA = [
   {
@@ -139,8 +139,8 @@ const AdminRolesPage: React.FC = () => {
 
   if (!wallet.connected) {
     return (
-      <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
-        <PremiumContainer size="sm">
+      <div className="min-h-screen bg-[#080B18] text-white selection:bg-primary-500/30">
+        <Container size="sm">
           <div className="bg-warning-900/20 border border-warning-500/30 rounded-xl p-6 text-center">
             <h2 className="text-xl font-semibold text-warning-200 mb-2">
               Wallet Connection Required
@@ -149,15 +149,15 @@ const AdminRolesPage: React.FC = () => {
               Connect a DAO admin wallet to manage protocol roles.
             </p>
           </div>
-        </PremiumContainer>
+        </Container>
       </div>
     );
   }
 
   if (!canManage) {
     return (
-      <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
-        <PremiumContainer size="sm">
+      <div className="min-h-screen bg-[#080B18] text-white selection:bg-primary-500/30">
+        <Container size="sm">
           <div className="bg-error-900/20 border border-error-500/30 rounded-xl p-6 text-center">
             <h2 className="text-xl font-semibold text-error-200 mb-2">
               Admin Role Required
@@ -169,14 +169,14 @@ const AdminRolesPage: React.FC = () => {
               <p className="mt-2 text-sm text-error-300">Checking admin permissions...</p>
             )}
           </div>
-        </PremiumContainer>
+        </Container>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
-      <PremiumContainer size="lg">
+    <div className="min-h-screen bg-[#080B18] text-white selection:bg-primary-500/30">
+      <Container size="lg">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -186,7 +186,7 @@ const AdminRolesPage: React.FC = () => {
             <h1 className="text-3xl font-bold text-white">
               DAO Role Management
             </h1>
-            <p className="text-gray-400 mt-2">
+            <p className="text-slate-500 mt-2">
               Grant or revoke on-chain roles for DAO contributors. These permissions are enforced by the
               `access_control` module and require on-chain transactions.
             </p>
@@ -233,7 +233,7 @@ const AdminRolesPage: React.FC = () => {
                 <h2 className="text-lg font-semibold text-white mb-2">
                   Active Roles
                 </h2>
-                <div className="flex flex-wrap items-center gap-3 text-xs text-gray-400 mb-3">
+                <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 mb-3">
                   <span className="uppercase tracking-wide font-semibold">
                     {activeChain === 'aptos' ? 'Aptos' : 'Sui'} network
                   </span>
@@ -244,7 +244,7 @@ const AdminRolesPage: React.FC = () => {
                   )}
                 </div>
                 {roles.length === 0 ? (
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-slate-500 text-sm">
                     This address currently has no protocol roles.
                   </p>
                 ) : (
@@ -271,11 +271,11 @@ const AdminRolesPage: React.FC = () => {
                     >
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="text-lg font-semibold text-white">{role.label}</h3>
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${hasRole ? 'bg-success-500/20 text-success-200' : 'bg-white/10 text-gray-400'}`}>
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${hasRole ? 'bg-success-500/20 text-success-200' : 'bg-white/10 text-slate-500'}`}>
                           {hasRole ? 'Assigned' : 'Not Assigned'}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-400 mb-4">{role.description}</p>
+                      <p className="text-sm text-slate-500 mb-4">{role.description}</p>
                       <div className="flex gap-3">
                         <Button
                           variant="success"
@@ -311,7 +311,7 @@ const AdminRolesPage: React.FC = () => {
             </ul>
           </div>
         </motion.div>
-      </PremiumContainer>
+      </Container>
     </div>
   );
 };
