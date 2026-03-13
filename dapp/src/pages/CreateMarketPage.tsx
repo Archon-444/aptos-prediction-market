@@ -8,7 +8,7 @@ import { useHasMarketCreatorRole } from '../hooks/useRoles';
 import { Select } from '../components/ui/Select';
 import { useUnifiedWallet } from '../hooks/useUnifiedWallet';
 import { useChain } from '../contexts/ChainContext';
-import { PremiumContainer } from '../components/layout/PremiumContainer';
+import { Container } from '../components/layout/Container';
 
 const CATEGORY_OPTIONS = [
   { value: 'general', label: 'General', icon: '📋' },
@@ -210,17 +210,17 @@ export default function CreateMarketPage() {
 
   if (!connected) {
     return (
-      <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
-        <PremiumContainer size="sm">
-          <div className="bg-warning-900/20 border border-warning-500/30 rounded-2xl p-8 text-center">
-            <h2 className="text-xl font-bold text-warning-200 mb-2">
+      <div className="min-h-screen bg-[#080B18] text-white selection:bg-primary-500/30">
+        <Container className="py-8">
+          <div className="max-w-lg mx-auto rounded-2xl border border-warning-500/30 bg-warning-500/[0.06] p-8 text-center">
+            <h2 className="text-xl font-bold text-warning-300 mb-2">
               Wallet Connection Required
             </h2>
-            <p className="text-warning-100/80">
+            <p className="text-warning-200/70">
               Please connect your wallet to {(hasCreatorRole && activeChain === 'aptos') ? 'create' : 'suggest'} a market.
             </p>
           </div>
-        </PremiumContainer>
+        </Container>
       </div>
     );
   }
@@ -229,40 +229,36 @@ export default function CreateMarketPage() {
     hasCreatorRole && !roleLoading && (creatorChains as readonly string[]).includes(activeChain);
 
   return (
-    <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
-      <PremiumContainer size="md">
+    <div className="min-h-screen bg-[#080B18] text-white selection:bg-primary-500/30">
+      <Container className="py-8 md:py-12 max-w-2xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
         >
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-white">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary-400 mb-2">New Market</p>
+            <h1 className="text-3xl font-black text-white tracking-tight">
               {isCreatorMode ? 'Create New Market' : 'Suggest a Market'}
             </h1>
-            <div className="mt-3 inline-flex flex-wrap items-center gap-3 rounded-xl bg-white/5 border border-white/10 px-4 py-2 text-sm text-gray-300">
+            <div className="mt-3 inline-flex flex-wrap items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.07] px-4 py-2 text-sm text-slate-400">
               <span className="font-semibold text-white">Active Chain:</span>
               <span className="inline-flex items-center rounded-full bg-primary-500/20 text-primary-200 px-3 py-1 text-xs font-semibold uppercase tracking-wide">
                 {chainLabel}
               </span>
               {address && (
-                <span className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 font-mono text-xs text-gray-300">
+                <span className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 font-mono text-xs text-slate-400">
                   {address.slice(0, 6)}…{address.slice(-4)}
                 </span>
               )}
-              <span className="text-xs text-gray-400">
+              <span className="text-xs text-slate-500">
                 Suggestions will route to the {chainLabel} review queue.
               </span>
             </div>
             {roleLoading && (
-              <p className="mt-2 text-sm text-gray-400">
-                Checking creator permissions...
-              </p>
+              <p className="mt-2 text-sm text-slate-500">Checking creator permissions...</p>
             )}
             {!isCreatorMode && (
-              <p className="mt-2 text-gray-400">
-                Your suggestion will be reviewed by the DAO before being published.
-              </p>
+              <p className="mt-2 text-sm text-slate-500">Your suggestion will be reviewed by the DAO before being published.</p>
             )}
             {isCreatorMode && (
               <div className="mt-2 inline-flex items-center px-3 py-1 rounded-full bg-success-500/20 text-success-200 text-sm font-medium">
@@ -276,21 +272,21 @@ export default function CreateMarketPage() {
             className="space-y-6"
           >
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-300">
+              <label className="block text-sm font-medium text-slate-400">
                 Question
               </label>
               <textarea
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 rows={3}
-                className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 placeholder-gray-500"
+                className="w-full rounded-xl border border-[#1C2537] bg-[#080B18] px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 placeholder-slate-600"
                 placeholder="e.g. Will BTC close above $80k on 31 Dec 2025?"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-slate-400 mb-2">
                 Market Type
               </label>
               <div className="flex flex-wrap items-center gap-3">
@@ -299,7 +295,7 @@ export default function CreateMarketPage() {
                   onClick={setBinaryOutcomes}
                   className={`px-3 py-1 rounded-full text-sm font-medium border transition ${marketType === 'binary'
                       ? 'bg-primary-500/20 border-primary-500 text-primary-200'
-                      : 'border-white/10 text-gray-400 hover:border-white/20'
+                      : 'border-white/10 text-slate-500 hover:border-white/20'
                     }`}
                 >
                   Binary (Yes / No)
@@ -312,7 +308,7 @@ export default function CreateMarketPage() {
                   }}
                   className={`px-3 py-1 rounded-full text-sm font-medium border transition ${marketType === 'multi'
                       ? 'bg-primary-500/20 border-primary-500 text-primary-200'
-                      : 'border-white/10 text-gray-400 hover:border-white/20'
+                      : 'border-white/10 text-slate-500 hover:border-white/20'
                     }`}
                 >
                   Multiple Choice
@@ -322,10 +318,10 @@ export default function CreateMarketPage() {
 
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <label className="block text-sm font-medium text-gray-300">
+                <label className="block text-sm font-medium text-slate-400">
                   Outcomes
                 </label>
-                <div className="flex items-center gap-3 text-xs text-gray-400">
+                <div className="flex items-center gap-3 text-xs text-slate-500">
                   {marketType === 'multi'
                     ? 'Minimum 2, maximum 10'
                     : 'Binary markets automatically use Yes / No'}
@@ -348,7 +344,7 @@ export default function CreateMarketPage() {
                       type="text"
                       value={outcome}
                       onChange={(e) => handleOutcomeChange(index, e.target.value)}
-                      className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 placeholder-gray-500"
+                      className="flex-1 rounded-xl border border-[#1C2537] bg-[#080B18] px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 placeholder-slate-600"
                       placeholder={`Outcome ${index + 1}`}
                       readOnly={marketType === 'binary'}
                     />
@@ -377,7 +373,7 @@ export default function CreateMarketPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-300">
+              <label className="block text-sm font-medium text-slate-400">
                 Market Settlement Deadline
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -385,16 +381,16 @@ export default function CreateMarketPage() {
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 [color-scheme:dark]"
+                  className="rounded-xl border border-[#1C2537] bg-[#080B18] px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 [color-scheme:dark]"
                 />
                 <input
                   type="time"
                   value={endTime}
                   onChange={(e) => setEndTime(e.target.value)}
-                  className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 [color-scheme:dark]"
+                  className="rounded-xl border border-[#1C2537] bg-[#080B18] px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 [color-scheme:dark]"
                 />
               </div>
-              <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400">
+              <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
                 <span>Quick presets:</span>
                 {[24, 72, 24 * 7, 24 * 30].map((hours) => (
                   <button
@@ -407,13 +403,13 @@ export default function CreateMarketPage() {
                   </button>
                 ))}
               </div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-slate-600">
                 We’ll automatically convert this to contract hours. Markets must close in the future.
               </p>
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-300">
+              <label className="block text-sm font-medium text-slate-400">
                 Category
               </label>
               <Select
@@ -426,34 +422,30 @@ export default function CreateMarketPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-300">
+              <label className="block text-sm font-medium text-slate-400">
                 Resolution Source (optional)
               </label>
               <input
                 type="text"
                 value={resolutionSource}
                 onChange={(e) => setResolutionSource(e.target.value)}
-                className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 placeholder-gray-500"
+                className="w-full rounded-xl border border-[#1C2537] bg-[#080B18] px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 placeholder-slate-600"
                 placeholder="e.g. https://data.provider.com/oracle-feed"
               />
             </div>
 
             <button
               type="submit"
-              className="inline-flex items-center justify-center rounded-lg bg-primary-600 px-4 py-2 font-medium text-white shadow hover:bg-primary-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 w-full md:w-auto"
+              className="inline-flex items-center justify-center rounded-xl border-0 bg-gradient-to-r from-primary-500 to-secondary-600 px-8 py-3.5 font-bold text-white shadow-[0_0_24px_rgba(59,130,246,0.3)] hover:shadow-[0_0_36px_rgba(59,130,246,0.45)] transition-all disabled:cursor-not-allowed disabled:opacity-50 w-full"
               disabled={isCreatorMode ? isLoading : isSubmittingSuggestion}
             >
               {isCreatorMode
-                ? isLoading
-                  ? 'Publishing...'
-                  : 'Publish on-chain'
-                : isSubmittingSuggestion
-                  ? 'Submitting...'
-                  : 'Submit suggestion'}
+                ? isLoading ? 'Publishing…' : 'Publish On-Chain'
+                : isSubmittingSuggestion ? 'Submitting…' : 'Submit Suggestion'}
             </button>
           </form>
         </motion.div>
-      </PremiumContainer>
+      </Container>
     </div>
   );
 }
