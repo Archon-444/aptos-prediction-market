@@ -158,166 +158,186 @@ export const MarketsPage: React.FC = () => {
   }, [displayMarkets]);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+    <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
       <PullToRefresh isRefreshing={isRefreshing} pullDistance={pullDistance} />
       <Container className="py-12 space-y-8">
-        <div className="flex flex-col gap-3">
-          <span className="inline-flex items-center gap-2 self-start rounded-full bg-primary-100 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-primary-700 dark:bg-primary-900/30 dark:text-primary-200">
-            {activeChain === 'aptos' ? 'Aptos' : 'Sui'} markets
-          </span>
-          {activeChain === 'sui' && (
-            <p className="max-w-2xl text-sm text-sky-800 dark:text-sky-100 bg-sky-100/70 dark:bg-sky-900/30 border border-sky-200 dark:border-sky-700 rounded-lg px-4 py-3">
-              Sui markets load directly from the on-chain market objects. Post-resolution updates rely on the new oracle aggregate snapshot, so settlements may take a few seconds to surface while the indexer polls fresh events.
-            </p>
-          )}
-        </div>
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-white transition-colors">
-            Prediction Markets
-          </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 transition-colors">
-            Browse and participate in live markets powered by on-chain data.
-          </p>
-        </div>
+        <div className="bg-[#0A0E27] rounded-[32px] p-8 md:p-12 relative overflow-hidden border border-white/5 shadow-2xl">
+          {/* Background Glows */}
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-primary-500/10 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary-500/10 rounded-full blur-[100px] pointer-events-none" />
 
-        <CategoryFilter
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-          marketCounts={categoryCounts}
-        />
-
-        <AdvancedFilters
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          sortBy={sortBy}
-          onSortChange={setSortBy}
-          statusFilter={statusFilter}
-          onStatusChange={setStatusFilter}
-          totalResults={filteredMarkets.length}
-        />
-
-        <div className="grid md:grid-cols-3 gap-6">
-          <Card hover>
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-primary-100 rounded-xl">
-                <FiTrendingUp className="w-6 h-6 text-primary-600" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Live Activity</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Markets update in real-time with Pyth prices and optimistic consensus.
+          {/* Content */}
+          <div className="relative z-10">
+            <div className="flex flex-col gap-3 mb-8">
+              <span className="inline-flex items-center gap-2 self-start rounded-full bg-white/5 border border-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-gray-300">
+                {activeChain === 'aptos' ? 'Aptos' : 'Sui'} markets
+              </span>
+              {activeChain === 'sui' && (
+                <p className="max-w-2xl text-sm text-sky-200 bg-sky-900/20 border border-sky-700/30 rounded-lg px-4 py-3">
+                  Sui markets load directly from the on-chain market objects. Post-resolution updates rely on the new oracle aggregate snapshot, so settlements may take a few seconds to surface while the indexer polls fresh events.
                 </p>
-              </div>
+              )}
             </div>
-          </Card>
-          <Card hover>
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-success-100 rounded-xl">
-                <FiClock className="w-6 h-6 text-success-600" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Ending Soon</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Keep an eye on markets approaching resolution windows.
-                </p>
-              </div>
-            </div>
-          </Card>
-          <Card hover>
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-warning-100 rounded-xl">
-                <FiTrendingUp className="w-6 h-6 text-warning-600" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Trending Topics</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Discover high-volume markets across crypto, sports, tech, and more.
-                </p>
-              </div>
-            </div>
-          </Card>
-        </div>
 
-        {error && (
-          <div className="rounded-lg border border-error-200 bg-error-50 text-error-700 p-4">
-            {error.message}
-          </div>
-        )}
+            <div className="mb-8">
+              <h1 className="text-3xl md:text-4xl font-display font-bold text-white mb-2">
+                Prediction Markets
+              </h1>
+              <p className="text-lg text-gray-400">
+                Browse and participate in live markets powered by on-chain data.
+              </p>
+            </div>
 
-        {isLoading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({ length: 6 }).map((_, idx) => (
-              <Card key={idx} className="h-64 animate-pulse">
-                <div className="text-gray-400">Loading...</div>
+            <CategoryFilter
+              selectedCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
+              marketCounts={categoryCounts}
+            />
+
+            <AdvancedFilters
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              sortBy={sortBy}
+              onSortChange={setSortBy}
+              statusFilter={statusFilter}
+              onStatusChange={setStatusFilter}
+              totalResults={filteredMarkets.length}
+            />
+
+            <div className="grid md:grid-cols-3 gap-6 my-8">
+              <Card hover className="bg-white/5 border-white/10">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-primary-500/20 rounded-xl">
+                    <FiTrendingUp className="w-6 h-6 text-primary-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">Live Activity</h3>
+                    <p className="text-gray-400">
+                      Markets update in real-time with Pyth prices and optimistic consensus.
+                    </p>
+                  </div>
+                </div>
               </Card>
-            ))}
-          </div>
-        ) : (
-          <>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredMarkets.map((market, index) => {
-                const categoryInfo = getCategoryInfo(market.category);
-                return (
-                  <motion.div
-                    key={market.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.25, delay: index * 0.04 }}
-                  >
-                    <Card hover padding="lg">
-                      <div className="flex items-start justify-between mb-4">
-                        <Badge
-                          variant="secondary"
-                          title={categoryInfo.description}
-                        >
-                          <span className="mr-1">{categoryInfo.icon}</span>
-                          {categoryInfo.label}
-                        </Badge>
-                        <Badge variant={market.status === 'closed' ? 'neutral' : market.status === 'ending_soon' ? 'warning' : 'success'}>
-                          {market.status.replace('_', ' ')}
-                        </Badge>
-                      </div>
-
-                      <h3 className="text-lg font-display font-semibold text-gray-900 dark:text-white mb-4 transition-colors line-clamp-2">
-                        {market.question}
-                      </h3>
-
-                      <div className="space-y-3 text-sm">
-                        <div className="flex items-center justify-between text-gray-600 dark:text-gray-400">
-                          <span>Total Stakes</span>
-                          <span className="font-semibold text-gray-900 dark:text-white">
-                            {formatStake(market.totalStakes)}
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between text-gray-600 dark:text-gray-400">
-                          <span>Ends In</span>
-                          <span className="font-semibold text-gray-900 dark:text-white">
-                            {formatEndsIn(market.endTime, market.resolved)}
-                          </span>
-                        </div>
-                      </div>
-
-                      <Button to={`/market/${market.id}`} variant="primary" className="w-full mt-6">
-                        View Market
-                      </Button>
-                    </Card>
-                  </motion.div>
-                );
-              })}
+              <Card hover className="bg-white/5 border-white/10">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-success-500/20 rounded-xl">
+                    <FiClock className="w-6 h-6 text-success-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">Ending Soon</h3>
+                    <p className="text-gray-400">
+                      Keep an eye on markets approaching resolution windows.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+              <Card hover className="bg-white/5 border-white/10">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-warning-500/20 rounded-xl">
+                    <FiTrendingUp className="w-6 h-6 text-warning-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">Trending Topics</h3>
+                    <p className="text-gray-400">
+                      Discover high-volume markets across crypto, sports, tech, and more.
+                    </p>
+                  </div>
+                </div>
+              </Card>
             </div>
 
-            {filteredMarkets.length === 0 && (
-              <div className="text-center py-16">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                  No markets found
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Adjust filters or search terms to discover more opportunities.
-                </p>
+            {error && (
+              <div className="rounded-lg border border-error-500/30 bg-error-900/20 text-error-200 p-4 mb-6">
+                {error.message}
               </div>
             )}
-          </>
-        )}
+
+            {isLoading ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Array.from({ length: 6 }).map((_, idx) => (
+                  <Card key={idx} className="h-64 animate-pulse bg-white/5 border-white/10">
+                    <div className="text-gray-500">Loading...</div>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredMarkets.map((market, index) => {
+                    const categoryInfo = getCategoryInfo(market.category);
+                    return (
+                      <motion.div
+                        key={market.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.25, delay: index * 0.04 }}
+                      >
+                        <Card hover padding="lg" className="bg-white/5 border-white/10 hover:bg-white/10 h-full">
+                          <div className="flex items-start justify-between mb-4">
+                            <Badge
+                              variant="secondary"
+                              title={categoryInfo.description}
+                              className="bg-white/10 text-gray-300"
+                            >
+                              <span className="mr-1">{categoryInfo.icon}</span>
+                              {categoryInfo.label}
+                            </Badge>
+                            <Badge
+                              variant={market.status === 'closed' ? 'neutral' : market.status === 'ending_soon' ? 'warning' : 'success'}
+                              className={
+                                market.status === 'closed'
+                                  ? 'bg-gray-700 text-gray-300'
+                                  : market.status === 'ending_soon'
+                                    ? 'bg-warning-900/30 text-warning-200'
+                                    : 'bg-success-900/30 text-success-200'
+                              }
+                            >
+                              {market.status.replace('_', ' ')}
+                            </Badge>
+                          </div>
+
+                          <h3 className="text-lg font-display font-semibold text-white mb-4 line-clamp-2">
+                            {market.question}
+                          </h3>
+
+                          <div className="space-y-3 text-sm">
+                            <div className="flex items-center justify-between text-gray-400">
+                              <span>Total Stakes</span>
+                              <span className="font-semibold text-white">
+                                {formatStake(market.totalStakes)}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-between text-gray-400">
+                              <span>Ends In</span>
+                              <span className="font-semibold text-white">
+                                {formatEndsIn(market.endTime, market.resolved)}
+                              </span>
+                            </div>
+                          </div>
+
+                          <Button to={`/market/${market.id}`} variant="primary" className="w-full mt-6">
+                            View Market
+                          </Button>
+                        </Card>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+
+                {filteredMarkets.length === 0 && (
+                  <div className="text-center py-16">
+                    <h3 className="text-xl font-semibold text-white mb-4">
+                      No markets found
+                    </h3>
+                    <p className="text-gray-400">
+                      Adjust filters or search terms to discover more opportunities.
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        </div>
       </Container>
     </div>
   );

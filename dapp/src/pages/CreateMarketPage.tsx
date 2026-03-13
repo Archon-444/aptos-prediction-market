@@ -8,6 +8,7 @@ import { useHasMarketCreatorRole } from '../hooks/useRoles';
 import { Select } from '../components/ui/Select';
 import { useUnifiedWallet } from '../hooks/useUnifiedWallet';
 import { useChain } from '../contexts/ChainContext';
+import { PremiumContainer } from '../components/layout/PremiumContainer';
 
 const CATEGORY_OPTIONS = [
   { value: 'general', label: 'General', icon: '📋' },
@@ -138,12 +139,12 @@ export default function CreateMarketPage() {
           signMessage,
         },
         {
-        question: question.trim(),
-        outcomes: filledOutcomes,
-        category,
-        durationHours,
-        resolutionSource: resolutionSource.trim() || undefined,
-        chain: activeChain,
+          question: question.trim(),
+          outcomes: filledOutcomes,
+          category,
+          durationHours,
+          resolutionSource: resolutionSource.trim() || undefined,
+          chain: activeChain,
         }
       );
 
@@ -209,15 +210,17 @@ export default function CreateMarketPage() {
 
   if (!connected) {
     return (
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6 text-center">
-          <h2 className="text-xl font-bold text-yellow-800 dark:text-yellow-200 mb-2">
-            Wallet Connection Required
-          </h2>
-          <p className="text-yellow-700 dark:text-yellow-300">
-            Please connect your wallet to {(hasCreatorRole && activeChain === 'aptos') ? 'create' : 'suggest'} a market.
-          </p>
-        </div>
+      <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
+        <PremiumContainer size="sm">
+          <div className="bg-warning-900/20 border border-warning-500/30 rounded-2xl p-8 text-center">
+            <h2 className="text-xl font-bold text-warning-200 mb-2">
+              Wallet Connection Required
+            </h2>
+            <p className="text-warning-100/80">
+              Please connect your wallet to {(hasCreatorRole && activeChain === 'aptos') ? 'create' : 'suggest'} a market.
+            </p>
+          </div>
+        </PremiumContainer>
       </div>
     );
   }
@@ -226,229 +229,231 @@ export default function CreateMarketPage() {
     hasCreatorRole && !roleLoading && (creatorChains as readonly string[]).includes(activeChain);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="container mx-auto px-4 py-8 max-w-2xl"
-    >
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-          {isCreatorMode ? 'Create New Market' : 'Suggest a Market'}
-        </h1>
-        <div className="mt-3 inline-flex flex-wrap items-center gap-3 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm text-gray-600 dark:text-gray-300">
-          <span className="font-semibold text-gray-900 dark:text-white">Active Chain:</span>
-          <span className="inline-flex items-center rounded-full bg-primary-100 text-primary-700 dark:bg-primary-900/40 dark:text-primary-200 px-3 py-1 text-xs font-semibold uppercase tracking-wide">
-            {chainLabel}
-          </span>
-          {address && (
-            <span className="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 px-3 py-1 font-mono text-xs text-gray-600 dark:text-gray-300">
-              {address.slice(0, 6)}…{address.slice(-4)}
-            </span>
-          )}
-          <span className="text-xs text-gray-500 dark:text-gray-400">
-            Suggestions will route to the {chainLabel} review queue.
-          </span>
-        </div>
-        {roleLoading && (
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-            Checking creator permissions...
-          </p>
-        )}
-        {!isCreatorMode && (
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Your suggestion will be reviewed by the DAO before being published.
-          </p>
-        )}
-        {isCreatorMode && (
-          <div className="mt-2 inline-flex items-center px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 text-sm font-medium">
-            Creator Mode Enabled
+    <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
+      <PremiumContainer size="md">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+        >
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-white">
+              {isCreatorMode ? 'Create New Market' : 'Suggest a Market'}
+            </h1>
+            <div className="mt-3 inline-flex flex-wrap items-center gap-3 rounded-xl bg-white/5 border border-white/10 px-4 py-2 text-sm text-gray-300">
+              <span className="font-semibold text-white">Active Chain:</span>
+              <span className="inline-flex items-center rounded-full bg-primary-500/20 text-primary-200 px-3 py-1 text-xs font-semibold uppercase tracking-wide">
+                {chainLabel}
+              </span>
+              {address && (
+                <span className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 font-mono text-xs text-gray-300">
+                  {address.slice(0, 6)}…{address.slice(-4)}
+                </span>
+              )}
+              <span className="text-xs text-gray-400">
+                Suggestions will route to the {chainLabel} review queue.
+              </span>
+            </div>
+            {roleLoading && (
+              <p className="mt-2 text-sm text-gray-400">
+                Checking creator permissions...
+              </p>
+            )}
+            {!isCreatorMode && (
+              <p className="mt-2 text-gray-400">
+                Your suggestion will be reviewed by the DAO before being published.
+              </p>
+            )}
+            {isCreatorMode && (
+              <div className="mt-2 inline-flex items-center px-3 py-1 rounded-full bg-success-500/20 text-success-200 text-sm font-medium">
+                Creator Mode Enabled
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      <form
-        onSubmit={isCreatorMode ? handleCreateMarket : handleSubmitSuggestion}
-        className="space-y-6"
-      >
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Question
-          </label>
-          <textarea
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            rows={3}
-            className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40"
-            placeholder="e.g. Will BTC close above $80k on 31 Dec 2025?"
-            required
-          />
-        </div>
+          <form
+            onSubmit={isCreatorMode ? handleCreateMarket : handleSubmitSuggestion}
+            className="space-y-6"
+          >
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-300">
+                Question
+              </label>
+              <textarea
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                rows={3}
+                className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 placeholder-gray-500"
+                placeholder="e.g. Will BTC close above $80k on 31 Dec 2025?"
+                required
+              />
+            </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Market Type
-          </label>
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={setBinaryOutcomes}
-              className={`px-3 py-1 rounded-full text-sm font-medium border transition ${
-                marketType === 'binary'
-                  ? 'bg-primary-100 border-primary-300 text-primary-700 dark:bg-primary-900/40 dark:border-primary-600 dark:text-primary-200'
-                  : 'border-gray-300 text-gray-600 dark:border-gray-700 dark:text-gray-300'
-              }`}
-            >
-              Binary (Yes / No)
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setMarketType('multi');
-                setOutcomes(['', '']);
-              }}
-              className={`px-3 py-1 rounded-full text-sm font-medium border transition ${
-                marketType === 'multi'
-                  ? 'bg-primary-100 border-primary-300 text-primary-700 dark:bg-primary-900/40 dark:border-primary-600 dark:text-primary-200'
-                  : 'border-gray-300 text-gray-600 dark:border-gray-700 dark:text-gray-300'
-              }`}
-            >
-              Multiple Choice
-            </button>
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Outcomes
-            </label>
-            <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
-              {marketType === 'multi'
-                ? 'Minimum 2, maximum 10'
-                : 'Binary markets automatically use Yes / No'}
-              {marketType === 'multi' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Market Type
+              </label>
+              <div className="flex flex-wrap items-center gap-3">
                 <button
                   type="button"
                   onClick={setBinaryOutcomes}
-                  className="text-primary-600 hover:text-primary-700 dark:text-primary-300"
+                  className={`px-3 py-1 rounded-full text-sm font-medium border transition ${marketType === 'binary'
+                      ? 'bg-primary-500/20 border-primary-500 text-primary-200'
+                      : 'border-white/10 text-gray-400 hover:border-white/20'
+                    }`}
                 >
-                  Quick set Yes / No
+                  Binary (Yes / No)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMarketType('multi');
+                    setOutcomes(['', '']);
+                  }}
+                  className={`px-3 py-1 rounded-full text-sm font-medium border transition ${marketType === 'multi'
+                      ? 'bg-primary-500/20 border-primary-500 text-primary-200'
+                      : 'border-white/10 text-gray-400 hover:border-white/20'
+                    }`}
+                >
+                  Multiple Choice
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="block text-sm font-medium text-gray-300">
+                  Outcomes
+                </label>
+                <div className="flex items-center gap-3 text-xs text-gray-400">
+                  {marketType === 'multi'
+                    ? 'Minimum 2, maximum 10'
+                    : 'Binary markets automatically use Yes / No'}
+                  {marketType === 'multi' && (
+                    <button
+                      type="button"
+                      onClick={setBinaryOutcomes}
+                      className="text-primary-400 hover:text-primary-300"
+                    >
+                      Quick set Yes / No
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                {outcomes.map((outcome, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={outcome}
+                      onChange={(e) => handleOutcomeChange(index, e.target.value)}
+                      className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 placeholder-gray-500"
+                      placeholder={`Outcome ${index + 1}`}
+                      readOnly={marketType === 'binary'}
+                    />
+                    {outcomes.length > 2 && marketType === 'multi' && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveOutcome(index)}
+                        className="text-xs text-error-400 hover:text-error-300"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {outcomes.length < 10 && marketType === 'multi' && (
+                <button
+                  type="button"
+                  onClick={handleAddOutcome}
+                  className="text-sm text-primary-400 hover:text-primary-300"
+                >
+                  + Add outcome
                 </button>
               )}
             </div>
-          </div>
 
-          <div className="space-y-2">
-            {outcomes.map((outcome, index) => (
-              <div key={index} className="flex items-center gap-2">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-300">
+                Market Settlement Deadline
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <input
-                  type="text"
-                  value={outcome}
-                  onChange={(e) => handleOutcomeChange(index, e.target.value)}
-                  className="flex-1 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40"
-                  placeholder={`Outcome ${index + 1}`}
-                  readOnly={marketType === 'binary'}
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 [color-scheme:dark]"
                 />
-                {outcomes.length > 2 && marketType === 'multi' && (
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveOutcome(index)}
-                    className="text-xs text-red-500 hover:text-red-600"
-                  >
-                    Remove
-                  </button>
-                )}
+                <input
+                  type="time"
+                  value={endTime}
+                  onChange={(e) => setEndTime(e.target.value)}
+                  className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 [color-scheme:dark]"
+                />
               </div>
-            ))}
-          </div>
+              <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400">
+                <span>Quick presets:</span>
+                {[24, 72, 24 * 7, 24 * 30].map((hours) => (
+                  <button
+                    key={hours}
+                    type="button"
+                    onClick={() => applyDurationPreset(hours)}
+                    className="px-2 py-1 rounded-full border border-white/10 hover:border-primary-500 hover:text-primary-300"
+                  >
+                    +{hours >= 24 ? `${hours / 24}${hours % 24 === 0 ? 'd' : 'h'}` : `${hours}h`}
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-gray-500">
+                We’ll automatically convert this to contract hours. Markets must close in the future.
+              </p>
+            </div>
 
-          {outcomes.length < 10 && marketType === 'multi' && (
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-300">
+                Category
+              </label>
+              <Select
+                options={CATEGORY_OPTIONS}
+                value={category}
+                onChange={setCategory}
+                placeholder="Select a category"
+                className="bg-white/5 border-white/10 text-white"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-300">
+                Resolution Source (optional)
+              </label>
+              <input
+                type="text"
+                value={resolutionSource}
+                onChange={(e) => setResolutionSource(e.target.value)}
+                className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 placeholder-gray-500"
+                placeholder="e.g. https://data.provider.com/oracle-feed"
+              />
+            </div>
+
             <button
-              type="button"
-              onClick={handleAddOutcome}
-              className="text-sm text-primary-600 hover:text-primary-700 dark:text-primary-300"
+              type="submit"
+              className="inline-flex items-center justify-center rounded-lg bg-primary-600 px-4 py-2 font-medium text-white shadow hover:bg-primary-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 w-full md:w-auto"
+              disabled={isCreatorMode ? isLoading : isSubmittingSuggestion}
             >
-              + Add outcome
+              {isCreatorMode
+                ? isLoading
+                  ? 'Publishing...'
+                  : 'Publish on-chain'
+                : isSubmittingSuggestion
+                  ? 'Submitting...'
+                  : 'Submit suggestion'}
             </button>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Market Settlement Deadline
-          </label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40"
-            />
-            <input
-              type="time"
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-              className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40"
-            />
-          </div>
-          <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-            <span>Quick presets:</span>
-            {[24, 72, 24 * 7, 24 * 30].map((hours) => (
-              <button
-                key={hours}
-                type="button"
-                onClick={() => applyDurationPreset(hours)}
-                className="px-2 py-1 rounded-full border border-gray-300 dark:border-gray-700 hover:border-primary-400 hover:text-primary-600 dark:hover:border-primary-500 dark:hover:text-primary-300"
-              >
-                +{hours >= 24 ? `${hours / 24}${hours % 24 === 0 ? 'd' : 'h'}` : `${hours}h`}
-              </button>
-            ))}
-          </div>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            We’ll automatically convert this to contract hours. Markets must close in the future.
-          </p>
-        </div>
-
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Category
-          </label>
-          <Select
-            options={CATEGORY_OPTIONS}
-            value={category}
-            onChange={setCategory}
-            placeholder="Select a category"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Resolution Source (optional)
-          </label>
-          <input
-            type="text"
-            value={resolutionSource}
-            onChange={(e) => setResolutionSource(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40"
-            placeholder="e.g. https://data.provider.com/oracle-feed"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="inline-flex items-center justify-center rounded-lg bg-primary-600 px-4 py-2 font-medium text-white shadow hover:bg-primary-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
-          disabled={isCreatorMode ? isLoading : isSubmittingSuggestion}
-        >
-          {isCreatorMode
-            ? isLoading
-              ? 'Publishing...'
-              : 'Publish on-chain'
-            : isSubmittingSuggestion
-              ? 'Submitting...'
-              : 'Submit suggestion'}
-        </button>
-      </form>
-    </motion.div>
+          </form>
+        </motion.div>
+      </PremiumContainer>
+    </div>
   );
 }

@@ -14,8 +14,8 @@ import {
   FiCreditCard,
   FiCode,
 } from 'react-icons/fi';
-import { Container } from '../components/layout/Container';
-import { Card, CardHeader, CardTitle } from '../components/ui/Card';
+import { PremiumContainer } from '../components/layout/PremiumContainer';
+import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { PayoutCalculator } from '../components/docs/PayoutCalculator';
@@ -184,38 +184,35 @@ export const HowItWorksPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary-50 via-white to-primary-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-16 lg:py-24 overflow-hidden transition-colors">
-        <Container>
+    <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
+      <PremiumContainer size="xl">
+        {/* Hero Section */}
+        <section className="relative py-12 lg:py-16 text-center max-w-3xl mx-auto mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto"
           >
-            <Badge variant="primary" className="mb-6">
+            <Badge variant="primary" className="mb-6 bg-primary-500/20 text-primary-200 border border-primary-500/30">
               Learn the Basics
             </Badge>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-gray-900 dark:text-white mb-6 leading-tight transition-colors">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
               How It Works
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed transition-colors">
+            <p className="text-lg md:text-xl text-gray-400 leading-relaxed">
               Discover how to participate in decentralized prediction markets on Aptos and Sui.
               From connecting your wallet to claiming winnings, we will guide you through every step.
             </p>
           </motion.div>
-        </Container>
-      </section>
+        </section>
 
-      {/* Steps Section */}
-      <section className="py-16 lg:py-24 bg-white dark:bg-gray-900 transition-colors">
-        <Container>
+        {/* Steps Section */}
+        <section className="mb-24">
           <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-white mb-4 transition-colors">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
               6 Simple Steps to Start
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto transition-colors">
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
               Follow these steps to make your first prediction and start earning rewards
             </p>
           </div>
@@ -234,53 +231,53 @@ export const HowItWorksPage: React.FC = () => {
                     <>
                       <div className="lg:pr-12">
                         <div className="flex items-center gap-4 mb-4">
-                          <div className="text-5xl font-display font-bold text-primary-200">
+                          <div className="text-5xl font-display font-bold text-primary-500/40">
                             {step.number}
                           </div>
-                          <div className="w-12 h-12 bg-primary-500 rounded-xl flex items-center justify-center">
-                            <step.icon className="w-6 h-6 text-white" />
+                          <div className="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center border border-primary-500/30">
+                            <step.icon className="w-6 h-6 text-primary-400" />
                           </div>
                         </div>
-                        <h3 className="text-2xl md:text-3xl font-display font-bold text-gray-900 dark:text-white mb-4 transition-colors">
+                        <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
                           {step.title}
                         </h3>
-                        <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 transition-colors">{step.description}</p>
+                        <p className="text-lg text-gray-400 mb-6">{step.description}</p>
                         <ul className="space-y-3">
                           {step.details.map((detail, detailIndex) => (
                             <li key={detailIndex} className="flex items-start gap-3">
-                              <FiCheckCircle className="w-5 h-5 text-success-500 flex-shrink-0 mt-0.5" />
-                              <span className="text-gray-700 dark:text-gray-300 transition-colors">{detail}</span>
+                              <FiCheckCircle className="w-5 h-5 text-success-400 flex-shrink-0 mt-0.5" />
+                              <span className="text-gray-300">{detail}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
-                      <div className="bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/20 rounded-2xl p-8 lg:p-12 flex items-center justify-center transition-colors">
-                        <step.icon className="w-32 h-32 text-primary-400" />
+                      <div className="bg-white/5 border border-white/10 rounded-2xl p-8 lg:p-12 flex items-center justify-center">
+                        <step.icon className="w-32 h-32 text-primary-500/40" />
                       </div>
                     </>
                   ) : (
                     <>
-                      <div className="bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/20 rounded-2xl p-8 lg:p-12 flex items-center justify-center lg:order-first transition-colors">
-                        <step.icon className="w-32 h-32 text-primary-400" />
+                      <div className="bg-white/5 border border-white/10 rounded-2xl p-8 lg:p-12 flex items-center justify-center lg:order-first">
+                        <step.icon className="w-32 h-32 text-primary-500/40" />
                       </div>
                       <div className="lg:pl-12">
                         <div className="flex items-center gap-4 mb-4">
-                          <div className="text-5xl font-display font-bold text-primary-200">
+                          <div className="text-5xl font-display font-bold text-primary-500/40">
                             {step.number}
                           </div>
-                          <div className="w-12 h-12 bg-primary-500 rounded-xl flex items-center justify-center">
-                            <step.icon className="w-6 h-6 text-white" />
+                          <div className="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center border border-primary-500/30">
+                            <step.icon className="w-6 h-6 text-primary-400" />
                           </div>
                         </div>
-                        <h3 className="text-2xl md:text-3xl font-display font-bold text-gray-900 dark:text-white mb-4 transition-colors">
+                        <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
                           {step.title}
                         </h3>
-                        <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 transition-colors">{step.description}</p>
+                        <p className="text-lg text-gray-400 mb-6">{step.description}</p>
                         <ul className="space-y-3">
                           {step.details.map((detail, detailIndex) => (
                             <li key={detailIndex} className="flex items-start gap-3">
-                              <FiCheckCircle className="w-5 h-5 text-success-500 flex-shrink-0 mt-0.5" />
-                              <span className="text-gray-700 dark:text-gray-300 transition-colors">{detail}</span>
+                              <FiCheckCircle className="w-5 h-5 text-success-400 flex-shrink-0 mt-0.5" />
+                              <span className="text-gray-300">{detail}</span>
                             </li>
                           ))}
                         </ul>
@@ -291,17 +288,15 @@ export const HowItWorksPage: React.FC = () => {
               </motion.div>
             ))}
           </div>
-        </Container>
-      </section>
+        </section>
 
-      {/* How Odds Work Section */}
-      <section className="py-16 lg:py-24 bg-gray-50 dark:bg-gray-800 transition-colors">
-        <Container>
+        {/* How Odds Work Section */}
+        <section className="mb-24">
           <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-white mb-4 transition-colors">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
               Understanding Odds
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto transition-colors">
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
               Learn how prediction market odds work and how payouts are calculated
             </p>
           </div>
@@ -315,14 +310,14 @@ export const HowItWorksPage: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card hover padding="lg">
-                  <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900 rounded-xl flex items-center justify-center mb-4 transition-colors">
-                    <card.icon className="w-6 h-6 text-primary-500" />
+                <Card hover padding="lg" className="bg-white/5 border-white/10 h-full">
+                  <div className="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center mb-4 border border-primary-500/30">
+                    <card.icon className="w-6 h-6 text-primary-400" />
                   </div>
-                  <h3 className="text-xl font-display font-bold text-gray-900 dark:text-white mb-2 transition-colors">
+                  <h3 className="text-xl font-display font-bold text-white mb-2">
                     {card.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 transition-colors">{card.description}</p>
+                  <p className="text-gray-400">{card.description}</p>
                 </Card>
               </motion.div>
             ))}
@@ -338,17 +333,15 @@ export const HowItWorksPage: React.FC = () => {
           >
             <PayoutCalculator />
           </motion.div>
-        </Container>
-      </section>
+        </section>
 
-      {/* Benefits Section */}
-      <section className="py-16 lg:py-24 bg-white dark:bg-gray-900 transition-colors">
-        <Container>
+        {/* Benefits Section */}
+        <section className="mb-24">
           <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-white mb-4 transition-colors">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
               Why Choose Our Platform
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto transition-colors">
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
               Built on Aptos and Sui for the best prediction market experience
             </p>
           </div>
@@ -362,29 +355,27 @@ export const HowItWorksPage: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card hover padding="lg">
-                  <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
-                    <benefit.icon className="w-6 h-6 text-primary-500" />
+                <Card hover padding="lg" className="bg-white/5 border-white/10 h-full">
+                  <div className="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center mb-4 border border-primary-500/30">
+                    <benefit.icon className="w-6 h-6 text-primary-400" />
                   </div>
-                  <h3 className="text-xl font-display font-bold text-gray-900 mb-2">
+                  <h3 className="text-xl font-display font-bold text-white mb-2">
                     {benefit.title}
                   </h3>
-                  <p className="text-gray-600">{benefit.description}</p>
+                  <p className="text-gray-400">{benefit.description}</p>
                 </Card>
               </motion.div>
             ))}
           </div>
-        </Container>
-      </section>
+        </section>
 
-      {/* FAQ Section */}
-      <section className="py-16 lg:py-24 bg-gray-50 dark:bg-gray-800 transition-colors">
-        <Container>
+        {/* FAQ Section */}
+        <section className="mb-24">
           <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-white mb-4 transition-colors">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto transition-colors">
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
               Got questions? We have got answers
             </p>
           </div>
@@ -398,22 +389,20 @@ export const HowItWorksPage: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card padding="lg">
-                  <h3 className="text-lg font-display font-bold text-gray-900 dark:text-white mb-2 transition-colors">
+                <Card padding="lg" className="bg-white/5 border-white/10">
+                  <h3 className="text-lg font-display font-bold text-white mb-2">
                     {faq.question}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 transition-colors">{faq.answer}</p>
+                  <p className="text-gray-400">{faq.answer}</p>
                 </Card>
               </motion.div>
             ))}
           </div>
-        </Container>
-      </section>
+        </section>
 
-      {/* CTA Section */}
-      <section className="py-16 lg:py-24 bg-gradient-to-br from-primary-500 to-primary-600">
-        <Container>
-          <div className="text-center max-w-3xl mx-auto">
+        {/* CTA Section */}
+        <section className="text-center max-w-3xl mx-auto pb-12">
+          <div className="bg-gradient-to-br from-primary-600 to-primary-800 rounded-3xl p-12 border border-primary-500/30 shadow-2xl shadow-primary-900/50">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">
               Ready to Make Your First Prediction?
             </h2>
@@ -426,6 +415,7 @@ export const HowItWorksPage: React.FC = () => {
                   variant="secondary"
                   size="lg"
                   rightIcon={<FiArrowRight />}
+                  className="bg-white text-primary-900 hover:bg-gray-100"
                 >
                   Browse Markets
                 </Button>
@@ -434,7 +424,7 @@ export const HowItWorksPage: React.FC = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                  className="bg-primary-900/50 border-white/20 text-white hover:bg-primary-900/70"
                   leftIcon={<FiCode />}
                 >
                   Developer Docs
@@ -461,8 +451,8 @@ export const HowItWorksPage: React.FC = () => {
               </div>
             </div>
           </div>
-        </Container>
-      </section>
+        </section>
+      </PremiumContainer>
     </div>
   );
 };

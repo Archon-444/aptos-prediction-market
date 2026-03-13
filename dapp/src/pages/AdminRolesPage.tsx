@@ -13,6 +13,7 @@ import {
 } from '../hooks/useRoles';
 import { useUnifiedWallet } from '../hooks/useUnifiedWallet';
 import { useChain } from '../contexts/ChainContext';
+import { PremiumContainer } from '../components/layout/PremiumContainer';
 
 const ROLE_METADATA = [
   {
@@ -138,173 +139,180 @@ const AdminRolesPage: React.FC = () => {
 
   if (!wallet.connected) {
     return (
-      <div className="container mx-auto px-4 py-10 max-w-3xl">
-        <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-xl p-6 text-center">
-          <h2 className="text-xl font-semibold text-yellow-900 dark:text-yellow-200 mb-2">
-            Wallet Connection Required
-          </h2>
-          <p className="text-yellow-800 dark:text-yellow-300">
-            Connect a DAO admin wallet to manage protocol roles.
-          </p>
-        </div>
+      <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
+        <PremiumContainer size="sm">
+          <div className="bg-warning-900/20 border border-warning-500/30 rounded-xl p-6 text-center">
+            <h2 className="text-xl font-semibold text-warning-200 mb-2">
+              Wallet Connection Required
+            </h2>
+            <p className="text-warning-100/80">
+              Connect a DAO admin wallet to manage protocol roles.
+            </p>
+          </div>
+        </PremiumContainer>
       </div>
     );
   }
 
   if (!canManage) {
     return (
-      <div className="container mx-auto px-4 py-10 max-w-3xl">
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl p-6 text-center">
-          <h2 className="text-xl font-semibold text-red-900 dark:text-red-200 mb-2">
-            Admin Role Required
-          </h2>
-          <p className="text-red-800 dark:text-red-300">
-            Only DAO admins can grant or revoke protocol roles.
-          </p>
-          {adminLoading && (
-            <p className="mt-2 text-sm text-red-600 dark:text-red-300">Checking admin permissions...</p>
-          )}
-        </div>
+      <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
+        <PremiumContainer size="sm">
+          <div className="bg-error-900/20 border border-error-500/30 rounded-xl p-6 text-center">
+            <h2 className="text-xl font-semibold text-error-200 mb-2">
+              Admin Role Required
+            </h2>
+            <p className="text-error-100/80">
+              Only DAO admins can grant or revoke protocol roles.
+            </p>
+            {adminLoading && (
+              <p className="mt-2 text-sm text-error-300">Checking admin permissions...</p>
+            )}
+          </div>
+        </PremiumContainer>
       </div>
     );
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="container mx-auto px-4 py-10 max-w-4xl"
-    >
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-          DAO Role Management
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400 mt-2">
-          Grant or revoke on-chain roles for DAO contributors. These permissions are enforced by the
-          `access_control` module and require on-chain transactions.
-        </p>
-        <p className="mt-3 inline-flex items-center gap-2 rounded-lg bg-primary-50 px-3 py-2 text-sm text-primary-700 dark:bg-primary-900/20 dark:text-primary-200">
-          Managing roles on <span className="font-semibold uppercase">{activeChain}</span>. Use the Sync button after on-chain updates to refresh backend state.
-        </p>
-      </div>
-
-      <form onSubmit={handleLookup} className="mb-6 space-y-3">
-        <label htmlFor="address" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Wallet Address
-        </label>
-        <div className="flex flex-col sm:flex-row gap-3">
-          <input
-            id="address"
-            type="text"
-            value={targetAddress}
-            onChange={(event) => setTargetAddress(event.target.value)}
-            placeholder="0x..."
-            className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-          />
-          <div className="flex flex-col sm:flex-row gap-3 sm:w-auto">
-            <Button type="submit" variant="primary" loading={isFetchingRoles} className="sm:min-w-[140px]">
-              Check Roles
-            </Button>
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={handleSync}
-              loading={isSyncing}
-              disabled={!targetAddress.trim()}
-              className="flex items-center justify-center gap-2 sm:min-w-[140px]"
-            >
-              <FiRefreshCw className="h-4 w-4" aria-hidden="true" />
-              Sync Roles
-            </Button>
-          </div>
-        </div>
-      </form>
-
-      {targetAddress && (
-        <div className="space-y-6">
-          <div className="p-4 bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700 rounded-xl">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-              Active Roles
-            </h2>
-            <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
-              <span className="uppercase tracking-wide font-semibold">
-                {activeChain === 'aptos' ? 'Aptos' : 'Sui'} network
-              </span>
-              {lastSynced && (
-                <span>
-                  Last synced {lastSynced.toLocaleString()}
-                </span>
-              )}
-            </div>
-            {roles.length === 0 ? (
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
-                This address currently has no protocol roles.
-              </p>
-            ) : (
-              <ul className="flex flex-wrap gap-2">
-                {roles.map((role) => (
-                  <li
-                    key={role}
-                    className="px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-200 text-sm font-medium"
-                  >
-                    {roleLabelMap[role] ?? role}
-                  </li>
-                ))}
-              </ul>
-            )}
+    <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
+      <PremiumContainer size="lg">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+        >
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-white">
+              DAO Role Management
+            </h1>
+            <p className="text-gray-400 mt-2">
+              Grant or revoke on-chain roles for DAO contributors. These permissions are enforced by the
+              `access_control` module and require on-chain transactions.
+            </p>
+            <p className="mt-3 inline-flex items-center gap-2 rounded-lg bg-primary-500/20 px-3 py-2 text-sm text-primary-200 border border-primary-500/30">
+              Managing roles on <span className="font-semibold uppercase">{activeChain}</span>. Use the Sync button after on-chain updates to refresh backend state.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {ROLE_METADATA.map((role) => {
-              const hasRole = roles.includes(role.canonical);
-              return (
-                <div
-                  key={role.id}
-                  className="border border-gray-200 dark:border-gray-700 rounded-xl p-4 bg-white dark:bg-gray-900 shadow-sm"
+          <form onSubmit={handleLookup} className="mb-6 space-y-3">
+            <label htmlFor="address" className="block text-sm font-medium text-gray-300">
+              Wallet Address
+            </label>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                id="address"
+                type="text"
+                value={targetAddress}
+                onChange={(event) => setTargetAddress(event.target.value)}
+                placeholder="0x..."
+                className="flex-1 px-4 py-3 border border-white/10 bg-white/5 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-white"
+              />
+              <div className="flex flex-col sm:flex-row gap-3 sm:w-auto">
+                <Button type="submit" variant="primary" loading={isFetchingRoles} className="sm:min-w-[140px]">
+                  Check Roles
+                </Button>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={handleSync}
+                  loading={isSyncing}
+                  disabled={!targetAddress.trim()}
+                  className="flex items-center justify-center gap-2 sm:min-w-[140px] bg-white/10 text-white hover:bg-white/20 border-transparent"
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{role.label}</h3>
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${hasRole ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-200' : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300'}`}>
-                      {hasRole ? 'Assigned' : 'Not Assigned'}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{role.description}</p>
-                  <div className="flex gap-3">
-                    <Button
-                      variant="success"
-                      size="sm"
-                      onClick={() => handleGrant(role.id)}
-                      disabled={hasRole || isProcessing}
-                    >
-                      Grant Role
-                    </Button>
-                    <Button
-                      variant="error"
-                      size="sm"
-                      onClick={() => handleRevoke(role.id)}
-                      disabled={!hasRole || isProcessing}
-                    >
-                      Revoke Role
-                    </Button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+                  <FiRefreshCw className="h-4 w-4" aria-hidden="true" />
+                  Sync Roles
+                </Button>
+              </div>
+            </div>
+          </form>
 
-      <div className="mt-10 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl">
-        <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Best Practices</h3>
-        <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
-          <li>• Require multi-sig approval for Admin role assignments.</li>
-          <li>• Grant Market Creator to proven contributors whose suggestions are consistently approved.</li>
-          <li>• Log all role changes in governance minutes for transparency.</li>
-          <li>• Rotate Admin keys periodically and remove stale permissions.</li>
-        </ul>
-      </div>
-    </motion.div>
+          {targetAddress && (
+            <div className="space-y-6">
+              <div className="p-4 bg-white/5 border border-white/10 rounded-xl">
+                <h2 className="text-lg font-semibold text-white mb-2">
+                  Active Roles
+                </h2>
+                <div className="flex flex-wrap items-center gap-3 text-xs text-gray-400 mb-3">
+                  <span className="uppercase tracking-wide font-semibold">
+                    {activeChain === 'aptos' ? 'Aptos' : 'Sui'} network
+                  </span>
+                  {lastSynced && (
+                    <span>
+                      Last synced {lastSynced.toLocaleString()}
+                    </span>
+                  )}
+                </div>
+                {roles.length === 0 ? (
+                  <p className="text-gray-400 text-sm">
+                    This address currently has no protocol roles.
+                  </p>
+                ) : (
+                  <ul className="flex flex-wrap gap-2">
+                    {roles.map((role) => (
+                      <li
+                        key={role}
+                        className="px-3 py-1 rounded-full bg-primary-500/20 text-primary-200 text-sm font-medium border border-primary-500/30"
+                      >
+                        {roleLabelMap[role] ?? role}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {ROLE_METADATA.map((role) => {
+                  const hasRole = roles.includes(role.canonical);
+                  return (
+                    <div
+                      key={role.id}
+                      className="border border-white/10 rounded-xl p-4 bg-white/5 shadow-sm"
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-lg font-semibold text-white">{role.label}</h3>
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${hasRole ? 'bg-success-500/20 text-success-200' : 'bg-white/10 text-gray-400'}`}>
+                          {hasRole ? 'Assigned' : 'Not Assigned'}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-400 mb-4">{role.description}</p>
+                      <div className="flex gap-3">
+                        <Button
+                          variant="success"
+                          size="sm"
+                          onClick={() => handleGrant(role.id)}
+                          disabled={hasRole || isProcessing}
+                        >
+                          Grant Role
+                        </Button>
+                        <Button
+                          variant="error"
+                          size="sm"
+                          onClick={() => handleRevoke(role.id)}
+                          disabled={!hasRole || isProcessing}
+                        >
+                          Revoke Role
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          <div className="mt-10 p-4 bg-primary-900/20 border border-primary-500/20 rounded-xl">
+            <h3 className="font-semibold text-primary-200 mb-2">Best Practices</h3>
+            <ul className="text-sm text-primary-100/80 space-y-1">
+              <li>• Require multi-sig approval for Admin role assignments.</li>
+              <li>• Grant Market Creator to proven contributors whose suggestions are consistently approved.</li>
+              <li>• Log all role changes in governance minutes for transparency.</li>
+              <li>• Rotate Admin keys periodically and remove stale permissions.</li>
+            </ul>
+          </div>
+        </motion.div>
+      </PremiumContainer>
+    </div>
   );
 };
 

@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FiClock, FiTrendingUp, FiDollarSign, FiLayers } from 'react-icons/fi';
 import { format } from 'date-fns';
-import { Container } from '../components/layout/Container';
+import { PremiumContainer } from '../components/layout/PremiumContainer';
 import { Card, CardHeader, CardTitle, CardDescription } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
@@ -107,24 +107,24 @@ export const MarketDetailPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-      <Container size="xl" className="py-10 space-y-6">
+    <div className="min-h-screen bg-[#050713] text-white selection:bg-primary-500/30">
+      <PremiumContainer size="xl" className="space-y-6">
         {isLoading && (
-          <Card padding="lg" className="animate-pulse h-64">
+          <Card padding="lg" className="animate-pulse h-64 bg-white/5 border-white/10">
             <div className="text-gray-400">Loading market...</div>
           </Card>
         )}
 
         {!isLoading && error && (
-          <Card padding="lg" className="border-error-200 bg-error-50 text-error-700">
+          <Card padding="lg" className="border-error-500/30 bg-error-900/20 text-error-200">
             <div>{error.message}</div>
           </Card>
         )}
 
         {!isLoading && !error && !market && (
-          <Card padding="lg">
-            <CardTitle>Market not found</CardTitle>
-            <CardDescription>
+          <Card padding="lg" className="bg-white/5 border-white/10">
+            <CardTitle className="text-white">Market not found</CardTitle>
+            <CardDescription className="text-gray-400">
               We couldn&apos;t locate this market. It may have been removed or the identifier is incorrect.
             </CardDescription>
           </Card>
@@ -134,71 +134,73 @@ export const MarketDetailPage: React.FC = () => {
           <>
             <MarketResolutionPanel marketId={marketId} />
 
-            <Card padding="lg">
+            <Card padding="lg" className="bg-white/5 border-white/10">
               <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
-                <Badge variant="primary">Market #{market.id}</Badge>
-                <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                <Badge variant="primary" className="bg-primary-500/20 text-primary-200 border border-primary-500/30">
+                  Market #{market.id}
+                </Badge>
+                <div className="flex items-center gap-2 text-gray-400">
                   <FiClock className="w-4 h-4" />
-                  <span className="font-medium">
+                  <span className="font-medium text-gray-300">
                     {getTimeRemaining(countdown.isExpired, countdown)}
                   </span>
                 </div>
               </div>
 
-              <h1 className="text-2xl md:text-3xl font-display font-bold text-gray-900 dark:text-white mb-4 transition-colors">
+              <h1 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
                 {question}
               </h1>
 
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-                Created by <span className="font-mono">{formatAddress(market.creator)}</span>{' '}
+              <p className="text-sm text-gray-400 mb-6">
+                Created by <span className="font-mono text-gray-300">{formatAddress(market.creator)}</span>{' '}
                 on{' '}
                 {format(market.createdAt * 1000, 'PPP HH:mm')}
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 bg-white/5 rounded-xl p-4 border border-white/5">
                 <div>
-                  <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-sm mb-1">
+                  <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
                     <FiTrendingUp className="w-4 h-4" />
                     Total Stakes
                   </div>
-                  <div className="text-xl font-semibold text-gray-900 dark:text-white">
+                  <div className="text-xl font-semibold text-white">
                     ${formatNumber(totalStakes)}
                   </div>
                 </div>
                 <div>
-                  <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-sm mb-1">
+                  <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
                     <FiLayers className="w-4 h-4" />
                     Outcomes
                   </div>
-                  <div className="text-xl font-semibold text-gray-900 dark:text-white">
+                  <div className="text-xl font-semibold text-white">
                     {market.outcomes.length}
                   </div>
                 </div>
                 <div>
-                  <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-sm mb-1">
+                  <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
                     <FiClock className="w-4 h-4" />
                     Ends
                   </div>
-                  <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                  <div className="text-sm font-semibold text-white">
                     {format(market.endTime * 1000, 'PPP HH:mm')}
                   </div>
                 </div>
                 <div>
-                  <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-sm mb-1">
+                  <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
                     <FiDollarSign className="w-4 h-4" />
                     Resolved
                   </div>
-                  <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                  <div className="text-sm font-semibold text-white">
                     {market.resolved ? 'Yes' : 'Not yet'}
                   </div>
                 </div>
               </div>
             </Card>
 
-            <Card padding="lg">
+            <Card padding="lg" className="bg-white/5 border-white/10">
               <CardHeader className="mb-4">
-                <CardTitle>Outcomes & Stakes</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-white">Outcomes & Stakes</CardTitle>
+                <CardDescription className="text-gray-400">
                   Distribution of total stakes across available outcomes. Select one to place a prediction.
                 </CardDescription>
               </CardHeader>
@@ -209,32 +211,31 @@ export const MarketDetailPage: React.FC = () => {
                     key={`${outcome.label}-${index}`}
                     type="button"
                     onClick={() => setSelectedOutcomeIndex(index)}
-                    className={`flex items-center justify-between rounded-lg border px-4 py-3 text-left transition-colors ${
-                      selectedOutcomeIndex === index
-                        ? 'border-primary-400 bg-primary-50 dark:bg-primary-900/20'
-                        : 'border-gray-200 dark:border-gray-700 hover:border-primary-300'
-                    }`}
+                    className={`flex items-center justify-between rounded-lg border px-4 py-3 text-left transition-colors w-full ${selectedOutcomeIndex === index
+                        ? 'border-primary-500 bg-primary-500/20'
+                        : 'border-white/10 hover:border-white/20 hover:bg-white/5'
+                      }`}
                   >
-                    <div className="font-medium text-gray-900 dark:text-white">
+                    <div className="font-medium text-white">
                       {outcome.label}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                    <div className="text-sm text-gray-400">
                       ${formatNumber(outcome.stake)}
                     </div>
                   </button>
                 ))}
                 {outcomeData.length === 0 && (
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-gray-400">
                     Outcomes will appear once this market is fully initialized.
                   </p>
                 )}
               </div>
             </Card>
 
-            <Card padding="lg">
+            <Card padding="lg" className="bg-white/5 border-white/10">
               <CardHeader className="mb-4">
-                <CardTitle>Participate</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-white">Participate</CardTitle>
+                <CardDescription className="text-gray-400">
                   Select an outcome and place your prediction.
                 </CardDescription>
               </CardHeader>
@@ -268,7 +269,7 @@ export const MarketDetailPage: React.FC = () => {
             minBetUSDC={VALIDATION_CONSTANTS.MIN_BET_USDC}
           />
         )}
-      </Container>
+      </PremiumContainer>
     </div>
   );
 };
