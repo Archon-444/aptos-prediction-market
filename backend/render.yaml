@@ -1,0 +1,30 @@
+services:
+  # Managed PostgreSQL Database
+  - type: psql
+    name: movemarket-db
+    plan: free # or starter
+    ipAllowList: [] # allow internal and external connections based on Render's defaults
+
+  # Node.js Express Backend
+  - type: web
+    name: movemarket-api
+    env: node
+    plan: free # or starter
+    region: oregon # adjust as needed
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npx prisma migrate deploy && npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: movemarket-db
+          property: connectionString
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: CORS_ORIGIN
+        value: https://aptos-prediction-market-japgzcxwm-archon-444s-projects.vercel.app
+      # You will need to add these manually in the Render dashboard:
+      # - APTOS_ADMIN_PRIVATE_KEY
+      # - APTOS_ADMIN_ACCOUNT
+      # - JWT_SECRET
