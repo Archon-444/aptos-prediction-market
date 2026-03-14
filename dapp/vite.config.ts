@@ -4,6 +4,9 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default defineConfig({
   plugins: [react(), nodePolyfills()],
+  resolve: {
+    dedupe: ['react', 'react-dom', 'react/jsx-runtime'],
+  },
   server: {
     port: 3001,
   },
@@ -13,6 +16,15 @@ export default defineConfig({
         // Function form catches transitive deps correctly
         manualChunks(id) {
           if (!id.includes('node_modules')) return;
+
+          // Ant Design + Radix UI (via wallet-adapter-ant-design) — must share chunk with React
+          if (
+            id.includes('@aptos-labs/wallet-adapter-ant-design') ||
+            id.includes('@ant-design') ||
+            id.includes('@radix-ui') ||
+            id.includes('/antd/') ||
+            id.includes('/rc-')
+          ) return 'vendor-react';
 
           // Aptos ecosystem (largest SDKs)
           if (
