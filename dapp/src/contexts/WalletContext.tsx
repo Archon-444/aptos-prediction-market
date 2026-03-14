@@ -157,7 +157,14 @@ export const AptosWalletProvider: React.FC<{ children: React.ReactNode }> = ({ c
   );
 
   return (
-    <AptosWalletAdapterProvider plugins={wallets} autoConnect={true}>
+    <AptosWalletAdapterProvider
+      plugins={wallets}
+      autoConnect={true}
+      dappConfig={{
+        network: env.aptosNetwork as any,
+        aptosConnectDappId: import.meta.env.VITE_APTOS_CONNECT_DAPP_ID || undefined,
+      } as any}
+    >
       <WalletContext.Provider value={contextValue}>
         <WalletSessionManager>
           {children}

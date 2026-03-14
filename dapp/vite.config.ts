@@ -26,14 +26,6 @@ export default defineConfig({
             id.includes('/rc-')
           ) return 'vendor-react';
 
-          // Aptos ecosystem (largest SDKs)
-          if (
-            id.includes('@aptos-labs') ||
-            id.includes('petra-plugin') ||
-            id.includes('@martianwallet') ||
-            id.includes('@nightlylabs/aptos')
-          ) return 'vendor-aptos';
-
           // Sui ecosystem
           if (
             id.includes('@mysten') ||
