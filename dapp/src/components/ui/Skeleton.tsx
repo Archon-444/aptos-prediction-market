@@ -33,7 +33,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     height: height || (variant === 'text' ? '1em' : undefined),
   };
 
-  const baseClass = `bg-gray-200 ${getVariantClass()} ${className}`;
+  const baseClass = `bg-white/[0.08] ${getVariantClass()} ${className}`;
 
   if (animation) {
     return (
@@ -125,7 +125,7 @@ export const UserBetSkeleton: React.FC = () => {
 // Table Row Skeleton
 export const TableRowSkeleton: React.FC<{ columns?: number }> = ({ columns = 4 }) => {
   return (
-    <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+    <div className="flex items-center gap-4 p-4 bg-white/[0.03] rounded-lg">
       {Array.from({ length: columns }).map((_, i) => (
         <Skeleton key={i} width="100%" height={20} />
       ))}

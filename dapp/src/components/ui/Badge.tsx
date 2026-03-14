@@ -13,13 +13,13 @@ interface BadgeProps {
 }
 
 const variantClasses: Record<BadgeVariant, string> = {
-  primary: 'bg-primary-100 text-primary-800 border-primary-200',
-  secondary: 'bg-gray-100 text-gray-700 border-gray-200',
-  success: 'bg-success-100 text-success-800 border-success-200',
-  warning: 'bg-warning-100 text-warning-800 border-warning-200',
-  error: 'bg-error-100 text-error-800 border-error-200',
-  info: 'bg-blue-100 text-blue-800 border-blue-200',
-  neutral: 'bg-gray-100 text-gray-800 border-gray-200',
+  primary: 'bg-primary-500/15 text-primary-300 border-primary-500/20',
+  secondary: 'bg-secondary-500/15 text-secondary-300 border-secondary-500/20',
+  success: 'bg-success-500/15 text-success-300 border-success-500/20',
+  warning: 'bg-warning-500/15 text-warning-300 border-warning-500/20',
+  error: 'bg-error-500/15 text-error-300 border-error-500/20',
+  info: 'bg-primary-500/15 text-primary-300 border-primary-500/20',
+  neutral: 'bg-white/[0.06] text-slate-400 border-white/[0.08]',
 };
 
 const sizeClasses: Record<BadgeSize, string> = {

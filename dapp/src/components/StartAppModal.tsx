@@ -47,7 +47,7 @@ export const StartAppModal: React.FC<StartAppModalProps> = ({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3, type: 'spring' }}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
+              className="bg-[#0D1224] rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
@@ -78,28 +78,28 @@ export const StartAppModal: React.FC<StartAppModalProps> = ({
               <div className="px-6 py-6">
                 <div className="space-y-4 mb-6">
                   <div className="flex gap-3">
-                    <div className="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                    <div className="flex-shrink-0 w-10 h-10 bg-primary-100 /30 rounded-lg flex items-center justify-center">
                       <FiZap className="w-5 h-5 text-primary-500" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                      <h3 className="font-semibold text-white mb-1">
                         Connect Your Wallet
                       </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-slate-400">
                         Link your Aptos wallet to place bets and earn rewards
                       </p>
                     </div>
                   </div>
 
                   <div className="flex gap-3">
-                    <div className="flex-shrink-0 w-10 h-10 bg-success-100 dark:bg-success-900/30 rounded-lg flex items-center justify-center">
+                    <div className="flex-shrink-0 w-10 h-10 bg-success-100 /30 rounded-lg flex items-center justify-center">
                       <FiShield className="w-5 h-5 text-success-500" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                      <h3 className="font-semibold text-white mb-1">
                         100% Secure & Transparent
                       </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-slate-400">
                         All transactions on Aptos blockchain, fully auditable
                       </p>
                     </div>
@@ -129,7 +129,7 @@ export const StartAppModal: React.FC<StartAppModalProps> = ({
                 </div>
 
                 {/* Footer note */}
-                <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
+                <p className="text-xs text-slate-500 text-center mt-4">
                   No wallet? No problem! Browse markets first, connect later.
                 </p>
               </div>

@@ -48,7 +48,7 @@ export const MobileBottomNav: React.FC = () => {
   const location = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 shadow-lg safe-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-[#080B18]/95 backdrop-blur-xl border-t border-white/[0.05] safe-bottom">
       <div className="grid grid-cols-5 h-16">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -75,7 +75,7 @@ export const MobileBottomNav: React.FC = () => {
                 className={`relative ${
                   isActive
                     ? 'text-primary-500'
-                    : 'text-gray-500 dark:text-gray-400'
+                    : 'text-slate-500'
                 }`}
               >
                 <Icon className={`w-6 h-6 ${isActive ? 'scale-110' : ''} transition-transform`} />
@@ -91,7 +91,7 @@ export const MobileBottomNav: React.FC = () => {
                 className={`text-xs font-medium ${
                   isActive
                     ? 'text-primary-500'
-                    : 'text-gray-600 dark:text-gray-400'
+                    : 'text-slate-500'
                 }`}
               >
                 {item.label}
@@ -102,7 +102,7 @@ export const MobileBottomNav: React.FC = () => {
       </div>
 
       {/* Safe area for iPhone notch */}
-      <div className="h-safe-bottom bg-white dark:bg-gray-900" />
+      <div className="h-safe-bottom bg-[#080B18]" />
     </nav>
   );
 };

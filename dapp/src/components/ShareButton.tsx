@@ -76,7 +76,7 @@ export function ShareButton({
       <motion.button
         whileTap={{ scale: 0.95 }}
         onClick={() => setShowMenu(!showMenu)}
-        className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors"
+        className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.06] hover:bg-white/[0.05] text-slate-300 rounded-lg transition-colors"
       >
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
@@ -103,21 +103,21 @@ export function ShareButton({
               initial={{ opacity: 0, scale: 0.95, y: -10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
-              className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50"
+              className="absolute right-0 mt-2 w-56 bg-[#0D1224] rounded-xl shadow-xl border border-white/[0.08] overflow-hidden z-50"
             >
               {/* Twitter/X */}
               <button
                 onClick={() => handleShare('twitter')}
-                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-left"
+                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/[0.05] transition-colors text-left"
               >
-                <div className="w-10 h-10 bg-black dark:bg-white rounded-lg flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white dark:text-black" fill="currentColor" viewBox="0 0 24 24">
+                <div className="w-10 h-10 bg-black  rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                   </svg>
                 </div>
                 <div>
-                  <div className="font-semibold text-gray-900 dark:text-white">Share to X</div>
-                  <div className="text-xs text-gray-500">Post to your followers</div>
+                  <div className="font-semibold text-white">Share to X</div>
+                  <div className="text-xs text-slate-500">Post to your followers</div>
                 </div>
               </button>
 
@@ -125,7 +125,7 @@ export function ShareButton({
               {isNativeShareSupported && (
                 <button
                   onClick={() => handleShare('native')}
-                  className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-left border-t border-gray-200 dark:border-gray-700"
+                  className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/[0.05] transition-colors text-left border-t border-white/[0.08]"
                 >
                   <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
                     <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -138,8 +138,8 @@ export function ShareButton({
                     </svg>
                   </div>
                   <div>
-                    <div className="font-semibold text-gray-900 dark:text-white">Share via...</div>
-                    <div className="text-xs text-gray-500">Use native share sheet</div>
+                    <div className="font-semibold text-white">Share via...</div>
+                    <div className="text-xs text-slate-500">Use native share sheet</div>
                   </div>
                 </button>
               )}
@@ -147,9 +147,9 @@ export function ShareButton({
               {/* Copy Link */}
               <button
                 onClick={() => handleShare('copy')}
-                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-left border-t border-gray-200 dark:border-gray-700"
+                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/[0.05] transition-colors text-left border-t border-white/[0.08]"
               >
-                <div className="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-white/[0.06] rounded-lg flex items-center justify-center">
                   {copied ? (
                     <svg className="w-5 h-5 text-success-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path
@@ -160,7 +160,7 @@ export function ShareButton({
                       />
                     </svg>
                   ) : (
-                    <svg className="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -171,10 +171,10 @@ export function ShareButton({
                   )}
                 </div>
                 <div>
-                  <div className="font-semibold text-gray-900 dark:text-white">
+                  <div className="font-semibold text-white">
                     {copied ? 'Copied!' : 'Copy Link'}
                   </div>
-                  <div className="text-xs text-gray-500">
+                  <div className="text-xs text-slate-500">
                     {copied ? 'Link copied to clipboard' : 'Share anywhere'}
                   </div>
                 </div>

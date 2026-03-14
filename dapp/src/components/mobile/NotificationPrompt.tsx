@@ -126,9 +126,9 @@ export const NotificationPrompt: React.FC = () => {
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
             className="fixed bottom-0 left-0 right-0 z-50 p-4 safe-bottom"
           >
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div className="bg-[#0D1224] rounded-2xl shadow-2xl border border-[#1C2537] overflow-hidden">
               {/* Header */}
-              <div className="relative bg-gradient-to-br from-blue-500 to-purple-600 p-6 pb-8">
+              <div className="relative bg-gradient-to-br from-primary-500 to-secondary-600 p-6 pb-8">
                 <button
                   onClick={handleDismiss}
                   className="absolute top-4 right-4 p-2 hover:bg-white/10 rounded-lg transition-colors touch-manipulation"
@@ -155,42 +155,42 @@ export const NotificationPrompt: React.FC = () => {
               <div className="p-6 space-y-4">
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <div className="w-2 h-2 bg-green-500 rounded-full" />
+                    <div className="w-6 h-6 bg-success-500/15 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="w-2 h-2 bg-success-500 rounded-full" />
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900 dark:text-white">
+                      <p className="font-semibold text-white">
                         Win alerts
                       </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-slate-400">
                         Get notified instantly when you win
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <div className="w-2 h-2 bg-green-500 rounded-full" />
+                    <div className="w-6 h-6 bg-success-500/15 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="w-2 h-2 bg-success-500 rounded-full" />
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900 dark:text-white">
+                      <p className="font-semibold text-white">
                         Market updates
                       </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-slate-400">
                         Track odds changes on markets you bet on
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <div className="w-2 h-2 bg-green-500 rounded-full" />
+                    <div className="w-6 h-6 bg-success-500/15 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="w-2 h-2 bg-success-500 rounded-full" />
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900 dark:text-white">
+                      <p className="font-semibold text-white">
                         Closing reminders
                       </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-slate-400">
                         Get alerts before markets close
                       </p>
                     </div>
@@ -203,7 +203,7 @@ export const NotificationPrompt: React.FC = () => {
                     whileTap={{ scale: 0.97 }}
                     onClick={handleEnable}
                     disabled={isEnabling}
-                    className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-600 hover:from-primary-600 hover:to-secondary-700 text-white font-semibold py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <FiBell className="w-5 h-5" />
                     {isEnabling ? 'Enabling...' : 'Enable Notifications'}
@@ -212,13 +212,13 @@ export const NotificationPrompt: React.FC = () => {
                   <motion.button
                     whileTap={{ scale: 0.97 }}
                     onClick={handleRemindLater}
-                    className="px-6 py-4 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-xl transition-colors touch-manipulation"
+                    className="px-6 py-4 bg-white/[0.06] hover:bg-white/[0.1] text-slate-300 font-medium rounded-xl transition-colors touch-manipulation"
                   >
                     Later
                   </motion.button>
                 </div>
 
-                <p className="text-xs text-center text-gray-500 dark:text-gray-500">
+                <p className="text-xs text-center text-slate-500">
                   You can change this anytime in settings
                 </p>
               </div>

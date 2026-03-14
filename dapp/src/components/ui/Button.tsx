@@ -30,11 +30,11 @@ type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary: 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 focus:ring-primary-500 shadow-sm hover:shadow-md',
-  secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300 focus:ring-gray-500',
+  secondary: 'bg-white/[0.06] text-slate-200 border border-white/[0.08] hover:bg-white/[0.1] hover:text-white focus:ring-slate-500',
   success: 'bg-success-500 text-white hover:bg-success-600 active:bg-success-700 focus:ring-success-500',
   error: 'bg-error-500 text-white hover:bg-error-600 active:bg-error-700 focus:ring-error-500',
-  ghost: 'bg-transparent text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:ring-gray-500',
-  outline: 'bg-transparent border-2 border-primary-500 text-primary-500 hover:bg-primary-50 focus:ring-primary-500',
+  ghost: 'bg-transparent text-slate-400 hover:bg-white/[0.06] hover:text-slate-200 active:bg-white/[0.08] focus:ring-slate-500',
+  outline: 'bg-transparent border border-primary-500/50 text-primary-400 hover:bg-primary-500/10 hover:border-primary-500 focus:ring-primary-500',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {

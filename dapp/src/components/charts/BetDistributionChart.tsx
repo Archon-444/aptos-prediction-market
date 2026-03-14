@@ -28,8 +28,8 @@ export const BetDistributionChart: React.FC<BetDistributionChartProps> = ({
 }) => {
   if (!data || data.length === 0) {
     return (
-      <div className={`flex items-center justify-center h-64 bg-gray-50 rounded-lg ${className}`}>
-        <p className="text-gray-500">No bet distribution data available</p>
+      <div className={`flex items-center justify-center h-64 bg-white/[0.03] rounded-xl border border-white/[0.05] ${className}`}>
+        <p className="text-slate-500">No bet distribution data available</p>
       </div>
     );
   }

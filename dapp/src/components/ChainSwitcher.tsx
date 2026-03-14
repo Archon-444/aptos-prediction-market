@@ -43,7 +43,7 @@ export const ChainSwitcher: React.FC<ChainSwitcherProps> = ({ className }) => {
 
   return (
     <div className={`chain-switcher ${className || ''}`}>
-      <div className="flex items-center gap-2 bg-white dark:bg-gray-800 rounded-lg p-1 shadow-sm border border-gray-200 dark:border-gray-700">
+      <div className="flex items-center gap-2 bg-[#0D1224] rounded-lg p-1 shadow-sm border border-white/[0.08]">
         {availableChains.map((chain) => (
           <button
             key={chain}
@@ -53,7 +53,7 @@ export const ChainSwitcher: React.FC<ChainSwitcherProps> = ({ className }) => {
               ${
                 activeChain === chain
                   ? 'bg-primary-500 text-white shadow-md'
-                  : 'bg-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  : 'bg-transparent text-slate-300 hover:bg-white/[0.05] '
               }
             `}
             aria-label={`Switch to ${getChainLabel(chain)} chain`}

@@ -28,7 +28,7 @@ export const PullToRefresh: React.FC<PullToRefreshProps> = ({
             transform: `translateY(${Math.min(pullDistance, threshold)}px)`,
           }}
         >
-          <div className="bg-white dark:bg-gray-800 rounded-full p-3 shadow-lg border border-gray-200 dark:border-gray-700">
+          <div className="bg-[#0D1224] rounded-full p-3 shadow-lg border border-white/[0.1]">
             <motion.div
               animate={{
                 rotate: isRefreshing ? 360 : rotation,
@@ -51,7 +51,7 @@ export const PullToRefresh: React.FC<PullToRefreshProps> = ({
                     ? 'text-primary-500'
                     : progress >= 1
                     ? 'text-success-500'
-                    : 'text-gray-400'
+                    : 'text-slate-500'
                 }`}
               />
             </motion.div>

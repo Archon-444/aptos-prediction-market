@@ -107,26 +107,26 @@ export const WalletModal: React.FC<WalletModalProps> = ({ isOpen, onClose }) => 
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.2, type: 'spring', damping: 25 }}
-            className="relative z-10 w-full max-w-md mx-4 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden"
+            className="relative z-10 w-full max-w-md mx-4 bg-[#0D1224] rounded-2xl border border-[#1C2537] shadow-[0_24px_64px_rgba(0,0,0,0.7)] overflow-hidden"
             role="dialog"
             aria-modal="true"
             aria-labelledby="wallet-modal-title"
           >
             {/* Header */}
-            <div className="relative bg-gradient-to-br from-primary-500 to-primary-600 dark:from-primary-600 dark:to-primary-700 px-6 py-8 text-white">
+            <div className="relative px-6 py-6 border-b border-white/[0.06]">
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/20 transition-colors"
+                className="absolute top-4 right-4 p-2 rounded-xl border border-white/[0.08] hover:bg-white/[0.08] transition-colors"
                 aria-label="Close modal"
               >
-                <FiX className="w-5 h-5" />
+                <FiX className="w-4 h-4 text-slate-400" />
               </button>
 
-              <h2 id="wallet-modal-title" className="text-2xl font-bold mb-2">
+              <h2 id="wallet-modal-title" className="text-xl font-black text-white tracking-tight mb-1">
                 Connect Wallet
               </h2>
-              <p className="text-primary-100 text-sm">
-                Choose your preferred Aptos wallet to get started
+              <p className="text-sm text-slate-500">
+                Select your wallet to continue
               </p>
             </div>
 
@@ -135,7 +135,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({ isOpen, onClose }) => 
               {/* Installed Wallets */}
               {installedWallets.length > 0 && (
                 <div className="mb-6">
-                  <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
+                  <h3 className="text-sm font-semibold text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
                     Available Wallets
                   </h3>
                   <div className="space-y-2">
@@ -151,17 +151,17 @@ export const WalletModal: React.FC<WalletModalProps> = ({ isOpen, onClose }) => 
                           key={wallet.name}
                           onClick={() => handleConnect(wallet.name)}
                           className="
-                            w-full flex items-center justify-between p-4 rounded-xl border-2 border-gray-200 dark:border-gray-700
-                            hover:border-[var(--wallet-brand)] dark:hover:border-[var(--wallet-brand)]
-                            hover:bg-[var(--wallet-brand-soft)] dark:hover:bg-[var(--wallet-brand-soft)]
-                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--wallet-brand)] dark:focus:ring-[var(--wallet-brand)]
+                            w-full flex items-center justify-between p-4 rounded-xl border border-white/[0.07] bg-white/[0.03]
+                            hover:border-[var(--wallet-brand)]
+                            hover:bg-[var(--wallet-brand-soft)]
+                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--wallet-brand)]
                             transition-all group
                           "
                           style={brandCssVariables}
                         >
                           <div className="flex items-center space-x-3">
                             <div
-                              className="w-12 h-12 rounded-xl border flex items-center justify-center overflow-hidden bg-white dark:bg-gray-900 shadow-sm transition-colors"
+                              className="w-12 h-12 rounded-xl border flex items-center justify-center overflow-hidden bg-white shadow-sm transition-colors"
                               style={iconWrapperStyle}
                             >
                               {brand.icon ? (
@@ -178,10 +178,10 @@ export const WalletModal: React.FC<WalletModalProps> = ({ isOpen, onClose }) => 
                               )}
                             </div>
                             <div className="text-left">
-                              <div className="font-semibold text-gray-900 dark:text-white">
+                              <div className="font-semibold text-white">
                                 {wallet.name}
                               </div>
-                              <div className="text-xs text-green-600 dark:text-green-400 flex items-center space-x-1">
+                              <div className="text-xs text-success-400 flex items-center space-x-1">
                                 <FiCheckCircle className="w-3 h-3" />
                                 <span>Installed</span>
                               </div>
@@ -203,7 +203,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({ isOpen, onClose }) => 
               {/* Loadable Wallets */}
               {loadableWallets.length > 0 && (
                 <div className="mb-6">
-                  <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
+                  <h3 className="text-sm font-semibold text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
                     Loadable Wallets
                   </h3>
                   <div className="space-y-2">
@@ -219,17 +219,17 @@ export const WalletModal: React.FC<WalletModalProps> = ({ isOpen, onClose }) => 
                           key={wallet.name}
                           onClick={() => handleConnect(wallet.name)}
                           className="
-                            w-full flex items-center justify-between p-4 rounded-xl border-2 border-gray-200 dark:border-gray-700
-                            hover:border-[var(--wallet-brand)] dark:hover:border-[var(--wallet-brand)]
-                            hover:bg-[var(--wallet-brand-soft)] dark:hover:bg-[var(--wallet-brand-soft)]
-                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--wallet-brand)] dark:focus:ring-[var(--wallet-brand)]
+                            w-full flex items-center justify-between p-4 rounded-xl border border-white/[0.07] bg-white/[0.03]
+                            hover:border-[var(--wallet-brand)]
+                            hover:bg-[var(--wallet-brand-soft)]
+                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--wallet-brand)]
                             transition-all group
                           "
                           style={brandCssVariables}
                         >
                           <div className="flex items-center space-x-3">
                             <div
-                              className="w-12 h-12 rounded-xl border flex items-center justify-center overflow-hidden bg-white dark:bg-gray-900 shadow-sm transition-colors"
+                              className="w-12 h-12 rounded-xl border flex items-center justify-center overflow-hidden bg-white shadow-sm transition-colors"
                               style={iconWrapperStyle}
                             >
                               {brand.icon ? (
@@ -246,7 +246,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({ isOpen, onClose }) => 
                               )}
                             </div>
                             <div className="text-left">
-                              <div className="font-semibold text-gray-900 dark:text-white">
+                              <div className="font-semibold text-white">
                                 {wallet.name}
                               </div>
                               <div className="text-xs" style={{ color: brandColor }}>
@@ -270,7 +270,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({ isOpen, onClose }) => 
               {/* Not Detected Wallets */}
               {notDetectedWallets.length > 0 && (
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
+                  <h3 className="text-sm font-semibold text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
                     Not Installed
                   </h3>
                   <div className="space-y-2">
@@ -289,16 +289,16 @@ export const WalletModal: React.FC<WalletModalProps> = ({ isOpen, onClose }) => 
                           target="_blank"
                           rel="noopener noreferrer"
                           className="
-                            w-full flex items-center justify-between p-4 rounded-xl border-2 border-gray-200 dark:border-gray-700
-                            hover:border-[var(--wallet-brand)] dark:hover:border-[var(--wallet-brand)]
-                            hover:bg-[var(--wallet-brand-soft)] dark:hover:bg-[var(--wallet-brand-soft)]
+                            w-full flex items-center justify-between p-4 rounded-xl border border-white/[0.07] bg-white/[0.03]
+                            hover:border-[var(--wallet-brand)]
+                            hover:bg-[var(--wallet-brand-soft)]
                             transition-all group
                           "
                           style={brandCssVariables}
                         >
                           <div className="flex items-center space-x-3">
                             <div
-                              className="w-12 h-12 rounded-xl border flex items-center justify-center overflow-hidden bg-white dark:bg-gray-900 shadow-sm transition-colors opacity-70 group-hover:opacity-100"
+                              className="w-12 h-12 rounded-xl border flex items-center justify-center overflow-hidden bg-white shadow-sm transition-colors opacity-70 group-hover:opacity-100"
                               style={iconWrapperStyle}
                             >
                               {brand.icon ? (
@@ -315,7 +315,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({ isOpen, onClose }) => 
                               )}
                             </div>
                             <div className="text-left">
-                              <div className="font-semibold text-gray-900 dark:text-white">
+                              <div className="font-semibold text-white">
                                 {wallet.name}
                               </div>
                               <div className="text-xs flex items-center space-x-1" style={{ color: brandColor }}>
@@ -339,17 +339,17 @@ export const WalletModal: React.FC<WalletModalProps> = ({ isOpen, onClose }) => 
               {wallets.length === 0 && (
                 <div className="text-center py-8">
                   <div className="text-4xl mb-4">💼</div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-semibold text-white mb-2">
                     No Wallets Found
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                  <p className="text-sm text-slate-400 mb-4">
                     Install an Aptos wallet to get started
                   </p>
                   <a
                     href="https://petra.app/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 text-primary-600 dark:text-primary-400 hover:underline"
+                    className="inline-flex items-center space-x-2 text-primary-400 hover:underline"
                   >
                     <span>Download Petra Wallet</span>
                     <FiExternalLink className="w-4 h-4" />
@@ -359,14 +359,14 @@ export const WalletModal: React.FC<WalletModalProps> = ({ isOpen, onClose }) => 
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-800">
-              <p className="text-xs text-center text-gray-600 dark:text-gray-400">
+            <div className="px-6 py-4 bg-white/[0.03] border-t border-white/[0.06]">
+              <p className="text-xs text-center text-slate-400">
                 New to Aptos wallets?{' '}
                 <a
                   href="https://aptos.dev/guides/wallet-standard"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary-600 dark:text-primary-400 hover:underline"
+                  className="text-primary-400 hover:underline"
                 >
                   Learn more
                 </a>

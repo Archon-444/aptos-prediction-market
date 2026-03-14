@@ -51,7 +51,7 @@ export const PayoutCalculator: React.FC = () => {
           <FiDollarSign className="w-5 h-5 text-primary-500" />
           Interactive Payout Calculator
         </CardTitle>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+        <p className="text-sm text-slate-400 mt-2">
           Adjust the values below to see how payouts are calculated in real-time
         </p>
       </CardHeader>
@@ -60,27 +60,27 @@ export const PayoutCalculator: React.FC = () => {
           {/* Market Pools */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-slate-300 mb-2">
                 Yes Pool (USDC)
               </label>
               <input
                 type="number"
                 value={yesPool}
                 onChange={(e) => setYesPool(Number(e.target.value))}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-[#1C2537] rounded-xl bg-[#0D1224] text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 min="100"
                 step="100"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-slate-300 mb-2">
                 No Pool (USDC)
               </label>
               <input
                 type="number"
                 value={noPool}
                 onChange={(e) => setNoPool(Number(e.target.value))}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-[#1C2537] rounded-xl bg-[#0D1224] text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 min="100"
                 step="100"
               />
@@ -89,14 +89,14 @@ export const PayoutCalculator: React.FC = () => {
 
           {/* Your Bet */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-slate-300 mb-2">
               Your Bet Amount (USDC)
             </label>
             <input
               type="number"
               value={betAmount}
               onChange={(e) => setBetAmount(Number(e.target.value))}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-[#1C2537] rounded-xl bg-[#0D1224] text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               min="1"
               step="10"
             />
@@ -104,7 +104,7 @@ export const PayoutCalculator: React.FC = () => {
 
           {/* Bet Side Toggle */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-slate-300 mb-2">
               Your Prediction
             </label>
             <div className="flex gap-3">
@@ -113,7 +113,7 @@ export const PayoutCalculator: React.FC = () => {
                 className={`flex-1 py-3 rounded-lg font-semibold transition-all ${
                   betSide === 'yes'
                     ? 'bg-success-500 text-white shadow-lg'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    : 'bg-white/[0.06] text-slate-300 hover:bg-white/[0.1]'
                 }`}
               >
                 YES
@@ -123,7 +123,7 @@ export const PayoutCalculator: React.FC = () => {
                 className={`flex-1 py-3 rounded-lg font-semibold transition-all ${
                   betSide === 'no'
                     ? 'bg-error-500 text-white shadow-lg'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    : 'bg-white/[0.06] text-slate-300 hover:bg-white/[0.1]'
                 }`}
               >
                 NO
@@ -132,71 +132,71 @@ export const PayoutCalculator: React.FC = () => {
           </div>
 
           {/* Market Stats */}
-          <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 space-y-3">
+          <div className="bg-white/[0.03] rounded-xl border border-white/[0.05] p-4 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600 dark:text-gray-400">Total Market Pool:</span>
-              <span className="font-semibold text-gray-900 dark:text-white">
+              <span className="text-sm text-slate-400">Total Market Pool:</span>
+              <span className="font-semibold text-white">
                 {calculation.totalPool.toLocaleString()} USDC
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
+              <span className="text-sm text-slate-400 flex items-center gap-1">
                 <FiPercent className="w-4 h-4" />
                 Implied Probability ({betSide.toUpperCase()}):
               </span>
-              <span className="font-semibold text-primary-600 dark:text-primary-400">
+              <span className="font-semibold text-primary-400">
                 {calculation.impliedProbability.toFixed(1)}%
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600 dark:text-gray-400">Your Share of Pool:</span>
-              <span className="font-semibold text-gray-900 dark:text-white">
+              <span className="text-sm text-slate-400">Your Share of Pool:</span>
+              <span className="font-semibold text-white">
                 {calculation.yourShare.toFixed(2)}%
               </span>
             </div>
           </div>
 
           {/* Payout Breakdown */}
-          <div className="bg-gradient-to-br from-success-50 to-success-100 dark:from-success-900/20 dark:to-success-800/20 rounded-lg p-6 space-y-3">
-            <h4 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
-              <FiTrendingUp className="w-5 h-5 text-success-600" />
+          <div className="bg-success-500/[0.06] rounded-lg p-6 space-y-3">
+            <h4 className="font-semibold text-white flex items-center gap-2 mb-4">
+              <FiTrendingUp className="w-5 h-5 text-success-400" />
               If You Win
             </h4>
 
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-700 dark:text-gray-300">Your bet returns:</span>
-                <span className="font-medium text-gray-900 dark:text-white">
+                <span className="text-slate-300">Your bet returns:</span>
+                <span className="font-medium text-white">
                   {betAmount.toLocaleString()} USDC
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-700 dark:text-gray-300">
+                <span className="text-slate-300">
                   Winnings from {betSide === 'yes' ? 'NO' : 'YES'} pool:
                 </span>
-                <span className="font-medium text-gray-900 dark:text-white">
+                <span className="font-medium text-white">
                   +{calculation.winnings.toFixed(2)} USDC
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-700 dark:text-gray-300">Platform fee (2%):</span>
+                <span className="text-slate-300">Platform fee (2%):</span>
                 <span className="font-medium text-error-600">
                   -{calculation.fee.toFixed(2)} USDC
                 </span>
               </div>
-              <div className="border-t-2 border-success-300 dark:border-success-700 pt-2 mt-2"></div>
+              <div className="border-t border-success-500/30 pt-2 mt-2"></div>
               <div className="flex justify-between items-center">
-                <span className="text-gray-900 dark:text-white font-semibold text-base">
+                <span className="text-white font-semibold text-base">
                   Total Payout:
                 </span>
-                <span className="font-bold text-success-600 dark:text-success-400 text-lg">
+                <span className="font-bold text-success-400 text-lg">
                   {calculation.totalPayout.toFixed(2)} USDC
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-gray-900 dark:text-white font-semibold">Net Profit:</span>
+                <span className="text-white font-semibold">Net Profit:</span>
                 <span className={`font-bold text-lg ${
-                  calculation.profit > 0 ? 'text-success-600 dark:text-success-400' : 'text-error-600'
+                  calculation.profit > 0 ? 'text-success-400' : 'text-error-600'
                 }`}>
                   {calculation.profit > 0 ? '+' : ''}{calculation.profit.toFixed(2)} USDC
                   <span className="text-sm ml-2">
@@ -208,8 +208,8 @@ export const PayoutCalculator: React.FC = () => {
           </div>
 
           {/* Info Note */}
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-            <p className="text-sm text-blue-900 dark:text-blue-100">
+          <div className="bg-primary-500/[0.07] border border-primary-500/20 rounded-lg p-4">
+            <p className="text-sm text-primary-200">
               <strong>Note:</strong> This calculator assumes you win. If the opposite outcome occurs,
               you will lose your entire bet amount of {betAmount.toLocaleString()} USDC.
             </p>

@@ -42,17 +42,17 @@ export const ServiceWorkerUpdate: React.FC = () => {
           exit={{ y: 100, opacity: 0 }}
           className="fixed bottom-20 md:bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 z-50"
         >
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4">
+          <div className="bg-[#0D1224] rounded-2xl shadow-2xl border border-white/[0.08] p-4">
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center flex-shrink-0">
-                <FiRefreshCw className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+              <div className="w-10 h-10 bg-primary-100 /30 rounded-full flex items-center justify-center flex-shrink-0">
+                <FiRefreshCw className="w-5 h-5 text-primary-400" />
               </div>
 
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                <h3 className="font-semibold text-white mb-1">
                   Update Available
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                <p className="text-sm text-slate-400 mb-3">
                   A new version of Move Market is available with improvements and bug fixes.
                 </p>
 
@@ -65,9 +65,9 @@ export const ServiceWorkerUpdate: React.FC = () => {
                   </button>
                   <button
                     onClick={handleDismiss}
-                    className="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
+                    className="px-4 py-2 bg-white/[0.06] hover:bg-white/[0.05] rounded-lg transition-colors"
                   >
-                    <FiX className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                    <FiX className="w-5 h-5 text-slate-400" />
                   </button>
                 </div>
               </div>

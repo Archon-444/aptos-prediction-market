@@ -3,7 +3,7 @@ import { FiFileText, FiAlertTriangle, FiShield, FiDollarSign, FiUsers, FiLock } 
 
 export default function TermsOfServicePage() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-dark-bg py-12 px-4">
+    <div className="min-h-screen bg-[#080B18] py-12 px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -14,16 +14,16 @@ export default function TermsOfServicePage() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl mb-4">
             <FiFileText className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className="text-4xl font-bold text-white mb-4">
             Terms of Service
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-slate-400">
             Last Updated: October 9, 2025
           </p>
         </div>
 
         {/* Content */}
-        <div className="bg-white dark:bg-dark-surface rounded-2xl shadow-xl p-8 space-y-8">
+        <div className="bg-[#0D1224] border border-[#1C2537] rounded-2xl shadow-[0_24px_64px_rgba(0,0,0,0.5)] p-8 space-y-8">
 
           {/* Introduction */}
           <Section icon={FiFileText} title="1. Acceptance of Terms">
@@ -33,8 +33,8 @@ export default function TermsOfServicePage() {
             <p className="mt-4">
               These Terms constitute a legally binding agreement between you and PROPHECY. Please read them carefully before using the Platform.
             </p>
-            <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
-              <p className="text-sm text-red-800 dark:text-red-200">
+            <div className="mt-4 p-4 bg-error-500/[0.07] border border-error-500/25 rounded-xl">
+              <p className="text-sm text-error-300">
                 <strong>IMPORTANT:</strong> These Terms contain provisions that limit our liability and require you to resolve disputes through binding arbitration on an individual basis and not as part of any class or representative action.
               </p>
             </div>
@@ -50,14 +50,14 @@ export default function TermsOfServicePage() {
               <li>Comply with all applicable local, state, national, and international laws</li>
               <li>Not be on any sanctions list or restricted person list</li>
             </ul>
-            <p className="mt-4 font-semibold text-red-600 dark:text-red-400">
+            <p className="mt-4 font-semibold text-error-400">
               By using the Platform, you represent and warrant that you meet all eligibility requirements.
             </p>
           </Section>
 
           {/* Platform Description */}
           <Section icon={FiShield} title="3. Platform Description">
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">3.1 Decentralized Application</h4>
+            <h4 className="font-semibold text-white mb-3">3.1 Decentralized Application</h4>
             <p className="mb-4">
               PROPHECY is a decentralized prediction market platform built on the Aptos blockchain. The Platform allows users to:
             </p>
@@ -68,12 +68,12 @@ export default function TermsOfServicePage() {
               <li>Participate in a decentralized oracle system</li>
             </ul>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">3.2 Smart Contract Interaction</h4>
+            <h4 className="font-semibold text-white mb-3">3.2 Smart Contract Interaction</h4>
             <p>
               The Platform operates through smart contracts deployed on the Aptos blockchain. By using the Platform, you interact directly with these smart contracts. We do not control the Aptos blockchain or guarantee the security or functionality of smart contracts.
             </p>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mt-6 mb-3">3.3 Non-Custodial Service</h4>
+            <h4 className="font-semibold text-white mt-6 mb-3">3.3 Non-Custodial Service</h4>
             <p>
               <strong>We do not custody your funds.</strong> All assets are held in smart contracts or your self-custodied wallet. You are solely responsible for the security of your wallet and private keys.
             </p>
@@ -81,7 +81,7 @@ export default function TermsOfServicePage() {
 
           {/* User Responsibilities */}
           <Section icon={FiLock} title="4. User Responsibilities">
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">4.1 Wallet Security</h4>
+            <h4 className="font-semibold text-white mb-3">4.1 Wallet Security</h4>
             <p className="mb-4">You are responsible for:</p>
             <ul className="list-disc pl-6 space-y-2 mb-4">
               <li>Maintaining the confidentiality of your private keys and seed phrases</li>
@@ -89,11 +89,11 @@ export default function TermsOfServicePage() {
               <li>Ensuring your wallet is compatible with the Platform</li>
               <li>Protecting your account from unauthorized access</li>
             </ul>
-            <p className="font-semibold text-red-600 dark:text-red-400">
+            <p className="font-semibold text-error-400">
               NEVER share your private keys with anyone, including Platform administrators. We will NEVER ask for your private keys.
             </p>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mt-6 mb-3">4.2 Transaction Responsibility</h4>
+            <h4 className="font-semibold text-white mt-6 mb-3">4.2 Transaction Responsibility</h4>
             <ul className="list-disc pl-6 space-y-2">
               <li>Review all transaction details before confirming</li>
               <li>Verify recipient addresses and amounts</li>
@@ -101,7 +101,7 @@ export default function TermsOfServicePage() {
               <li>Pay all applicable gas fees and transaction costs</li>
             </ul>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mt-6 mb-3">4.3 Prohibited Conduct</h4>
+            <h4 className="font-semibold text-white mt-6 mb-3">4.3 Prohibited Conduct</h4>
             <p className="mb-2">You agree NOT to:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Use the Platform for money laundering or other illegal activities</li>
@@ -117,12 +117,12 @@ export default function TermsOfServicePage() {
 
           {/* Financial Risks */}
           <Section icon={FiDollarSign} title="5. Financial Risks and Disclaimers">
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">5.1 Risk of Loss</h4>
-            <div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-300 dark:border-red-700 rounded-xl p-6 mb-4">
-              <p className="font-bold text-red-900 dark:text-red-100 mb-3">
+            <h4 className="font-semibold text-white mb-3">5.1 Risk of Loss</h4>
+            <div className="bg-error-500/[0.07] border border-error-500/25 rounded-xl p-6 mb-4">
+              <p className="font-bold text-error-300 mb-3">
                 ⚠️ IMPORTANT RISK WARNINGS
               </p>
-              <ul className="space-y-2 text-red-800 dark:text-red-200">
+              <ul className="space-y-2 text-error-300">
                 <li>• You may lose your entire investment</li>
                 <li>• Prediction markets are speculative and high-risk</li>
                 <li>• Past performance does not guarantee future results</li>
@@ -133,12 +133,12 @@ export default function TermsOfServicePage() {
               </ul>
             </div>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">5.2 No Investment Advice</h4>
+            <h4 className="font-semibold text-white mb-3">5.2 No Investment Advice</h4>
             <p>
               The Platform provides information and tools for prediction markets but does NOT provide investment, financial, legal, or tax advice. You should consult with qualified professionals before making any financial decisions.
             </p>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mt-6 mb-3">5.3 Regulatory Uncertainty</h4>
+            <h4 className="font-semibold text-white mt-6 mb-3">5.3 Regulatory Uncertainty</h4>
             <p>
               Prediction markets and cryptocurrency regulations are evolving. You are responsible for understanding and complying with all applicable laws in your jurisdiction. We do not guarantee that the Platform complies with all jurisdictions' laws.
             </p>
@@ -146,7 +146,7 @@ export default function TermsOfServicePage() {
 
           {/* Market Rules */}
           <Section icon={FiShield} title="6. Market Rules and Resolution">
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">6.1 Market Creation</h4>
+            <h4 className="font-semibold text-white mb-3">6.1 Market Creation</h4>
             <p className="mb-4">When creating a market, you must:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Provide clear, unambiguous questions</li>
@@ -156,7 +156,7 @@ export default function TermsOfServicePage() {
               <li>Specify resolution sources (oracles)</li>
             </ul>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mt-6 mb-3">6.2 Market Resolution</h4>
+            <h4 className="font-semibold text-white mt-6 mb-3">6.2 Market Resolution</h4>
             <p className="mb-4">
               Markets are resolved through a multi-oracle consensus mechanism. Resolution is based on:
             </p>
@@ -165,11 +165,11 @@ export default function TermsOfServicePage() {
               <li>Majority consensus (typically 2-of-3 oracles)</li>
               <li>Manual fallback if oracle consensus fails</li>
             </ul>
-            <p className="font-semibold text-gray-900 dark:text-white">
+            <p className="font-semibold text-white">
               Market resolutions are final and irreversible. We do not guarantee the accuracy of oracle data.
             </p>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mt-6 mb-3">6.3 Disputes</h4>
+            <h4 className="font-semibold text-white mt-6 mb-3">6.3 Disputes</h4>
             <p>
               Due to the decentralized nature of the Platform, we have limited ability to intervene in market disputes. Oracle consensus is the primary dispute resolution mechanism.
             </p>
@@ -177,7 +177,7 @@ export default function TermsOfServicePage() {
 
           {/* Fees */}
           <Section icon={FiDollarSign} title="7. Fees and Payments">
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">7.1 Platform Fees</h4>
+            <h4 className="font-semibold text-white mb-3">7.1 Platform Fees</h4>
             <p className="mb-4">The Platform charges the following fees:</p>
             <ul className="list-disc pl-6 space-y-2 mb-4">
               <li><strong>Trading Fee:</strong> 1.5-2% on winning bets (competitive with industry standards)</li>
@@ -185,12 +185,12 @@ export default function TermsOfServicePage() {
               <li><strong>Withdrawals:</strong> Blockchain gas fees apply</li>
             </ul>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">7.2 Gas Fees</h4>
+            <h4 className="font-semibold text-white mb-3">7.2 Gas Fees</h4>
             <p>
               All blockchain transactions require gas fees (paid in APT). Gas fees are set by the Aptos network and are subject to change based on network congestion. We do not control or profit from gas fees.
             </p>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mt-6 mb-3">7.3 Fee Changes</h4>
+            <h4 className="font-semibold text-white mt-6 mb-3">7.3 Fee Changes</h4>
             <p>
               We reserve the right to modify fees with 30 days' notice. Continued use of the Platform after fee changes constitutes acceptance of the new fees.
             </p>
@@ -214,7 +214,7 @@ export default function TermsOfServicePage() {
 
           {/* Disclaimers */}
           <Section icon={FiAlertTriangle} title="9. Disclaimers and Limitation of Liability">
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">9.1 "AS IS" Disclaimer</h4>
+            <h4 className="font-semibold text-white mb-3">9.1 "AS IS" Disclaimer</h4>
             <p className="mb-4">
               THE PLATFORM IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:
             </p>
@@ -226,7 +226,7 @@ export default function TermsOfServicePage() {
               <li>Uninterrupted or error-free operation</li>
             </ul>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mt-6 mb-3">9.2 No Liability for Losses</h4>
+            <h4 className="font-semibold text-white mt-6 mb-3">9.2 No Liability for Losses</h4>
             <p>
               TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM:
             </p>
@@ -240,7 +240,7 @@ export default function TermsOfServicePage() {
               <li>Third-party actions or services</li>
             </ul>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">9.3 Limitation Amount</h4>
+            <h4 className="font-semibold text-white mb-3">9.3 Limitation Amount</h4>
             <p>
               IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) $100 USD OR (B) THE FEES YOU PAID TO US IN THE 12 MONTHS PRECEDING THE CLAIM.
             </p>
@@ -262,12 +262,12 @@ export default function TermsOfServicePage() {
 
           {/* Termination */}
           <Section icon={FiLock} title="11. Termination">
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">11.1 Right to Terminate</h4>
+            <h4 className="font-semibold text-white mb-3">11.1 Right to Terminate</h4>
             <p className="mb-4">
               We reserve the right to suspend or terminate your access to the Platform at any time, with or without cause, including if you violate these Terms.
             </p>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">11.2 Effect of Termination</h4>
+            <h4 className="font-semibold text-white mb-3">11.2 Effect of Termination</h4>
             <p>
               Upon termination:
             </p>
@@ -281,12 +281,12 @@ export default function TermsOfServicePage() {
 
           {/* Dispute Resolution */}
           <Section icon={FiFileText} title="12. Dispute Resolution and Arbitration">
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">12.1 Informal Resolution</h4>
+            <h4 className="font-semibold text-white mb-3">12.1 Informal Resolution</h4>
             <p className="mb-4">
-              Before filing a claim, you agree to contact us at legal@movemarket.com to attempt informal resolution of any dispute.
+              Before filing a claim, you agree to contact us at legal@prophecy.finance to attempt informal resolution of any dispute.
             </p>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">12.2 Binding Arbitration</h4>
+            <h4 className="font-semibold text-white mb-3">12.2 Binding Arbitration</h4>
             <p className="mb-4">
               If informal resolution fails, disputes shall be resolved through binding arbitration, except where prohibited by law. Arbitration will be conducted by:
             </p>
@@ -297,35 +297,35 @@ export default function TermsOfServicePage() {
               <li>With costs shared equally unless otherwise determined</li>
             </ul>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mt-6 mb-3">12.3 Class Action Waiver</h4>
-            <p className="font-semibold text-gray-900 dark:text-white">
+            <h4 className="font-semibold text-white mt-6 mb-3">12.3 Class Action Waiver</h4>
+            <p className="font-semibold text-white">
               YOU AGREE TO RESOLVE DISPUTES ON AN INDIVIDUAL BASIS ONLY. YOU WAIVE ANY RIGHT TO PARTICIPATE IN CLASS ACTIONS OR CLASS-WIDE ARBITRATION.
             </p>
           </Section>
 
           {/* Miscellaneous */}
           <Section icon={FiFileText} title="13. Miscellaneous">
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">13.1 Governing Law</h4>
+            <h4 className="font-semibold text-white mb-3">13.1 Governing Law</h4>
             <p className="mb-4">
               These Terms are governed by the laws of [Jurisdiction], without regard to conflict of law principles.
             </p>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">13.2 Severability</h4>
+            <h4 className="font-semibold text-white mb-3">13.2 Severability</h4>
             <p className="mb-4">
               If any provision of these Terms is found unenforceable, the remaining provisions shall remain in full force and effect.
             </p>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">13.3 No Waiver</h4>
+            <h4 className="font-semibold text-white mb-3">13.3 No Waiver</h4>
             <p className="mb-4">
               Our failure to enforce any provision does not constitute a waiver of that provision.
             </p>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">13.4 Entire Agreement</h4>
+            <h4 className="font-semibold text-white mb-3">13.4 Entire Agreement</h4>
             <p className="mb-4">
               These Terms, together with our Privacy Policy, constitute the entire agreement between you and PROPHECY.
             </p>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">13.5 Assignment</h4>
+            <h4 className="font-semibold text-white mb-3">13.5 Assignment</h4>
             <p>
               You may not assign these Terms. We may assign our rights and obligations without restriction.
             </p>
@@ -336,26 +336,26 @@ export default function TermsOfServicePage() {
             <p className="mb-4">
               For questions about these Terms, please contact us:
             </p>
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 space-y-2">
-              <p><strong>Email:</strong> legal@movemarket.com</p>
-              <p><strong>Support:</strong> support@movemarket.com</p>
-              <p><strong>Security:</strong> security@movemarket.com</p>
+            <div className="bg-white/[0.04] rounded-xl p-6 space-y-2">
+              <p><strong>Email:</strong> legal@prophecy.finance</p>
+              <p><strong>Support:</strong> support@prophecy.finance</p>
+              <p><strong>Security:</strong> security@prophecy.finance</p>
               <p><strong>Discord:</strong> Join our community server</p>
             </div>
           </Section>
 
           {/* Acknowledgment */}
-          <div className="mt-12 p-6 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 border-2 border-primary-200 dark:border-primary-800 rounded-xl">
-            <h3 className="font-bold text-primary-900 dark:text-primary-100 mb-3">
+          <div className="mt-12 p-6 bg-primary-500/[0.06] border border-primary-500/25 rounded-xl">
+            <h3 className="font-bold text-primary-300 mb-3">
               📝 Acknowledgment
             </h3>
-            <p className="text-sm text-primary-800 dark:text-primary-200">
+            <p className="text-sm text-primary-400">
               BY USING THE PLATFORM, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO BE BOUND BY THESE TERMS OF SERVICE. IF YOU DO NOT AGREE, YOU MUST NOT USE THE PLATFORM.
             </p>
           </div>
 
           {/* Effective Date */}
-          <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-600 dark:text-gray-400">
+          <div className="mt-8 pt-6 border-t border-white/[0.06] text-center text-sm text-slate-400">
             <p>These Terms of Service are effective as of October 9, 2025</p>
             <p className="mt-2">Version 1.0</p>
           </div>
@@ -377,11 +377,11 @@ function Section({ icon: Icon, title, children }: SectionProps) {
     <div className="border-l-4 border-primary-500 pl-6">
       <div className="flex items-center gap-3 mb-4">
         <Icon className="w-6 h-6 text-primary-500" />
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h2 className="text-2xl font-bold text-white">
           {title}
         </h2>
       </div>
-      <div className="text-gray-700 dark:text-gray-300 space-y-4">
+      <div className="text-slate-400 space-y-4">
         {children}
       </div>
     </div>

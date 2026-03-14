@@ -3,7 +3,7 @@ import { FiShield, FiLock, FiEye, FiDatabase, FiMail } from 'react-icons/fi';
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-dark-bg py-12 px-4">
+    <div className="min-h-screen bg-[#080B18] py-12 px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -11,19 +11,19 @@ export default function PrivacyPolicyPage() {
       >
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-600 rounded-2xl mb-4 shadow-[0_0_24px_rgba(59,130,246,0.3)]">
             <FiShield className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className="text-4xl font-black text-white mb-4 tracking-tight">
             Privacy Policy
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-slate-500">
             Last Updated: October 9, 2025
           </p>
         </div>
 
         {/* Content */}
-        <div className="bg-white dark:bg-dark-surface rounded-2xl shadow-xl p-8 space-y-8">
+        <div className="bg-[#0D1224] rounded-2xl border border-[#1C2537] shadow-[0_24px_64px_rgba(0,0,0,0.5)] p-8 space-y-8">
 
           {/* Introduction */}
           <Section icon={FiShield} title="1. Introduction">
@@ -37,7 +37,7 @@ export default function PrivacyPolicyPage() {
 
           {/* Information We Collect */}
           <Section icon={FiDatabase} title="2. Information We Collect">
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">2.1 Blockchain Information</h4>
+            <h4 className="font-semibold text-white mb-3">2.1 Blockchain Information</h4>
             <p className="mb-4">
               As a decentralized application (dApp), we interact with the Aptos blockchain. When you connect your wallet and use the Platform, the following blockchain data is publicly available:
             </p>
@@ -48,11 +48,11 @@ export default function PrivacyPolicyPage() {
               <li>Market creations and resolutions</li>
               <li>Timestamps of all on-chain activities</li>
             </ul>
-            <p className="text-sm text-gray-600 dark:text-gray-400 italic">
+            <p className="text-sm text-slate-400 italic">
               Note: This information is stored on the Aptos blockchain and is publicly accessible. We do not control blockchain data.
             </p>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mt-6 mb-3">2.2 Technical Information</h4>
+            <h4 className="font-semibold text-white mt-6 mb-3">2.2 Technical Information</h4>
             <ul className="list-disc pl-6 space-y-2">
               <li>IP address and device information</li>
               <li>Browser type and version</li>
@@ -61,7 +61,7 @@ export default function PrivacyPolicyPage() {
               <li>Error logs and performance metrics</li>
             </ul>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mt-6 mb-3">2.3 Local Storage</h4>
+            <h4 className="font-semibold text-white mt-6 mb-3">2.3 Local Storage</h4>
             <p>
               We use browser local storage to enhance your experience:
             </p>
@@ -88,7 +88,7 @@ export default function PrivacyPolicyPage() {
 
           {/* Data Storage and Security */}
           <Section icon={FiLock} title="4. Data Storage and Security">
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">4.1 Blockchain Data</h4>
+            <h4 className="font-semibold text-white mb-3">4.1 Blockchain Data</h4>
             <p className="mb-4">
               All betting and market data is stored on the Aptos blockchain, which is:
             </p>
@@ -99,7 +99,7 @@ export default function PrivacyPolicyPage() {
               <li>Not controlled or deletable by us</li>
             </ul>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">4.2 Off-Chain Data</h4>
+            <h4 className="font-semibold text-white mb-3">4.2 Off-Chain Data</h4>
             <p className="mb-4">
               Technical and usage data is stored securely using:
             </p>
@@ -110,7 +110,7 @@ export default function PrivacyPolicyPage() {
               <li>Regular security audits</li>
             </ul>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mt-6 mb-3">4.3 Wallet Security</h4>
+            <h4 className="font-semibold text-white mt-6 mb-3">4.3 Wallet Security</h4>
             <p>
               <strong>IMPORTANT:</strong> We NEVER store, access, or request your private keys. Your wallet remains under your sole control. We only interact with your wallet through secure wallet provider APIs (Petra, Martian, Pontem).
             </p>
@@ -120,7 +120,7 @@ export default function PrivacyPolicyPage() {
           <Section icon={FiDatabase} title="5. Data Sharing and Disclosure">
             <p className="mb-4">We do not sell your personal information. We may share information in the following circumstances:</p>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">5.1 Service Providers</h4>
+            <h4 className="font-semibold text-white mb-3">5.1 Service Providers</h4>
             <ul className="list-disc pl-6 space-y-2 mb-4">
               <li>Error monitoring services (e.g., Sentry)</li>
               <li>Analytics providers (e.g., Google Analytics)</li>
@@ -128,7 +128,7 @@ export default function PrivacyPolicyPage() {
               <li>Oracle data providers</li>
             </ul>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">5.2 Legal Requirements</h4>
+            <h4 className="font-semibold text-white mb-3">5.2 Legal Requirements</h4>
             <p className="mb-4">We may disclose information if required by law, court order, or government regulation, or to:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Comply with legal processes</li>
@@ -137,7 +137,7 @@ export default function PrivacyPolicyPage() {
               <li>Prevent fraud or illegal activities</li>
             </ul>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mt-6 mb-3">5.3 Business Transfers</h4>
+            <h4 className="font-semibold text-white mt-6 mb-3">5.3 Business Transfers</h4>
             <p>
               In the event of a merger, acquisition, or sale of assets, user information may be transferred to the acquiring entity.
             </p>
@@ -145,7 +145,7 @@ export default function PrivacyPolicyPage() {
 
           {/* Your Rights */}
           <Section icon={FiShield} title="6. Your Rights and Choices">
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">6.1 Access and Control</h4>
+            <h4 className="font-semibold text-white mb-3">6.1 Access and Control</h4>
             <ul className="list-disc pl-6 space-y-2 mb-4">
               <li><strong>Wallet Control:</strong> You can disconnect your wallet at any time</li>
               <li><strong>Local Storage:</strong> You can clear browser data to remove stored preferences</li>
@@ -153,7 +153,7 @@ export default function PrivacyPolicyPage() {
               <li><strong>Analytics:</strong> You can opt out of analytics tracking</li>
             </ul>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">6.2 Data Deletion</h4>
+            <h4 className="font-semibold text-white mb-3">6.2 Data Deletion</h4>
             <p className="mb-4">
               <strong>Important Limitation:</strong> Blockchain data (transactions, bets, markets) cannot be deleted or modified as it is permanently stored on the Aptos blockchain. However, you can request deletion of:
             </p>
@@ -163,7 +163,7 @@ export default function PrivacyPolicyPage() {
               <li>Account preferences</li>
             </ul>
 
-            <h4 className="font-semibold text-gray-900 dark:text-white mt-6 mb-3">6.3 GDPR Rights (EU Users)</h4>
+            <h4 className="font-semibold text-white mt-6 mb-3">6.3 GDPR Rights (EU Users)</h4>
             <p className="mb-2">If you are located in the European Union, you have the right to:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Access your personal data</li>
@@ -184,7 +184,7 @@ export default function PrivacyPolicyPage() {
               <li><strong>Local Storage:</strong> To save preferences and application state</li>
               <li><strong>Session Storage:</strong> For temporary data during your browsing session</li>
             </ul>
-            <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-4 text-sm text-slate-400">
               You can control cookies through your browser settings, but disabling essential cookies may impair platform functionality.
             </p>
           </Section>
@@ -199,7 +199,7 @@ export default function PrivacyPolicyPage() {
               <li><strong>Analytics:</strong> Google Analytics, Mixpanel (if enabled)</li>
               <li><strong>Error Monitoring:</strong> Sentry (if enabled)</li>
             </ul>
-            <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-4 text-sm text-slate-400">
               These third parties have their own privacy policies. We are not responsible for their data practices.
             </p>
           </Section>
@@ -209,7 +209,7 @@ export default function PrivacyPolicyPage() {
             <p>
               The Platform is not intended for users under the age of 18. We do not knowingly collect personal information from children. If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately.
             </p>
-            <p className="mt-4 font-semibold text-red-600 dark:text-red-400">
+            <p className="mt-4 font-semibold text-error-400">
               You must be at least 18 years old to use this Platform.
             </p>
           </Section>
@@ -244,24 +244,24 @@ export default function PrivacyPolicyPage() {
             <p className="mb-4">
               If you have questions, concerns, or requests regarding this Privacy Policy or your personal data, please contact us:
             </p>
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 space-y-2">
-              <p><strong>Email:</strong> privacy@movemarket.com</p>
-              <p><strong>Security Email:</strong> security@movemarket.com</p>
+            <div className="bg-white/[0.04] rounded-xl p-6 space-y-2">
+              <p><strong>Email:</strong> privacy@prophecy.finance</p>
+              <p><strong>Security Email:</strong> security@prophecy.finance</p>
               <p><strong>Discord:</strong> Join our server for support</p>
               <p><strong>GitHub:</strong> Report issues on our public repository</p>
             </div>
-            <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
-              For security vulnerabilities, please use our bug bounty program or email security@movemarket.com directly.
+            <p className="mt-4 text-sm text-slate-400">
+              For security vulnerabilities, please use our bug bounty program or email security@prophecy.finance directly.
             </p>
           </Section>
 
           {/* Legal Disclaimer */}
-          <div className="mt-12 p-6 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl">
-            <h3 className="font-bold text-yellow-900 dark:text-yellow-100 mb-3 flex items-center gap-2">
+          <div className="mt-12 p-6 bg-warning-500/[0.07] border border-warning-500/25 rounded-xl">
+            <h3 className="font-bold text-warning-200 mb-3 flex items-center gap-2">
               <FiShield className="w-5 h-5" />
               Important Legal Disclaimer
             </h3>
-            <ul className="text-sm text-yellow-800 dark:text-yellow-200 space-y-2">
+            <ul className="text-sm text-warning-300 space-y-2">
               <li>• Blockchain transactions are permanent and publicly visible</li>
               <li>• We cannot delete or modify on-chain data</li>
               <li>• Your wallet address and transaction history are public</li>
@@ -272,7 +272,7 @@ export default function PrivacyPolicyPage() {
           </div>
 
           {/* Effective Date */}
-          <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-600 dark:text-gray-400">
+          <div className="mt-8 pt-6 border-t border-white/[0.06] text-center text-sm text-slate-400">
             <p>This Privacy Policy is effective as of October 9, 2025</p>
             <p className="mt-2">Version 1.0</p>
           </div>
@@ -294,11 +294,11 @@ function Section({ icon: Icon, title, children }: SectionProps) {
     <div className="border-l-4 border-primary-500 pl-6">
       <div className="flex items-center gap-3 mb-4">
         <Icon className="w-6 h-6 text-primary-500" />
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h2 className="text-2xl font-bold text-white">
           {title}
         </h2>
       </div>
-      <div className="text-gray-700 dark:text-gray-300 space-y-4">
+      <div className="text-slate-400 space-y-4">
         {children}
       </div>
     </div>

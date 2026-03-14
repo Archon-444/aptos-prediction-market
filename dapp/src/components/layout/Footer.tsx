@@ -3,79 +3,78 @@ import { Link } from 'react-router-dom';
 import { FiTwitter, FiGithub, FiMessageCircle, FiTrendingUp } from 'react-icons/fi';
 import { Container } from './Container';
 
+const FOOTER_LINKS = {
+  product: [
+    { label: 'Markets', href: '/markets' },
+    { label: 'How It Works', href: '/how-it-works' },
+    { label: 'Leaderboard', href: '/leaderboard' },
+    { label: 'Oracle', href: '/oracle' },
+  ],
+  resources: [
+    { label: 'Documentation', href: '/docs' },
+    { label: 'Smart Contracts', href: '/contracts' },
+    { label: 'API', href: '/api' },
+  ],
+  community: [
+    { label: 'DAO', href: '/dao' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Contact', href: '/contact' },
+  ],
+};
+
+const SOCIAL_LINKS = [
+  { icon: FiTwitter, href: 'https://twitter.com', label: 'Twitter' },
+  { icon: FiGithub, href: 'https://github.com', label: 'GitHub' },
+  { icon: FiMessageCircle, href: 'https://discord.com', label: 'Discord' },
+];
+
 export const Footer: React.FC = () => {
-  const footerLinks = {
-    product: [
-      { label: 'Markets', href: '/markets' },
-      { label: 'How It Works', href: '/how-it-works' },
-      { label: 'FAQ', href: '/faq' },
-    ],
-    resources: [
-      { label: 'Documentation', href: '/docs' },
-      { label: 'API', href: '/api' },
-      { label: 'Smart Contracts', href: '/contracts' },
-    ],
-    company: [
-      { label: 'About', href: '/about' },
-      { label: 'Blog', href: '/blog' },
-      { label: 'Contact', href: '/contact' },
-    ],
-    legal: [
-      { label: 'Privacy Policy', href: '/privacy' },
-      { label: 'Terms of Service', href: '/terms' },
-      { label: 'Cookie Policy', href: '/cookies' },
-    ],
-  };
-
-  const socialLinks = [
-    { icon: FiTwitter, href: 'https://twitter.com', label: 'Twitter' },
-    { icon: FiGithub, href: 'https://github.com', label: 'GitHub' },
-    { icon: FiMessageCircle, href: 'https://discord.com', label: 'Discord' },
-  ];
-
   return (
-    <footer className="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-auto transition-colors">
+    <footer className="border-t border-white/[0.05] bg-[#080B18] mt-auto">
       <Container>
         <div className="py-12 lg:py-16">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
             {/* Brand */}
             <div className="col-span-2 md:col-span-1">
-              <Link to="/" className="flex items-center space-x-2 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center shadow-md">
-                  <FiTrendingUp className="w-6 h-6 text-white" />
+              <Link to="/" className="flex items-center gap-3 group mb-4">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-600 flex items-center justify-center shadow-[0_0_16px_rgba(59,130,246,0.3)] group-hover:shadow-[0_0_24px_rgba(59,130,246,0.45)] transition-all">
+                  <FiTrendingUp className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-display font-bold text-gray-900 dark:text-white transition-colors">
-                  Move Market
-                </span>
+                <div>
+                  <span className="text-lg font-black text-white tracking-tight">Prophecy</span>
+                  <span className="block text-[9px] uppercase font-bold tracking-[0.15em] text-primary-400">
+                    Prediction Protocol
+                  </span>
+                </div>
               </Link>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 transition-colors">
-                Decentralized prediction markets on Aptos blockchain.
+              <p className="text-sm text-slate-500 mb-5 leading-relaxed">
+                Transparent prediction markets on Move. Instant settlement, oracle-powered resolution.
               </p>
-              <div className="flex space-x-4">
-                {socialLinks.map((social) => (
+              <div className="flex gap-2">
+                {SOCIAL_LINKS.map((social) => (
                   <a
                     key={social.label}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:border-primary-500 hover:text-primary-500 transition-colors"
+                    className="w-9 h-9 rounded-xl border border-white/[0.08] bg-white/[0.04] flex items-center justify-center text-slate-400 hover:text-white hover:border-white/[0.16] hover:bg-white/[0.08] transition-all"
                     aria-label={social.label}
                   >
-                    <social.icon className="w-5 h-5" />
+                    <social.icon className="w-4 h-4" />
                   </a>
                 ))}
               </div>
             </div>
 
-            {/* Links */}
+            {/* Product links */}
             <div>
-              <h3 className="font-display font-bold text-gray-900 dark:text-white mb-4 transition-colors">Product</h3>
+              <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Product</h3>
               <ul className="space-y-3">
-                {footerLinks.product.map((link) => (
+                {FOOTER_LINKS.product.map((link) => (
                   <li key={link.href}>
                     <Link
                       to={link.href}
-                      className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 transition-colors"
+                      className="text-sm text-slate-400 hover:text-white transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -84,14 +83,15 @@ export const Footer: React.FC = () => {
               </ul>
             </div>
 
+            {/* Resources links */}
             <div>
-              <h3 className="font-display font-bold text-gray-900 dark:text-white mb-4 transition-colors">Resources</h3>
+              <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Resources</h3>
               <ul className="space-y-3">
-                {footerLinks.resources.map((link) => (
+                {FOOTER_LINKS.resources.map((link) => (
                   <li key={link.href}>
                     <Link
                       to={link.href}
-                      className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 transition-colors"
+                      className="text-sm text-slate-400 hover:text-white transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -100,14 +100,15 @@ export const Footer: React.FC = () => {
               </ul>
             </div>
 
+            {/* Community links */}
             <div>
-              <h3 className="font-display font-bold text-gray-900 dark:text-white mb-4 transition-colors">Company</h3>
+              <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Community</h3>
               <ul className="space-y-3">
-                {footerLinks.company.map((link) => (
+                {FOOTER_LINKS.community.map((link) => (
                   <li key={link.href}>
                     <Link
                       to={link.href}
-                      className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 transition-colors"
+                      className="text-sm text-slate-400 hover:text-white transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -117,23 +118,17 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Bottom */}
-          <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 transition-colors">
-            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <p className="text-sm text-gray-600 dark:text-gray-400 transition-colors">
-                © {new Date().getFullYear()} Move Market. All rights reserved.
+          {/* Bottom bar */}
+          <div className="mt-12 pt-8 border-t border-white/[0.05]">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="text-xs text-slate-600">
+                © {new Date().getFullYear()} Prophecy. All rights reserved.
               </p>
-              <div className="flex space-x-6">
-                <Link
-                  to="/privacy"
-                  className="text-sm text-gray-600 hover:text-primary-500 transition-colors"
-                >
+              <div className="flex gap-6">
+                <Link to="/privacy" className="text-xs text-slate-600 hover:text-slate-400 transition-colors">
                   Privacy Policy
                 </Link>
-                <Link
-                  to="/terms"
-                  className="text-sm text-gray-600 hover:text-primary-500 transition-colors"
-                >
+                <Link to="/terms" className="text-xs text-slate-600 hover:text-slate-400 transition-colors">
                   Terms of Service
                 </Link>
               </div>

@@ -95,28 +95,28 @@ export function MarketDiscovery({ markets }: MarketDiscoveryProps) {
   return (
     <div className="space-y-4">
       {/* Search Bar */}
-      <div className="sticky top-0 z-10 bg-white dark:bg-gray-900 pb-4">
+      <div className="sticky top-0 z-10 bg-[#080B18]/95 backdrop-blur-xl pb-4">
         <div className="relative">
-          <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
           <input
             type="text"
             placeholder="Search markets..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-12 pr-12 py-4 text-base
-              bg-gray-100 dark:bg-gray-800
-              border-2 border-gray-200 dark:border-gray-700
-              focus:border-primary-500 dark:focus:border-primary-500
+              bg-white/[0.06]
+              border border-white/[0.08]
+              focus:border-primary-500
               rounded-2xl outline-none transition-colors
-              text-gray-900 dark:text-white
-              placeholder-gray-400 dark:placeholder-gray-500"
+              text-white
+              placeholder-slate-600"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors"
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-white/[0.1] rounded-full transition-colors"
             >
-              <FiX className="w-4 h-4 text-gray-400" />
+              <FiX className="w-4 h-4 text-slate-500" />
             </button>
           )}
         </div>
@@ -128,7 +128,7 @@ export function MarketDiscovery({ markets }: MarketDiscoveryProps) {
           className={`mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-colors ${
             showFilters
               ? 'bg-primary-500 text-white'
-              : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
+              : 'bg-white/[0.06] text-slate-300'
           }`}
         >
           <FiFilter className="w-4 h-4" />
@@ -143,11 +143,11 @@ export function MarketDiscovery({ markets }: MarketDiscoveryProps) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="space-y-4 pb-4 border-b border-gray-200 dark:border-gray-700"
+            className="space-y-4 pb-4 border-b border-white/[0.06]"
           >
             {/* Sort Options */}
             <div>
-              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 block">
+              <label className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2 block">
                 Sort By
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -162,8 +162,8 @@ export function MarketDiscovery({ markets }: MarketDiscoveryProps) {
                       onClick={() => setSortBy(option.value)}
                       className={`flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition-all ${
                         isSelected
-                          ? 'bg-gradient-to-br from-primary-500 to-secondary-500 text-white shadow-lg'
-                          : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
+                          ? 'bg-gradient-to-r from-primary-500 to-secondary-600 text-white'
+                          : 'bg-white/[0.06] text-slate-300'
                       }`}
                     >
                       <Icon className="w-4 h-4" />
@@ -176,7 +176,7 @@ export function MarketDiscovery({ markets }: MarketDiscoveryProps) {
 
             {/* Category Filters */}
             <div>
-              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 block">
+              <label className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2 block">
                 Category
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -190,8 +190,8 @@ export function MarketDiscovery({ markets }: MarketDiscoveryProps) {
                       onClick={() => setFilterCategory(category.value)}
                       className={`px-4 py-3 rounded-xl font-medium transition-all ${
                         isSelected
-                          ? 'bg-gradient-to-br from-secondary-500 to-primary-500 text-white shadow-lg'
-                          : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
+                          ? 'bg-gradient-to-r from-secondary-500 to-primary-500 text-white'
+                          : 'bg-white/[0.06] text-slate-300'
                       }`}
                     >
                       <span className="text-sm">{category.label}</span>
@@ -205,7 +205,7 @@ export function MarketDiscovery({ markets }: MarketDiscoveryProps) {
       </AnimatePresence>
 
       {/* Results Count */}
-      <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+      <div className="flex items-center justify-between text-sm text-slate-500">
         <span>
           {filteredMarkets.length} {filteredMarkets.length === 1 ? 'market' : 'markets'} found
         </span>
@@ -215,7 +215,7 @@ export function MarketDiscovery({ markets }: MarketDiscoveryProps) {
               setSearchQuery('');
               setFilterCategory('all');
             }}
-            className="text-primary-600 dark:text-primary-400 font-medium"
+            className="text-primary-400 font-medium"
           >
             Clear filters
           </button>
@@ -230,13 +230,13 @@ export function MarketDiscovery({ markets }: MarketDiscoveryProps) {
           ))
         ) : (
           <div className="text-center py-12 px-4">
-            <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FiSearch className="w-8 h-8 text-gray-400" />
+            <div className="w-16 h-16 bg-white/[0.06] rounded-full flex items-center justify-center mx-auto mb-4">
+              <FiSearch className="w-8 h-8 text-slate-500" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="text-lg font-semibold text-white mb-2">
               No markets found
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
+            <p className="text-slate-400 mb-4">
               Try adjusting your search or filters
             </p>
             <motion.button

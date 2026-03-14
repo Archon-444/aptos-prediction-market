@@ -75,7 +75,7 @@ export const Select: React.FC<SelectProps> = ({
       {label && (
         <label
           htmlFor={id}
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+          className="block text-sm font-medium text-slate-300 mb-2"
         >
           {label}
         </label>
@@ -89,30 +89,30 @@ export const Select: React.FC<SelectProps> = ({
         disabled={disabled}
         className={`
           w-full px-4 py-3 rounded-xl text-left shadow-sm
-          bg-gray-50/80 dark:bg-gray-900/60
-          border border-gray-200/80 dark:border-gray-700/70
-          text-gray-900 dark:text-white
-          transition-all duration-200 backdrop-blur
+          bg-[#0D1224]
+          border border-[#1C2537]
+          text-white
+          transition-all duration-200
           flex items-center justify-between
           ${
             isOpen
-              ? 'ring-2 ring-primary-400/70 border-primary-400/70 dark:border-primary-500'
-              : 'hover:border-primary-300/70 dark:hover:border-primary-400/60'
+              ? 'ring-1 ring-primary-500/50 border-primary-500/50'
+              : 'hover:border-primary-500/30'
           }
           ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-          focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-100 dark:focus-visible:ring-offset-gray-900
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#080B18]
         `}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
         <span className="flex items-center gap-2">
           {selectedOption?.icon && <span className="text-lg">{selectedOption.icon}</span>}
-          <span className={selectedOption ? '' : 'text-gray-500 dark:text-gray-400'}>
+          <span className={selectedOption ? '' : 'text-slate-500'}>
             {selectedOption?.label || placeholder}
           </span>
         </span>
         <FiChevronDown
-          className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${
+          className={`w-5 h-5 text-slate-500 transition-transform duration-200 ${
             isOpen ? 'rotate-180' : ''
           }`}
         />
@@ -135,9 +135,9 @@ export const Select: React.FC<SelectProps> = ({
               transition={{ duration: 0.15 }}
               className="
                 absolute z-20 w-full mt-2
-                bg-white/95 dark:bg-gray-900/95
-                border border-gray-200/80 dark:border-gray-700/70
-                rounded-2xl shadow-lg shadow-black/10 backdrop-blur
+                bg-[#0D1224]
+                border border-[#1C2537]
+                rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.5)]
                 max-h-60 overflow-auto
                 scrollbar-thin
               "
@@ -155,8 +155,8 @@ export const Select: React.FC<SelectProps> = ({
                       transition-colors duration-150
                       ${
                         isSelected
-                          ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-300'
-                          : 'text-gray-900 dark:text-gray-100 hover:bg-gray-100/70 dark:hover:bg-gray-800/50'
+                          ? 'bg-primary-500/10 text-primary-300'
+                          : 'text-slate-200 hover:bg-white/[0.05] hover:text-white'
                       }
                       ${option === options[0] ? 'rounded-t-lg' : ''}
                       ${option === options[options.length - 1] ? 'rounded-b-lg' : ''}
@@ -169,7 +169,7 @@ export const Select: React.FC<SelectProps> = ({
                       <span className="font-medium">{option.label}</span>
                     </span>
                     {isSelected && (
-                      <FiCheck className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+                      <FiCheck className="w-5 h-5 text-primary-400" />
                     )}
                   </li>
                 );

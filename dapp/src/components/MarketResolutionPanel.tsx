@@ -122,9 +122,9 @@ export const MarketResolutionPanel: React.FC<MarketResolutionPanelProps> = ({ ma
 
       {isLoading ? (
         <div className="animate-pulse space-y-3">
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3" />
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3" />
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2" />
+          <div className="h-4 bg-white/[0.06] rounded w-1/3" />
+          <div className="h-4 bg-white/[0.06] rounded w-2/3" />
+          <div className="h-4 bg-white/[0.06] rounded w-1/2" />
         </div>
       ) : error ? (
         <div className="flex items-start gap-3 p-4 bg-error-100 border border-error-200 text-error-800 rounded-lg">
@@ -138,7 +138,7 @@ export const MarketResolutionPanel: React.FC<MarketResolutionPanelProps> = ({ ma
         <>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+              <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wide">
                 Resolution Path
               </h4>
               <div className="flex items-center gap-2">
@@ -156,12 +156,12 @@ export const MarketResolutionPanel: React.FC<MarketResolutionPanelProps> = ({ ma
                 </Badge>
               </div>
               {metadata?.resolved ? (
-                <p className="text-sm text-success-600 dark:text-success-400 flex items-center gap-2">
+                <p className="text-sm text-success-400 flex items-center gap-2">
                   <FiActivity className="w-4 h-4" />
                   Resolved · winning outcome #{metadata.winningOutcome}
                 </p>
               ) : (
-                <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                <p className="text-sm text-slate-400 flex items-center gap-2">
                   <FiClock className="w-4 h-4" />
                   Awaiting resolution
                 </p>
@@ -169,19 +169,19 @@ export const MarketResolutionPanel: React.FC<MarketResolutionPanelProps> = ({ ma
             </div>
 
             <div className="space-y-2">
-              <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+              <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wide">
                 Latest Pyth Price
               </h4>
               {price?.hasSnapshot && formattedPrice ? (
                 <div className="space-y-1">
-                  <p className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                  <p className="text-lg font-semibold text-white flex items-center gap-2">
                     <FiTrendingUp className="w-5 h-5 text-primary-500" />
                     {formattedPrice.display}
                   </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-slate-400">
                     Confidence interval {formattedPrice.confidence}
                   </p>
-                  <div className="flex flex-wrap gap-3 text-xs text-gray-500 dark:text-gray-400">
+                  <div className="flex flex-wrap gap-3 text-xs text-slate-500">
                     <span className="flex items-center gap-1">
                       <FiDatabase className="w-3 h-3" />
                       Publish: {formatTimestamp(price.publishTime)}
@@ -193,7 +193,7 @@ export const MarketResolutionPanel: React.FC<MarketResolutionPanelProps> = ({ ma
                   </div>
                 </div>
               ) : (
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-slate-400">
                   No verified Pyth snapshot cached yet. The market will fall back to optimistic resolution if data remains stale.
                 </p>
               )}

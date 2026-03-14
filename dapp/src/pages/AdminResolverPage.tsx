@@ -311,7 +311,7 @@ const AdminResolverPage: React.FC = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-300 mb-2">
                     Check Interval (minutes)
                   </label>
                   <input
@@ -336,9 +336,9 @@ const AdminResolverPage: React.FC = () => {
                         ...config,
                         enabled: e.target.checked
                       })}
-                      className="w-4 h-4 text-primary-600 bg-gray-800 border-gray-600 rounded focus:ring-primary-500 focus:ring-2"
+                      className="w-4 h-4 text-primary-600 bg-[#0D1224] border-white/[0.1] rounded focus:ring-primary-500 focus:ring-2"
                     />
-                    <span className="ml-2 text-sm text-gray-300">Enabled</span>
+                    <span className="ml-2 text-sm text-slate-300">Enabled</span>
                   </label>
                 </div>
 
@@ -351,9 +351,9 @@ const AdminResolverPage: React.FC = () => {
                         ...config,
                         dryRun: e.target.checked
                       })}
-                      className="w-4 h-4 text-primary-600 bg-gray-800 border-gray-600 rounded focus:ring-primary-500 focus:ring-2"
+                      className="w-4 h-4 text-primary-600 bg-[#0D1224] border-white/[0.1] rounded focus:ring-primary-500 focus:ring-2"
                     />
-                    <span className="ml-2 text-sm text-gray-300">Dry Run Mode</span>
+                    <span className="ml-2 text-sm text-slate-300">Dry Run Mode</span>
                   </label>
                 </div>
               </div>
@@ -399,7 +399,7 @@ const AdminResolverPage: React.FC = () => {
                             Manual required
                           </span>
                         )}
-                        <span className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-200 bg-white/10 rounded">
+                        <span className="inline-flex items-center px-2 py-1 text-xs font-medium text-slate-200 bg-white/10 rounded">
                           {market.chain.toUpperCase()}
                         </span>
                       </div>

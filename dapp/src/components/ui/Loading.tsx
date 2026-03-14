@@ -46,7 +46,7 @@ export const Loading: React.FC<LoadingProps> = ({
       {/* Loading Text */}
       {text && (
         <motion.p
-          className={`${textSizes[size]} font-medium text-gray-600`}
+          className={`${textSizes[size]} font-medium text-slate-500`}
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         >

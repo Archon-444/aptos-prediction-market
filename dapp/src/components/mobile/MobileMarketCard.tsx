@@ -67,11 +67,11 @@ export const MobileMarketCard: React.FC<MobileMarketCardProps> = React.memo(({ m
       role="button"
       tabIndex={0}
       aria-label={`View market: ${market.question}`}
-      className="bg-white dark:bg-gray-800 rounded-2xl shadow-card border border-gray-200 dark:border-gray-700 overflow-hidden touch-manipulation active:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+      className="bg-[#0D1224] rounded-2xl border border-[#1C2537] hover:border-primary-500/25 transition-colors overflow-hidden touch-manipulation active:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
     >
       {/* Header */}
       <div className="p-4 pb-3">
-        <h3 className="text-base font-semibold text-gray-900 dark:text-white line-clamp-2 leading-tight">
+        <h3 className="text-base font-semibold text-white line-clamp-2 leading-tight">
           {sanitizeMarketQuestion(market.question)}
         </h3>
       </div>
@@ -81,7 +81,7 @@ export const MobileMarketCard: React.FC<MobileMarketCardProps> = React.memo(({ m
         {market.outcomes.slice(0, 2).map((outcome, index) => (
           <div
             key={index}
-            className="relative overflow-hidden rounded-xl bg-gray-50 dark:bg-gray-700/50 p-3"
+            className="relative overflow-hidden rounded-xl bg-white/[0.04] p-3"
           >
             {/* Background Bar */}
             <div
@@ -91,11 +91,11 @@ export const MobileMarketCard: React.FC<MobileMarketCardProps> = React.memo(({ m
 
             {/* Content */}
             <div className="relative flex items-center justify-between">
-              <span className="font-medium text-gray-900 dark:text-white text-sm">
+              <span className="font-medium text-slate-200 text-sm">
                 {sanitizeText(outcome)}
               </span>
               <div className="flex items-center gap-2">
-                <span className="text-lg font-bold text-primary-600 dark:text-primary-400">
+                <span className="text-lg font-bold text-primary-400">
                   {odds[index] || 0}%
                 </span>
                 <FiTrendingUp className="w-4 h-4 text-primary-500" />
@@ -106,8 +106,8 @@ export const MobileMarketCard: React.FC<MobileMarketCardProps> = React.memo(({ m
       </div>
 
       {/* Footer Stats */}
-      <div className="px-4 py-3 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-200 dark:border-gray-700">
-        <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
+      <div className="px-4 py-3 border-t border-white/[0.05]">
+        <div className="flex items-center justify-between text-xs text-slate-500">
           <div className="flex items-center gap-1">
             <FiClock className="w-4 h-4" />
             <span>{timeRemaining}</span>
@@ -119,7 +119,7 @@ export const MobileMarketCard: React.FC<MobileMarketCardProps> = React.memo(({ m
           </div>
 
           {market.resolved && (
-            <div className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs font-medium">
+            <div className="px-2 py-1 bg-success-500/10 text-success-400 rounded-full text-xs font-medium">
               Resolved
             </div>
           )}

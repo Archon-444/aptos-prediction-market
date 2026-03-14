@@ -39,8 +39,8 @@ export const OfflineIndicator: React.FC = () => {
           <div
             className={`${
               isOffline
-                ? 'bg-yellow-500 dark:bg-yellow-600'
-                : 'bg-green-500 dark:bg-green-600'
+                ? 'bg-yellow-500 '
+                : 'bg-green-500 '
             } text-white py-2 px-4 text-center text-sm font-medium flex items-center justify-center gap-2`}
           >
             {isOffline ? (

@@ -196,7 +196,7 @@ const AdminRolesPage: React.FC = () => {
           </div>
 
           <form onSubmit={handleLookup} className="mb-6 space-y-3">
-            <label htmlFor="address" className="block text-sm font-medium text-gray-300">
+            <label htmlFor="address" className="block text-sm font-medium text-slate-300">
               Wallet Address
             </label>
             <div className="flex flex-col sm:flex-row gap-3">
