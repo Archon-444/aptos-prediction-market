@@ -26,7 +26,7 @@ export const StubWalletProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   const getClient = useCallback(async () => {
     const { Aptos, AptosConfig } = await import('@aptos-labs/ts-sdk');
-    const config = new AptosConfig({ network });
+    const config = new AptosConfig({ network: network as any });
     return new Aptos(config);
   }, [network]);
 

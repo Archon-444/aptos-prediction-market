@@ -79,3 +79,4 @@ temp/
 # ============ Package Managers ============
 .yarn/cache
 .pnpm-debug.log
+claude_code-multi-AI-MCP/

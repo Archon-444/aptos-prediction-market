@@ -35,7 +35,7 @@ export class AptosAdapter implements IBlockchainAdapter {
   }
 
   async getUserPosition(marketId: number, address: string): Promise<UserPosition | null> {
-    return this.sdk.getUserPosition(marketId as any, address);
+    return this.sdk.getUserPosition(address, marketId);
   }
 
   async placeBet(): Promise<TransactionResult> {

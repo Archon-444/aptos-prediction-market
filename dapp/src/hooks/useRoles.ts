@@ -8,11 +8,22 @@ import { useUnifiedWallet } from './useUnifiedWallet';
 import { useChain, type Chain } from '../contexts/ChainContext';
 import env from '../config/env';
 import type { WalletAuthContext } from '../services/api/client';
-import { buildAuthHeaders as buildSignedHeaders } from '../services/api/client';
+import { buildAuthHeaders } from '../services/api/client';
 
 const API_BASE = env.apiUrl.replace(/\/$/, '');
 
 const buildUrl = (path: string) => `${API_BASE}${path.startsWith('/') ? path : `/${path}`}`;
+
+
+// Simple headers for admin API calls that don't require wallet signing
+function buildAdminHeaders(chain: string, address: string, opts?: { json?: boolean }): Record<string, string> {
+  const headers: Record<string, string> = {
+    'x-wallet-address': address,
+    'x-wallet-chain': chain,
+  };
+  if (opts?.json !== false) headers['Content-Type'] = 'application/json';
+  return headers;
+}
 
 export enum RoleId {
   Admin = 0,
@@ -130,7 +141,7 @@ const useRoleCheck = (role: RoleId): RoleState => {
         };
 
         const response = await fetch(buildUrl(`/roles/${address}`), {
-          headers: await buildSignedHeaders(auth),
+          headers: await buildAuthHeaders(auth),
         });
 
         if (!response.ok) {
@@ -200,7 +211,7 @@ export const useRoleManagement = () => {
 
       const response = await fetch(buildUrl('/roles/sync'), {
         method: 'POST',
-        headers: buildAuthHeaders(chain, actorAddress),
+        headers: buildAdminHeaders(chain, actorAddress),
         body: JSON.stringify({
           walletAddress: trimmedAddress,
           chain,
@@ -233,7 +244,7 @@ export const useRoleManagement = () => {
       }
 
       const response = await fetch(buildUrl(`/roles/${trimmedAddress}`), {
-        headers: buildAuthHeaders(chain, actorAddress, { json: false }),
+        headers: buildAdminHeaders(chain, actorAddress, { json: false }),
       });
 
       if (!response.ok) {
@@ -294,7 +305,7 @@ export const useRoleManagement = () => {
 
           await fetch(buildUrl(`/roles/${action}`), {
             method: 'POST',
-            headers: buildAuthHeaders('aptos', actorAddress),
+            headers: buildAdminHeaders('aptos', actorAddress),
             body: JSON.stringify({
               walletAddress: trimmedAddress,
               role: canonicalRole,
@@ -312,7 +323,7 @@ export const useRoleManagement = () => {
         // Sui path delegates to backend signer (admin cap)
         await fetch(buildUrl(`/roles/${action}`), {
           method: 'POST',
-          headers: buildAuthHeaders('sui', actorAddress),
+          headers: buildAdminHeaders('sui', actorAddress),
           body: JSON.stringify({
             walletAddress: trimmedAddress,
             role: canonicalRole,

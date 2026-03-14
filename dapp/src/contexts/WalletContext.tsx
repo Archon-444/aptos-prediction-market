@@ -139,7 +139,7 @@ export const AptosWalletProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
     if (!loadPromiseRef.current) {
       loadPromiseRef.current = import('@aptos-labs/ts-sdk').then(({ Aptos, AptosConfig }) => {
-        const config = new AptosConfig({ network });
+        const config = new AptosConfig({ network: network as any });
         const client = new Aptos(config);
         aptosRef.current = client;
         return client;

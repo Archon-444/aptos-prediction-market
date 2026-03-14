@@ -44,14 +44,15 @@ const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 const TermsOfServicePage = lazy(() => import('./pages/TermsOfServicePage'));
 const TikiDemo = lazy(() => import('./pages/TikiDemo'));
 const OracleDashboardPage = lazy(() => import('./pages/OracleDashboardPage'));
+const LiquidityPage = lazy(() => import('./pages/LiquidityPage'));
 
 // Loading fallback component
 function LoadingFallback() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-white dark:bg-[#0A0E27]">
+    <div className="flex items-center justify-center min-h-screen bg-[#080B18]">
       <div className="text-center">
         <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-        <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+        <p className="text-slate-500">Loading...</p>
       </div>
     </div>
   );
@@ -85,7 +86,7 @@ function App() {
                       <ServiceWorkerUpdate />
                       <SessionTimeoutWarning />
                     </Suspense>
-                    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-[#0A0E27] transition-colors pb-16 md:pb-0">
+                    <div className="min-h-screen flex flex-col bg-[#080B18] pb-16 md:pb-0">
                       <Header />
                       <main className="flex-1">
                         <Suspense fallback={<LoadingFallback />}>
@@ -152,6 +153,14 @@ function App() {
                                 element={
                                   <PageTransition>
                                     <DaoOverviewPage />
+                                  </PageTransition>
+                                }
+                              />
+                              <Route
+                                path="/liquidity"
+                                element={
+                                  <PageTransition>
+                                    <LiquidityPage />
                                   </PageTransition>
                                 }
                               />

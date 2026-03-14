@@ -62,7 +62,7 @@ export function getWalletConfig(walletName: string) {
  */
 export function walletSupportsChain(walletName: string, chain: string): boolean {
   const config = getWalletConfig(walletName);
-  return config?.chains.includes(chain as 'aptos' | 'sui') ?? false;
+  return ((config?.chains as unknown as string[])?.includes(chain) ?? false);
 }
 
 /**

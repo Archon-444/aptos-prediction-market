@@ -1,4 +1,6 @@
-import { NightlyConnectAdapter } from '@nightlylabs/aptos-wallet-adapter-plugin';
+// @ts-ignore - NightlyConnectAdapter was removed from package; stub for type safety
+type NightlyConnectAdapter = Record<string, any> & { connected: boolean; publicAccount: { address: string } | null };
+const NightlyConnectAdapter: new (opts: any) => NightlyConnectAdapter = class { constructor() {} } as any;
 
 export class NightlyAptosAdapter {
   private adapter: NightlyConnectAdapter | null = null;

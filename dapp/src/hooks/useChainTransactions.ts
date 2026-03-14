@@ -80,8 +80,8 @@ export const useChainPlaceBet = () => {
     const tx = new SuiTransaction();
 
     // Get user's USDC coins for payment
-    const usdcCoinType = sdk.getUsdcCoinType();
-    const userCoins = await sdk.getCoins(suietWallet.account.address, usdcCoinType);
+    const usdcCoinType = (sdk as any).getUsdcCoinType();
+    const userCoins = await (sdk as any).getCoins(suietWallet.account.address, usdcCoinType);
     
     if (userCoins.length === 0) {
       throw new Error('No USDC coins found in wallet. Please acquire USDC first.');
@@ -105,10 +105,6 @@ export const useChainPlaceBet = () => {
     // Sign and execute
     const result = await suietWallet.signAndExecuteTransaction({
       transaction: tx as any, // Type compatibility issue between Sui packages
-      options: {
-        showEffects: true,
-        showEvents: true,
-      },
     });
 
     const success = (result as any).effects?.status?.status === 'success';
@@ -191,10 +187,6 @@ export const useChainClaimWinnings = () => {
     // Sign and execute
     const result = await suietWallet.signAndExecuteTransaction({
       transaction: tx as any, // Type compatibility issue between Sui packages
-      options: {
-        showEffects: true,
-        showEvents: true,
-      },
     });
 
     const success = (result as any).effects?.status?.status === 'success';
@@ -292,16 +284,12 @@ export const useChainCreateMarket = () => {
     // Sign and execute
     const result = await suietWallet.signAndExecuteTransaction({
       transaction: tx as any, // Type compatibility issue between Sui packages
-      options: {
-        showEffects: true,
-        showEvents: true,
-      },
     });
 
-    const success = result.effects?.status?.status === 'success';
+    const success = (result as any).effects?.status?.status === 'success';
 
     if (!success) {
-      const error = result.effects?.status?.error || 'Unknown error';
+      const error = (result as any).effects?.status?.error || 'Unknown error';
       throw new Error(`Market creation failed: ${error}`);
     }
 

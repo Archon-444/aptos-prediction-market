@@ -1,229 +1,128 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useMemo, useState, useCallback } from 'react';
+import type { Market, UserPosition } from '../services/IBlockchainAdapter';
 
-export type NotificationType =
-  | 'market_resolved'
-  | 'bet_won'
-  | 'bet_lost'
-  | 'market_ending_soon'
-  | 'new_market'
-  | 'price_alert';
+export type NotificationKind = 'win_claimable' | 'market_resolved_loss' | 'ending_soon';
 
-export interface NotificationPayload {
-  title: string;
-  body: string;
-  type: NotificationType;
-  marketId?: string;
-  url?: string;
-  icon?: string;
-  badge?: string;
-  tag?: string;
-  actions?: Array<{
-    action: string;
-    title: string;
-    icon?: string;
-  }>;
+export interface AppNotification {
+  id: string;
+  kind: NotificationKind;
+  marketId: number;
+  question: string;
+  outcomeLabel: string;
+  timestamp: number;
+  read: boolean;
+  amount?: number; // micro units (shares) for wins
 }
 
-interface UseNotificationsReturn {
-  isSupported: boolean;
-  permission: NotificationPermission;
-  isSubscribed: boolean;
-  requestPermission: () => Promise<boolean>;
-  subscribe: () => Promise<PushSubscription | null>;
-  unsubscribe: () => Promise<boolean>;
-  sendTestNotification: () => Promise<void>;
+const STORAGE_KEY = 'prophecy-notifications-read';
+
+function getReadIds(): Set<string> {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return new Set();
+    return new Set(JSON.parse(raw) as string[]);
+  } catch {
+    return new Set();
+  }
 }
 
-export function useNotifications(): UseNotificationsReturn {
-  const [isSupported, setIsSupported] = useState(false);
-  const [permission, setPermission] = useState<NotificationPermission>('default');
-  const [isSubscribed, setIsSubscribed] = useState(false);
+function saveReadIds(ids: Set<string>) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...ids]));
+  } catch {}
+}
 
-  useEffect(() => {
-    // Check if notifications are supported
-    const supported = 'Notification' in window && 'serviceWorker' in navigator && 'PushManager' in window;
-    setIsSupported(supported);
+export function useNotifications(
+  markets: Market[],
+  positions: Map<number, UserPosition>
+) {
+  const [readIds, setReadIds] = useState<Set<string>>(() => getReadIds());
 
-    if (supported) {
-      setPermission(Notification.permission);
-      checkSubscription();
-    }
-  }, []);
+  const rawNotifications = useMemo<Omit<AppNotification, 'read'>[]>(() => {
+    const now = Date.now();
+    const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+    const list: Omit<AppNotification, 'read'>[] = [];
 
-  const checkSubscription = useCallback(async () => {
-    if (!('serviceWorker' in navigator)) return;
+    positions.forEach((pos, marketId) => {
+      const market = markets.find((m) => m.id === marketId);
+      if (!market) return;
 
-    try {
-      const registration = await navigator.serviceWorker.ready;
-      const subscription = await registration.pushManager.getSubscription();
-      setIsSubscribed(!!subscription);
-    } catch (error) {
-      console.error('Error checking subscription:', error);
-    }
-  }, []);
+      const outcomeLabel = market.outcomes[pos.outcome] ?? `Outcome ${pos.outcome}`;
 
-  const requestPermission = useCallback(async (): Promise<boolean> => {
-    if (!isSupported) {
-      console.warn('Notifications not supported');
-      return false;
-    }
-
-    try {
-      const result = await Notification.requestPermission();
-      setPermission(result);
-      return result === 'granted';
-    } catch (error) {
-      console.error('Error requesting permission:', error);
-      return false;
-    }
-  }, [isSupported]);
-
-  const subscribe = useCallback(async (): Promise<PushSubscription | null> => {
-    if (!isSupported) {
-      console.warn('Notifications not supported');
-      return null;
-    }
-
-    try {
-      const registration = await navigator.serviceWorker.ready;
-
-      // Get or create subscription
-      let subscription = await registration.pushManager.getSubscription();
-
-      if (!subscription) {
-        // VAPID public key - would normally come from backend
-        // For now, using a placeholder - replace with real key from backend
-        const vapidPublicKey = import.meta.env.VITE_VAPID_PUBLIC_KEY || '';
-
-        if (!vapidPublicKey) {
-          console.warn('VAPID public key not configured');
-          return null;
-        }
-
-        subscription = await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
+      if (market.resolved && market.winningOutcome === pos.outcome && !pos.claimed) {
+        list.push({
+          id: `win_claimable-${marketId}`,
+          kind: 'win_claimable',
+          marketId,
+          question: market.question,
+          outcomeLabel,
+          timestamp: market.endTime,
+          amount: pos.shares,
         });
-
-        // Send subscription to backend
-        await sendSubscriptionToBackend(subscription);
+      } else if (market.resolved && market.winningOutcome !== pos.outcome) {
+        list.push({
+          id: `market_resolved_loss-${marketId}`,
+          kind: 'market_resolved_loss',
+          marketId,
+          question: market.question,
+          outcomeLabel,
+          timestamp: market.endTime,
+        });
+      } else if (
+        !market.resolved &&
+        market.endTime > now &&
+        market.endTime - now < TWENTY_FOUR_HOURS
+      ) {
+        list.push({
+          id: `ending_soon-${marketId}`,
+          kind: 'ending_soon',
+          marketId,
+          question: market.question,
+          outcomeLabel,
+          timestamp: market.endTime,
+        });
       }
+    });
 
-      setIsSubscribed(true);
-      return subscription;
-    } catch (error) {
-      console.error('Error subscribing to push notifications:', error);
-      return null;
-    }
-  }, [isSupported]);
+    const order: Record<NotificationKind, number> = {
+      win_claimable: 0,
+      ending_soon: 1,
+      market_resolved_loss: 2,
+    };
 
-  const unsubscribe = useCallback(async (): Promise<boolean> => {
-    if (!('serviceWorker' in navigator)) return false;
+    return list.sort((a, b) => {
+      if (order[a.kind] !== order[b.kind]) return order[a.kind] - order[b.kind];
+      return b.timestamp - a.timestamp;
+    });
+  }, [markets, positions]);
 
-    try {
-      const registration = await navigator.serviceWorker.ready;
-      const subscription = await registration.pushManager.getSubscription();
+  const notifications: AppNotification[] = useMemo(
+    () => rawNotifications.map((n) => ({ ...n, read: readIds.has(n.id) })),
+    [rawNotifications, readIds]
+  );
 
-      if (subscription) {
-        await subscription.unsubscribe();
+  const unreadCount = useMemo(
+    () => notifications.filter((n) => !n.read).length,
+    [notifications]
+  );
 
-        // Notify backend to remove subscription
-        await removeSubscriptionFromBackend(subscription);
-
-        setIsSubscribed(false);
-        return true;
-      }
-
-      return false;
-    } catch (error) {
-      console.error('Error unsubscribing:', error);
-      return false;
-    }
+  const markRead = useCallback((id: string) => {
+    setReadIds((prev) => {
+      const next = new Set(prev);
+      next.add(id);
+      saveReadIds(next);
+      return next;
+    });
   }, []);
 
-  const sendTestNotification = useCallback(async () => {
-    if (!isSupported || permission !== 'granted') {
-      console.warn('Cannot send test notification');
-      return;
-    }
-
-    try {
-      const registration = await navigator.serviceWorker.ready;
-
-      await registration.showNotification('🎉 Move Market Test', {
-        body: 'Push notifications are working! You\'ll be notified about market updates.',
-        icon: '/icon-192.png',
-        badge: '/icon-96.png',
-        tag: 'test-notification',
-        // vibrate: [200, 100, 200], // Not supported in all browsers
-        // actions: [...], // Not supported in all browsers
-      });
-    } catch (error) {
-      console.error('Error sending test notification:', error);
-    }
-  }, [isSupported, permission]);
-
-  return {
-    isSupported,
-    permission,
-    isSubscribed,
-    requestPermission,
-    subscribe,
-    unsubscribe,
-    sendTestNotification,
-  };
-}
-
-// Helper function to convert VAPID key
-function urlBase64ToUint8Array(base64String: string): BufferSource {
-  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-
-  const rawData = window.atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
-
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-
-  return outputArray.buffer;
-}
-
-// Backend integration functions (would be real API calls)
-async function sendSubscriptionToBackend(subscription: PushSubscription): Promise<void> {
-  try {
-    // TODO: Replace with actual backend endpoint
-    const endpoint = import.meta.env.VITE_API_URL || '/api';
-
-    await fetch(`${endpoint}/push/subscribe`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(subscription),
+  const markAllRead = useCallback(() => {
+    setReadIds((prev) => {
+      const next = new Set(prev);
+      rawNotifications.forEach((n) => next.add(n.id));
+      saveReadIds(next);
+      return next;
     });
+  }, [rawNotifications]);
 
-    console.log('Subscription sent to backend');
-  } catch (error) {
-    console.error('Error sending subscription to backend:', error);
-  }
-}
-
-async function removeSubscriptionFromBackend(subscription: PushSubscription): Promise<void> {
-  try {
-    // TODO: Replace with actual backend endpoint
-    const endpoint = import.meta.env.VITE_API_URL || '/api';
-
-    await fetch(`${endpoint}/push/unsubscribe`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(subscription),
-    });
-
-    console.log('Subscription removed from backend');
-  } catch (error) {
-    console.error('Error removing subscription from backend:', error);
-  }
+  return { notifications, unreadCount, markRead, markAllRead };
 }

@@ -36,7 +36,7 @@ export const useUnifiedWallet = (): UnifiedWallet => {
   return useMemo<UnifiedWallet>(() => {
     if (activeChain === 'sui') {
       return {
-        address: suiWallet.account?.address,
+        address: suiWallet.account?.address as string | undefined,
         connected: suiWallet.connected,
         connecting: false,
         connect: suiWallet.connect,
@@ -44,11 +44,11 @@ export const useUnifiedWallet = (): UnifiedWallet => {
         chain: 'sui',
         publicKey: undefined,
         signMessage: undefined,
-      };
+      } as UnifiedWallet;
     }
 
     return {
-      address: aptosWallet.account?.address,
+      address: aptosWallet.account?.address as unknown as string | undefined,
       connected: aptosWallet.connected,
       connecting: false, // aptosWallet.connecting not available
       connect: () => {
@@ -56,8 +56,8 @@ export const useUnifiedWallet = (): UnifiedWallet => {
       },
       disconnect: aptosWallet.disconnect,
       chain: 'aptos',
-      publicKey: aptosWallet.account?.publicKey,
-      signMessage: aptosWallet.signMessage,
-    };
+      publicKey: aptosWallet.account?.publicKey as string | undefined,
+      signMessage: aptosWallet.signMessage as UnifiedWallet['signMessage'],
+    } as UnifiedWallet;
   }, [activeChain, aptosWallet, suiWallet]);
 };

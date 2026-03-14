@@ -22,7 +22,7 @@ export const useUserPosition = (
     setError(null);
 
     try {
-      const fetchedPosition = await sdk.getUserPosition(userAddress, marketId as any);
+      const fetchedPosition = await sdk.getUserPosition(marketId, userAddress);
       setPosition(fetchedPosition);
     } catch (err: any) {
       setError(err);
@@ -60,7 +60,7 @@ export const useUserPositions = (userAddress: string | undefined, marketCount: n
       const positionPromises = [];
       for (let i = 0; i < marketCount; i++) {
         positionPromises.push(
-          sdk.getUserPosition(userAddress, i as any).then((position) => ({ marketId: i, position }))
+          sdk.getUserPosition(i, userAddress).then((position) => ({ marketId: i, position }))
         );
       }
 

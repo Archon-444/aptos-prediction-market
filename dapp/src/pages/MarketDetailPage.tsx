@@ -101,8 +101,7 @@ const ChartTooltip: React.FC<{ active?: boolean; payload?: any[]; label?: string
   return (
     <div className="rounded-lg border border-white/[0.1] bg-[#0D1224] px-3 py-2 shadow-xl text-xs">
       <p className="text-slate-500 mb-1">{label}</p>
-      <p className="font-bold text-primary-300">YES {payload[0]?.value}%</p>
-      <p className="text-slate-500">NO {100 - (payload[0]?.value ?? 0)}%</p>
+      <p className="font-bold text-primary-300">{payload[0]?.value}%</p>
     </div>
   );
 };
@@ -372,8 +371,8 @@ export const MarketDetailPage: React.FC = () => {
               </div>
             </div>
 
-            {/* ── Price History Chart ─────────────────────────────── */}
-            {chartData.length > 0 && market!.outcomes.length >= 2 && (
+            {/* ── Price History Chart (binary markets only) ───────── */}
+            {chartData.length > 0 && market!.outcomes.length === 2 && (
               <div
                 className="rounded-2xl border border-[#1C2537] bg-[#0D1224] p-6"
                 style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)' }}
@@ -386,11 +385,11 @@ export const MarketDetailPage: React.FC = () => {
                   <div className="flex items-center gap-4 text-xs font-semibold">
                     <span className="flex items-center gap-1.5">
                       <span className="w-2.5 h-2.5 rounded-full" style={{ background: '#60A5FA' }} />
-                      <span className="text-slate-400">YES {outcomeData[0]?.pct ?? 0}%</span>
+                      <span className="text-slate-400">{outcomeData[0]?.label ?? 'YES'} {outcomeData[0]?.pct ?? 0}%</span>
                     </span>
                     <span className="flex items-center gap-1.5">
                       <span className="w-2.5 h-2.5 rounded-full bg-slate-600" />
-                      <span className="text-slate-500">NO {outcomeData[1]?.pct ?? 0}%</span>
+                      <span className="text-slate-500">{outcomeData[1]?.label ?? 'NO'} {outcomeData[1]?.pct ?? 0}%</span>
                     </span>
                   </div>
                 </div>

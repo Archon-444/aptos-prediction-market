@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMenu, FiX, FiTrendingUp, FiDollarSign, FiAlertCircle, FiZap } from 'react-icons/fi';
+import { FiMenu, FiX, FiTrendingUp, FiDollarSign, FiAlertCircle, FiZap, FiBell } from 'react-icons/fi';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import { useSuiWallet } from '../../contexts/SuiWalletContext';
 import { useChain } from '../../contexts/ChainContext';
@@ -14,12 +14,17 @@ import { useUSDCFaucet } from '../../hooks/useTransactions';
 import { useChainCurrency } from '../../hooks/useChainCurrency';
 import useWusdcWarning from '../../hooks/useWusdcWarning';
 import { useIsAdmin } from '../../hooks/useRoles';
+import { useMarkets } from '../../hooks/useMarkets';
+import { useUserPositions } from '../../hooks/useUserPosition';
+import { useNotifications } from '../../hooks/useNotifications';
+import { NotificationPanel } from './NotificationPanel';
 
 const NAV_ITEMS = [
   { label: 'Markets', href: '/markets' },
   { label: 'Leaderboard', href: '/leaderboard' },
   { label: 'Oracle', href: '/oracle' },
   { label: 'My Bets', href: '/dashboard' },
+  { label: 'Liquidity', href: '/liquidity' },
   { label: 'DAO', href: '/dao' },
   { label: 'How It Works', href: '/how-it-works' },
 ];
@@ -27,6 +32,7 @@ const NAV_ITEMS = [
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [walletModalOpen, setWalletModalOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
   const { activeChain } = useChain();
   const location = useLocation();
   const navigate = useNavigate();
@@ -42,6 +48,10 @@ export const Header: React.FC = () => {
   const currency = useChainCurrency();
   const wusdcWarning = useWusdcWarning();
   const { hasRole: isAdmin } = useIsAdmin();
+  const { markets } = useMarkets();
+  const address = account ? String(account.address) : undefined;
+  const { positions } = useUserPositions(address, markets.length);
+  const { notifications, unreadCount, markRead, markAllRead } = useNotifications(markets, positions);
 
   const adminItems = isAdmin
     ? [
@@ -183,6 +193,32 @@ export const Header: React.FC = () => {
               {/* Right: chain + wallet + actions */}
               <div className="flex items-center gap-2">
                 <ChainSwitcher />
+
+                {/* Notification bell */}
+                {connected && (
+                  <div className="relative">
+                    <button
+                      onClick={() => setNotifOpen((v) => !v)}
+                      className="relative flex items-center justify-center w-9 h-9 rounded-xl border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] transition-colors focus:outline-none"
+                      aria-label="Notifications"
+                    >
+                      <FiBell className="w-4.5 h-4.5 text-slate-400" />
+                      {unreadCount > 0 && (
+                        <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center rounded-full bg-primary-500 text-[10px] font-bold text-white px-1 border-2 border-[#080B18]">
+                          {unreadCount > 9 ? '9+' : unreadCount}
+                        </span>
+                      )}
+                    </button>
+                    <NotificationPanel
+                      isOpen={notifOpen}
+                      onClose={() => setNotifOpen(false)}
+                      notifications={notifications}
+                      unreadCount={unreadCount}
+                      onMarkRead={markRead}
+                      onMarkAllRead={markAllRead}
+                    />
+                  </div>
+                )}
 
                 {/* Faucet (desktop) */}
                 {faucetAvailable && connected && (

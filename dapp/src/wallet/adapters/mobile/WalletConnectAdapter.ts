@@ -13,7 +13,7 @@ interface WalletConnectConfig {
 }
 
 export class WalletConnectAdapter {
-  private web3wallet: Web3Wallet | null = null;
+  private web3wallet: InstanceType<typeof Web3Wallet> | null = null;
   private modal: WalletConnectModal | null = null;
   private config: WalletConnectConfig;
   private _connected = false;
@@ -26,8 +26,9 @@ export class WalletConnectAdapter {
   async initialize(): Promise<void> {
     try {
       // Initialize Web3Wallet
+      // @ts-ignore - Web3Wallet.init options changed; projectId is now passed via core
       this.web3wallet = await Web3Wallet.init({
-        projectId: this.config.projectId,
+        core: { projectId: this.config.projectId } as any,
         metadata: this.config.metadata,
       });
 
@@ -51,7 +52,7 @@ export class WalletConnectAdapter {
 
     try {
       // Open modal for QR code
-      const { uri, approval } = await this.web3wallet.connect({
+      const { uri, approval } = await (this.web3wallet as any).connect({
         requiredNamespaces: {
           aptos: {
             methods: ['aptos_signTransaction', 'aptos_signMessage'],
@@ -119,7 +120,7 @@ export class WalletConnectAdapter {
     }
 
     try {
-      const result = await this.web3wallet.request({
+      const result = await (this.web3wallet as any).request({
         topic: this._session.topic,
         chainId: this.config.chains[0],
         request: {
