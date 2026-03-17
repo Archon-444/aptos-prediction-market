@@ -13,6 +13,7 @@
     "lint": "eslint . --ext ts,tsx"
   },
   "dependencies": {
+    "@coinbase/onchainkit": "^0.38.19",
     "@rainbow-me/rainbowkit": "^2.2.10",
     "@tanstack/react-query": "^5.90.5",
     "@testing-library/jest-dom": "^6.9.1",

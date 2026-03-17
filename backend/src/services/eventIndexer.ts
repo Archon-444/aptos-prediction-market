@@ -95,6 +95,7 @@ export class EventIndexer {
       aptos: env.APTOS_EXPECTED_CHAIN_ID,
       sui: env.SUI_EXPECTED_CHAIN_ID,
       movement: env.MOVEMENT_EXPECTED_CHAIN_ID,
+      base: env.BASE_CHAIN_ID,
     };
 
     if (chain === 'aptos') {
@@ -181,8 +182,8 @@ export class EventIndexer {
     }
 
     // Update state to indicate indexer is stopped
-    await prisma.indexerState.update({
-      where: { chain: this.config.chain },
+    await prisma.indexerState.updateMany({
+      where: { chain: this.config.chain, contractAddress: null },
       data: { isRunning: false },
     });
 
@@ -193,8 +194,8 @@ export class EventIndexer {
    * Initialize or load indexer state from database
    */
   private async initializeState(): Promise<void> {
-    const state = await prisma.indexerState.findUnique({
-      where: { chain: this.config.chain },
+    const state = await prisma.indexerState.findFirst({
+      where: { chain: this.config.chain, contractAddress: null },
     });
 
     if (!state) {
@@ -213,8 +214,8 @@ export class EventIndexer {
       });
     } else {
       // Update state to running
-      await prisma.indexerState.update({
-        where: { chain: this.config.chain },
+      await prisma.indexerState.updateMany({
+        where: { chain: this.config.chain, contractAddress: null },
         data: { isRunning: true, lastError: null },
       });
 
@@ -242,8 +243,8 @@ export class EventIndexer {
       });
 
       // Record error in state
-      await prisma.indexerState.update({
-        where: { chain: this.config.chain },
+      await prisma.indexerState.updateMany({
+        where: { chain: this.config.chain, contractAddress: null },
         data: {
           lastError: error instanceof Error ? error.message : 'Unknown error',
         },
@@ -265,8 +266,8 @@ export class EventIndexer {
     }
 
     // Get current state
-    const state = await prisma.indexerState.findUnique({
-      where: { chain: this.config.chain },
+    const state = await prisma.indexerState.findFirst({
+      where: { chain: this.config.chain, contractAddress: null },
     });
 
     if (!state) {
@@ -293,8 +294,8 @@ export class EventIndexer {
           advancedTo: advancedVersion.toString(),
         });
 
-        await prisma.indexerState.update({
-          where: { chain: this.config.chain },
+        await prisma.indexerState.updateMany({
+          where: { chain: this.config.chain, contractAddress: null },
           data: {
             lastProcessedVersion: advancedVersion,
             lastProcessedTimestamp: new Date(),
@@ -314,8 +315,8 @@ export class EventIndexer {
 
       // Update state with latest version processed
       const latestVersion = events[events.length - 1].version;
-      await prisma.indexerState.update({
-        where: { chain: this.config.chain },
+      await prisma.indexerState.updateMany({
+        where: { chain: this.config.chain, contractAddress: null },
         data: {
           lastProcessedVersion: BigInt(latestVersion),
           lastProcessedTimestamp: new Date(),
@@ -589,8 +590,8 @@ export class EventIndexer {
    * Get current indexer status
    */
   async getStatus() {
-    const state = await prisma.indexerState.findUnique({
-      where: { chain: this.config.chain },
+    const state = await prisma.indexerState.findFirst({
+      where: { chain: this.config.chain, contractAddress: null },
     });
 
     return {

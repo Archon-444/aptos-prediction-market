@@ -88,6 +88,26 @@ const chainConfigs: Record<Chain, ChainConfig> = {
     contractAddress: process.env.MOVEMENT_MODULE_ADDRESS ?? '',
     rpcEndpoint: process.env.MOVEMENT_RPC_ENDPOINT ?? '',
   },
+  base: {
+    chain: 'base',
+    feeStructure: {
+      tradingFee: 2.0,
+      withdrawalFee: 0,
+      creatorFee: 0,
+      protocolFee: 0,
+    },
+    lmsrParams: {
+      b: 0,
+      initialLiquidity: 0n,
+    },
+    limits: {
+      minBet: 1n * MICRO_USDC,
+      maxBet: 100_000n * MICRO_USDC,
+      maxMarketDurationHours: 24 * 365,
+    },
+    contractAddress: env.MARKET_FACTORY_ADDRESS ?? '',
+    rpcEndpoint: env.BASE_RPC_URL ?? '',
+  },
 };
 
 export function getChainConfig(chain: Chain): ChainConfig {

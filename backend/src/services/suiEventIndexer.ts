@@ -80,8 +80,8 @@ export class SuiEventIndexer {
   }
 
   private async loadCursor(): Promise<void> {
-    const state = await prisma.indexerState.findUnique({
-      where: { chain: 'sui' },
+    const state = await prisma.indexerState.findFirst({
+      where: { chain: 'sui', contractAddress: null },
     });
 
     if (!state) {
@@ -110,8 +110,8 @@ export class SuiEventIndexer {
   }
 
   private async saveCursor(timestamps: number): Promise<void> {
-    await prisma.indexerState.update({
-      where: { chain: 'sui' },
+    await prisma.indexerState.updateMany({
+      where: { chain: 'sui', contractAddress: null },
       data: {
         lastProcessedVersion: BigInt(timestamps),
         lastProcessedTimestamp: new Date(timestamps),

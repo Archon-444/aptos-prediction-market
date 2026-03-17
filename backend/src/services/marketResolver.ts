@@ -344,7 +344,7 @@ export class MarketResolverService {
    */
   private async submitResolution(
     market: {
-      chain: 'aptos' | 'sui' | 'movement';
+      chain: 'aptos' | 'sui' | 'movement' | 'base';
       onChainId: string;
       suiMarketObjectId: string | null;
     },
