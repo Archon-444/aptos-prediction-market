@@ -17,9 +17,9 @@ const envSchema = z.object({
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
   REDIS_URL: z.string().optional(),
 
-  // Aptos Configuration (Required)
+  // Aptos Configuration (Optional — only required if ACTIVE_CHAINS includes aptos)
   APTOS_NETWORK: z.string().default('testnet'),
-  APTOS_MODULE_ADDRESS: z.string().min(1, 'APTOS_MODULE_ADDRESS is required'),
+  APTOS_MODULE_ADDRESS: z.string().optional().default('0x0'),
   APTOS_ADMIN_ACCOUNT: z.string().optional(),
   APTOS_ADMIN_PRIVATE_KEY: z.string().optional(),
   APTOS_EXPECTED_CHAIN_ID: z.string().optional(),
