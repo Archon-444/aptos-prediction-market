@@ -13,12 +13,14 @@
     "loadtest:ratelimit": "tsx loadtests/ratelimit.loadtest.ts",
     "loadtest:all": "npm run loadtest:suggestions && npm run loadtest:ratelimit",
     "agent:create": "tsx src/agents/cli/createMarket.ts",
-    "agent:costs": "tsx src/agents/cli/costReport.ts"
+    "agent:costs": "tsx src/agents/cli/costReport.ts",
+    "deploy:sepolia": "tsx src/agents/cli/deployContracts.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
     "@aptos-labs/ts-sdk": "^1.32.0",
     "@circle-fin/smart-contract-platform": "^9.1.0",
+    "@coinbase/cdp-sdk": "^1.45.0",
     "@mysten/sui": "^1.16.0",
     "@prisma/client": "^5.22.0",
     "@pythnetwork/price-service-client": "^1.9.0",
