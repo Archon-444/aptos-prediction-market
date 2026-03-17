@@ -26,6 +26,9 @@ export const env = {
   // Wallet
   walletConnectProjectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || '',
 
+  // Paymaster (gasless transactions)
+  cdpPaymasterUrl: import.meta.env.VITE_CDP_PAYMASTER_URL || '',
+
   // Feature flags
   enablePushNotifications: import.meta.env.VITE_ENABLE_PUSH_NOTIFICATIONS === 'true',
   enableBiometricAuth: import.meta.env.VITE_ENABLE_BIOMETRIC_AUTH === 'true',
