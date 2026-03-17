@@ -22,25 +22,19 @@ export default defineConfig({
             id.includes('@rainbow-me')
           ) return 'vendor-evm';
 
-          // Charts (recharts + d3 deps)
-          if (id.includes('recharts') || id.includes('d3-') || id.includes('victory'))
-            return 'vendor-charts';
-
-          // Date utilities
-          if (id.includes('date-fns')) return 'vendor-dates';
-
-          // Animation
-          if (id.includes('framer-motion')) return 'vendor-animation';
-
-          // React core
+          // React core + charts + animation (must share chunk to avoid circular deps)
           if (
             id.includes('react-dom') ||
             id.includes('react-router') ||
-            id.includes('scheduler')
+            id.includes('scheduler') ||
+            id.includes('/react/') ||
+            id.includes('react-is') ||
+            id.includes('recharts') ||
+            id.includes('d3-') ||
+            id.includes('victory') ||
+            id.includes('framer-motion') ||
+            id.includes('date-fns')
           ) return 'vendor-react';
-
-          if (id.includes('/react/') || id.includes('react-is'))
-            return 'vendor-react';
         },
       },
     },
