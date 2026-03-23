@@ -96,7 +96,12 @@ function getContractConfigs(): ContractConfig[] {
 
 // ---------- Event Dispatcher ----------
 
-async function dispatchEvent(contractName: string, eventName: string, args: any, log: Log): Promise<void> {
+async function dispatchEvent(
+  contractName: string,
+  eventName: string,
+  args: unknown,
+  log: Log
+): Promise<void> {
   switch (`${contractName}:${eventName}`) {
     // MarketFactory
     case 'MarketFactory:MarketCreated':
@@ -179,7 +184,7 @@ function isPrismaUniqueConstraintError(error: unknown): boolean {
     typeof error === 'object' &&
     error !== null &&
     'code' in error &&
-    (error as any).code === 'P2002'
+    (error as { code: string }).code === 'P2002'
   );
 }
 
@@ -246,7 +251,10 @@ class BaseEventIndexer {
       const fromBlock = (await getLastProcessedBlock(config.address)) + 1n;
 
       if (fromBlock > latestBlock) {
-        logger.info({ contract: config.name, fromBlock: fromBlock.toString() }, '[BaseIndexer] Already up to date');
+        logger.info(
+          { contract: config.name, fromBlock: fromBlock.toString() },
+          '[BaseIndexer] Already up to date'
+        );
         continue;
       }
 
@@ -256,7 +264,10 @@ class BaseEventIndexer {
       );
 
       for (let start = fromBlock; start <= latestBlock; start += BACKFILL_CHUNK_SIZE) {
-        const end = start + BACKFILL_CHUNK_SIZE - 1n > latestBlock ? latestBlock : start + BACKFILL_CHUNK_SIZE - 1n;
+        const end =
+          start + BACKFILL_CHUNK_SIZE - 1n > latestBlock
+            ? latestBlock
+            : start + BACKFILL_CHUNK_SIZE - 1n;
 
         try {
           const logs = await publicClient.getLogs({
@@ -276,7 +287,11 @@ class BaseEventIndexer {
           recordBaseIndexerBlock(config.name, Number(end));
         } catch (error) {
           logger.error(
-            { contract: config.name, start: start.toString(), error: error instanceof Error ? error.message : String(error) },
+            {
+              contract: config.name,
+              start: start.toString(),
+              error: error instanceof Error ? error.message : String(error),
+            },
             '[BaseIndexer] Backfill chunk error'
           );
           throw error;
@@ -296,22 +311,26 @@ class BaseEventIndexer {
       const unwatch = wsClient.watchContractEvent({
         address: config.address,
         abi: config.abi,
-        onLogs: async (logs: any[]) => {
+        onLogs: async (logs: unknown[]) => {
           for (const event of logs) {
             await this.processEvent(config.name, event);
           }
 
           // Update last processed block
-          const lastBlock = logs[logs.length - 1]?.blockNumber;
+          const lastLog = logs[logs.length - 1] as Log | undefined;
+          const lastBlock = lastLog?.blockNumber;
           if (lastBlock) {
             await updateLastProcessedBlock(config.address, lastBlock);
             recordBaseIndexerBlock(config.name, Number(lastBlock));
           }
         },
         onError: (error: Error) => {
-          logger.error({ contract: config.name, error: error.message }, '[BaseIndexer] WebSocket event error');
+          logger.error(
+            { contract: config.name, error: error.message },
+            '[BaseIndexer] WebSocket event error'
+          );
         },
-      } as any);
+      } as unknown as Parameters<typeof wsClient.watchContractEvent>[0]);
 
       this.unwatchFunctions.push(unwatch);
     }
@@ -319,9 +338,10 @@ class BaseEventIndexer {
 
   // ---------- Process Single Event ----------
 
-  private async processEvent(contractName: string, event: any): Promise<void> {
+  private async processEvent(contractName: string, event: unknown): Promise<void> {
+    const evt = event as Log & { eventName: string; args: unknown };
     try {
-      await dispatchEvent(contractName, event.eventName, event.args, event as Log);
+      await dispatchEvent(contractName, evt.eventName, evt.args, evt as Log);
     } catch (error) {
       if (isPrismaUniqueConstraintError(error)) {
         // Already processed — idempotent skip
@@ -330,8 +350,8 @@ class BaseEventIndexer {
       logger.error(
         {
           contract: contractName,
-          event: event.eventName,
-          tx: event.transactionHash,
+          event: evt.eventName,
+          tx: evt.transactionHash,
           error: error instanceof Error ? error.message : String(error),
         },
         '[BaseIndexer] Event processing error'
