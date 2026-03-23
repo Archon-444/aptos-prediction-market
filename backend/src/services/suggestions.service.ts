@@ -1,8 +1,5 @@
-import { ChainRouter } from '../blockchain/chainRouter.js';
 import { logger } from '../config/logger.js';
 import { prisma } from '../database/prismaClient.js';
-
-const chainRouter = new ChainRouter();
 
 interface CreateSuggestionInput {
   question: string;
@@ -98,14 +95,8 @@ export const suggestionService = {
         let txHash = params.txHash ?? undefined;
 
         if (!txHash) {
-          const client = chainRouter.getClient(suggestion.chain);
-          txHash = await client.createMarket({
-            question: suggestion.question,
-            outcomes: suggestion.outcomes,
-            durationHours: suggestion.durationHours,
-            resolutionSource: suggestion.resolutionSource ?? '',
-            proposer: suggestion.proposer,
-          });
+          // On Base, market creation requires a tx hash from the admin frontend
+          throw new Error('Transaction hash required for on-chain market publication on Base');
         }
 
         if (!txHash) {
@@ -209,6 +200,7 @@ export const suggestionService = {
     id: string;
     publisher: string;
     publisherChain?: 'aptos' | 'sui' | 'movement' | 'base';
+    txHash?: string;
   }) {
     // 1. Get suggestion (must be 'approved')
     const suggestion = await prisma.suggestion.findUnique({
@@ -233,16 +225,12 @@ export const suggestionService = {
       );
     }
 
-    // 2. Create market on-chain
+    // 2. Create market on-chain (requires tx hash from admin frontend for Base)
     try {
-      const client = chainRouter.getClient(suggestion.chain);
-      const txHash = await client.createMarket({
-        question: suggestion.question,
-        outcomes: suggestion.outcomes,
-        durationHours: suggestion.durationHours,
-        resolutionSource: suggestion.resolutionSource ?? undefined,
-        proposer: suggestion.proposer,
-      });
+      if (!params.txHash) {
+        throw new Error('Transaction hash required for on-chain market publication on Base');
+      }
+      const txHash = params.txHash;
 
       // 3. Update suggestion
       const updatedSuggestion = await prisma.suggestion.update({

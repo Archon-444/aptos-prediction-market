@@ -18,12 +18,12 @@ declare global {
 }
 
 const normalizeChain = (value?: string | null): SupportedChain | undefined => {
-  if (!value) return undefined;
+  if (!value) return 'base';
   const normalized = value.toLowerCase();
-  if (normalized === 'aptos' || normalized === 'sui' || normalized === 'movement') {
+  if (normalized === 'base' || normalized === 'movement') {
     return normalized;
   }
-  return undefined;
+  return 'base';
 };
 
 export const authenticateWallet = async (req: Request, res: Response, next: NextFunction) => {

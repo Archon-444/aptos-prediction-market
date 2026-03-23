@@ -1,9 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { z } from 'zod';
 
-import { logger } from '../config/logger.js';
 import { marketsService } from '../services/markets.service.js';
-import { suiMarketLookupService } from '../services/sui-market-lookup.service.js';
 
 const listSchema = z.object({
   chain: z.enum(['aptos', 'sui', 'movement', 'base']).optional(),
@@ -29,14 +27,6 @@ const calculatePayoutSchema = z
     message: 'Provide marketId or chain and onChainId to calculate payout',
     path: ['marketId'],
   });
-
-const suiMarketObjectsSchema = z.object({
-  marketId: z.coerce.number().int().min(0),
-});
-
-const suiBootstrapSchema = z.object({
-  digest: z.string().min(1),
-});
 
 export const marketsController = {
   async listMarkets(req: Request, res: Response, next: NextFunction) {
@@ -85,39 +75,6 @@ export const marketsController = {
         betAmount: params.amount,
       });
     } catch (error) {
-      next(error);
-    }
-  },
-
-  async getSuiMarketObjects(req: Request, res: Response, next: NextFunction) {
-    try {
-      const params = suiMarketObjectsSchema.parse(req.params);
-      const objects = await suiMarketLookupService.getSuiMarketObjects(params.marketId);
-      if (!objects) {
-        return res.status(404).json({ error: 'Market objects not found' });
-      }
-      res.json(objects);
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async bootstrapSuiMarket(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { digest } = suiBootstrapSchema.parse(req.body);
-
-      const { globalChainRouter } = await import('../blockchain/chainRouter.js');
-      const client = globalChainRouter.getClient('sui');
-
-      if (!client.bootstrapMarket) {
-        return res.status(501).json({ error: 'Sui bootstrap not supported by this backend' });
-      }
-
-      const result = await client.bootstrapMarket({ digest });
-
-      res.status(201).json({ marketId: result.marketId });
-    } catch (error) {
-      logger.error({ error }, '[MarketsController] Failed to bootstrap Sui market');
       next(error);
     }
   },

@@ -1,9 +1,5 @@
-import { ChainRouter } from '../blockchain/chainRouter.js';
 import { prisma } from '../database/prismaClient.js';
 import { canonicalizeRoles } from '../utils/roleNormalization.js';
-import { getRoleVerificationService } from './roleVerification.js';
-
-const chainRouter = new ChainRouter();
 
 const devRoleAllowlist = (process.env.DEV_ROLE_ALLOWLIST || '')
   .split(',')
@@ -79,11 +75,6 @@ export const rolesService = {
       },
     });
 
-    if (!params.transactionHash) {
-      const client = chainRouter.getClient(params.chain);
-      await client.grantRole(params.walletAddress, params.role);
-    }
-
     return { success: true };
   },
 
@@ -120,11 +111,6 @@ export const rolesService = {
       });
     }
 
-    if (!params.transactionHash) {
-      const client = chainRouter.getClient(params.chain);
-      await client.revokeRole(params.walletAddress, params.role);
-    }
-
     return { success: true };
   },
 
@@ -133,27 +119,15 @@ export const rolesService = {
     chain: 'aptos' | 'sui' | 'movement' | 'base';
     actor: string;
   }) {
-    if (params.chain === 'movement') {
-      throw new Error('Role sync is not yet supported on Movement');
-    }
+    // On-chain role sync for Base uses the MarketFactory AccessControl contract
+    // For now, roles are managed via the database and synced on grant/revoke events
+    const user = await prisma.user.findUnique({
+      where: { walletAddress: params.walletAddress },
+    });
 
-    let onChainRoles: string[] = [];
+    const roles = user?.roles ?? [];
+    const normalizedRoles = canonicalizeRoles(roles);
     const now = new Date();
-
-    if (params.chain === 'aptos') {
-      const verifier = getRoleVerificationService();
-      verifier.invalidateCache(params.walletAddress);
-      const roles = await verifier.getRoles(params.walletAddress);
-      onChainRoles = roles.map((role) => role.toString());
-    } else {
-      const client = chainRouter.getClient(params.chain);
-      if (!client.fetchRoles) {
-        throw new Error(`Blockchain client for ${params.chain} does not support role sync`);
-      }
-      onChainRoles = await client.fetchRoles(params.walletAddress);
-    }
-
-    const normalizedRoles = canonicalizeRoles(onChainRoles);
 
     const updatedUser = await prisma.user.upsert({
       where: { walletAddress: params.walletAddress },
