@@ -99,7 +99,8 @@ function getContractConfigs(): ContractConfig[] {
 async function dispatchEvent(
   contractName: string,
   eventName: string,
-  args: unknown,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- event args are dynamically typed by ABI decoder
+  args: any,
   log: Log
 ): Promise<void> {
   switch (`${contractName}:${eventName}`) {
