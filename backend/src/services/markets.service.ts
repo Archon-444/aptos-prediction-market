@@ -28,11 +28,20 @@ export const marketsService = {
     });
   },
 
-  getMarket(params: { chain: 'aptos' | 'sui' | 'movement' | 'base'; onChainId: string }) {
-    return prisma.market.findFirst({
+  async getMarket(params: { chain: 'aptos' | 'sui' | 'movement' | 'base'; onChainId: string }) {
+    // Try onChainId first, then fall back to database UUID
+    const market = await prisma.market.findFirst({
       where: {
         chain: params.chain,
         onChainId: params.onChainId,
+      },
+    });
+    if (market) return market;
+
+    return prisma.market.findFirst({
+      where: {
+        chain: params.chain,
+        id: params.onChainId,
       },
     });
   },
