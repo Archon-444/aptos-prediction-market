@@ -5,7 +5,7 @@ import { config as dotenvConfig } from 'dotenv';
 
 dotenvConfig();
 
-const SIGNING_PREFIX = 'MoveMarket::';
+const SIGNING_PREFIX = 'Based::';
 
 type SupportedChain = 'aptos' | 'sui' | 'movement';
 
