@@ -1,6 +1,9 @@
 # ===================================
-# Aptos Prediction Market .gitignore
+# Based .gitignore
 # ===================================
+
+# ============ External repos ============
+agentkit/
 
 # ============ Move / Aptos ============
 contracts/build/
